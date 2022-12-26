@@ -13,5 +13,24 @@ UCLASS()
 class SURVIVORGAME_API ASurvivor_PC : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+		ASurvivor_PC();
+
+public:
+	virtual void OnPossess(APawn* aPawn) override;
+	virtual void PostInitializeComponents() override; // 여기서 빙의되는지 알 수 있음
+	virtual void SetupInputComponent() override;
+
+private:
+	UPROPERTY()
+		class ASurvivorCharacter* myCharacter;
+
+private:
+	void UpDown(float NewAxisValue);
+
+	void LeftRight(float NewAxisValue);
+
+	void LookUp(float NewAxisValue);
+
+	void Turn(float NewAxisValue);
 };

@@ -26,4 +26,23 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(VisibleAnywhere, Category = Camera)
+		class USpringArmComponent* SpringArm;
+
+	/** Follow camera */
+	UPROPERTY(VisibleAnywhere, Category = Camera)
+		class UCameraComponent* Camera;
+
+	//UPROPERTY(VisibleInstanceOnly, Category = Animation)
+		//class UMyPlayerAnimInstance* CharacterAnim;
+
+public:
+	void UpDown(float NewAxisValue);
+
+	void LeftRight(float NewAxisValue);
+
+	void LookUp(float NewAxisValue);
+
+	void Turn(float NewAxisValue);
+
 };
