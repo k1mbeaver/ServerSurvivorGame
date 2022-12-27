@@ -33,4 +33,20 @@ private:
 	void LookUp(float NewAxisValue);
 
 	void Turn(float NewAxisValue);
+
+	void Run();
+
+	void StopRun();
+
+	void Jump();
+
+	void StopJumping();
+
+	void GetItem();
+
+	void Crouching();
+
+	void StopCrouching();
+
+	void PlayerAttack();
 };

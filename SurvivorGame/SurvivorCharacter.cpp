@@ -8,6 +8,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFrameWork/CharacterMovementComponent.h"
 #include "Animation/AnimInstance.h"
+#include "PlayerAnimInstance.h"
 #include "Survivor_PC.h"
 #include "MyGameInstance.h"
 #include "MyGameMode.h"
@@ -17,11 +18,11 @@ ASurvivorCharacter::ASurvivorCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
+	//SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 
-	SpringArm->SetupAttachment(GetCapsuleComponent());
-	Camera->SetupAttachment(SpringArm);
+	///SpringArm->SetupAttachment(GetMesh());
+	Camera->SetupAttachment(GetMesh());
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
@@ -35,6 +36,11 @@ ASurvivorCharacter::ASurvivorCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
+	bCanRun = true;
+	bCanCrouching = true;
+
+	CurrentPlayerState = EPlayerState::ALIVE;
+	CurrentWeaponState = EWeaponState::PUNCH;
 
 }
 
@@ -43,6 +49,7 @@ void ASurvivorCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CharacterAnim = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
 }
 
 // Called every frame
@@ -65,6 +72,16 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 	Direction.Z = 0.0f;
 	Direction.Normalize();
 
+	if (NewAxisValue < 0)
+	{
+		CharacterAnim->IsBack = true;
+	}
+
+	else
+	{
+		CharacterAnim->IsBack = false;
+	}
+
 	AddMovementInput(Direction, NewAxisValue);
 }
 
@@ -86,3 +103,91 @@ void ASurvivorCharacter::Turn(float NewAxisValue)
 {
 	AddControllerYawInput(NewAxisValue);
 }
+
+void ASurvivorCharacter::Run()
+{
+	if (bCanRun)
+	{
+		GetCharacterMovement()->MaxWalkSpeed *= 2;
+		bCanCrouching = false;
+	}
+}
+
+void ASurvivorCharacter::StopRun()
+{
+	if (bCanRun)
+	{
+		GetCharacterMovement()->MaxWalkSpeed /= 2;
+		bCanCrouching = true;
+	}
+}
+
+void ASurvivorCharacter::Jump()
+{
+	Super::Jump();
+}
+
+void ASurvivorCharacter::StopJumping()
+{
+	Super::StopJumping();
+}
+
+void ASurvivorCharacter::GetItem()
+{
+	if (CurrentWeaponState == EWeaponState::PUNCH)
+	{
+		CurrentWeaponState = EWeaponState::SHOOT;
+		CharacterAnim->IsFire = true;
+	}
+
+	else
+	{
+		CurrentWeaponState = EWeaponState::PUNCH;
+		CharacterAnim->IsFire = false;
+	}
+}
+
+void ASurvivorCharacter::Crouching()
+{
+	if (bCanCrouching)
+	{
+		GetCharacterMovement()->MaxWalkSpeed /= 2;
+		CharacterAnim->IsCrouching = true;
+		bCanRun = false;
+	}
+}
+
+void ASurvivorCharacter::StopCrouching()
+{
+	if (bCanCrouching)
+	{
+		GetCharacterMovement()->MaxWalkSpeed *= 2;
+		CharacterAnim->IsCrouching = false;
+		bCanRun = true;
+	}
+}
+
+void ASurvivorCharacter::Punching()
+{
+	CharacterAnim->PlayAttackMontage();
+}
+
+void ASurvivorCharacter::OnFire()
+{
+	CharacterAnim->PlayFireMontage();
+}
+
+void ASurvivorCharacter::PlayerAttack()
+{
+	if (CurrentWeaponState == EWeaponState::SHOOT)
+	{
+		OnFire();
+	}
+
+	else if (CurrentWeaponState == EWeaponState::PUNCH)
+	{
+		Punching();
+	}
+}
+
+

@@ -6,6 +6,20 @@
 #include "GameFramework/Character.h"
 #include "SurvivorCharacter.generated.h"
 
+UENUM(BlueprintType)
+enum class EWeaponState : uint8
+{
+	PUNCH, // ¸ÇÁÖ¸Ô
+	SHOOT, // ÃÑ
+};
+
+UENUM(BlueprintType)
+enum class EPlayerState : uint8
+{
+	ALIVE, // »ì¾ÆÀÖÀ½
+	DEAD, // Á×À½(°üÀü)
+};
+
 UCLASS()
 class SURVIVORGAME_API ASurvivorCharacter : public ACharacter
 {
@@ -19,6 +33,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	bool bCanRun;
+	bool bCanCrouching;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -26,15 +44,21 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(VisibleAnywhere, Category = Camera)
-		class USpringArmComponent* SpringArm;
+	//UPROPERTY(VisibleAnywhere, Category = Camera)
+		//class USpringArmComponent* SpringArm;
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class UCameraComponent* Camera;
 
-	//UPROPERTY(VisibleInstanceOnly, Category = Animation)
-		//class UMyPlayerAnimInstance* CharacterAnim;
+	UPROPERTY(VisibleInstanceOnly, Category = Animation)
+		class UPlayerAnimInstance* CharacterAnim;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
+		EPlayerState CurrentPlayerState;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
+		EWeaponState CurrentWeaponState;
 
 public:
 	void UpDown(float NewAxisValue);
@@ -45,4 +69,23 @@ public:
 
 	void Turn(float NewAxisValue);
 
+	void Run();
+
+	void StopRun();
+
+	virtual void Jump() override;
+	
+	virtual void StopJumping() override;
+
+	void GetItem();
+
+	void Crouching();
+
+	void StopCrouching();
+
+	void Punching();
+
+	void OnFire();
+
+	void PlayerAttack();
 };
