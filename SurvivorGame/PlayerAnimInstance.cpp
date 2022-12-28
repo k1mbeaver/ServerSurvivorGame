@@ -15,7 +15,7 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 	IsCrouching = false;
 	IsFire = false;
 
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> ATTACK_MONTAGE(TEXT("AnimMontage'/Game/Animation/fbx/Punching4UE4_Montage.Punching4UE4_Montage'"));
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> ATTACK_MONTAGE(TEXT("AnimMontage'/Game/Animation/fbx/MmaKick4UE4_Montage.MmaKick4UE4_Montage'"));
 	if (ATTACK_MONTAGE.Succeeded())
 	{
 		PunchMontage = ATTACK_MONTAGE.Object;
@@ -53,7 +53,7 @@ void UPlayerAnimInstance::PlayAttackMontage()
 
 void UPlayerAnimInstance::PlayFireMontage()
 {
-	Montage_Play(FireMontage, 1.0f);
+	Montage_Play(FireMontage, 2.0f);
 }
 
 void UPlayerAnimInstance::SetDeadAnim()

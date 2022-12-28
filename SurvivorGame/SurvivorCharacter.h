@@ -61,6 +61,16 @@ public:
 		EWeaponState CurrentWeaponState;
 
 public:
+
+	// 이벤트
+	UFUNCTION(BlueprintNativeEvent)
+		void OnWeaponEquip();
+	virtual void OnWeaponEquip_Implementation()
+	{
+
+	}
+
+	// 함수
 	void UpDown(float NewAxisValue);
 
 	void LeftRight(float NewAxisValue);
