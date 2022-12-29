@@ -55,6 +55,10 @@ void ASurvivor_PC::SetupInputComponent()
 
 	// 캐릭터 공격
 	InputComponent->BindAction(TEXT("Attack"), IE_Pressed, this, &ASurvivor_PC::PlayerAttack);
+
+	// 캐릭터 견착
+	InputComponent->BindAction(TEXT("Aim"), IE_Pressed, this, &ASurvivor_PC::ToAim);
+	InputComponent->BindAction(TEXT("Aim"), IE_Released, this, &ASurvivor_PC::EndAim);
 }
 
 void ASurvivor_PC::UpDown(float NewAxisValue)
@@ -151,5 +155,21 @@ void ASurvivor_PC::PlayerAttack()
 	if (myCharacter)
 	{
 		myCharacter->PlayerAttack();
+	}
+}
+
+void ASurvivor_PC::ToAim()
+{
+	if (myCharacter)
+	{
+		myCharacter->ToAim();
+	}
+}
+
+void ASurvivor_PC::EndAim()
+{
+	if (myCharacter)
+	{
+		myCharacter->EndAim();
 	}
 }

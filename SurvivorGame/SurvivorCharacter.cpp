@@ -18,11 +18,11 @@ ASurvivorCharacter::ASurvivorCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	//SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 
-	///SpringArm->SetupAttachment(GetMesh());
-	Camera->SetupAttachment(GetMesh());
+	SpringArm->SetupAttachment(GetCapsuleComponent());
+	Camera->SetupAttachment(SpringArm);
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
@@ -191,4 +191,13 @@ void ASurvivorCharacter::PlayerAttack()
 	}
 }
 
+void ASurvivorCharacter::ToAim()
+{
+	Camera->SetRelativeLocation(FVector(450.0f, 0.0f, 50.0f));
+}
+
+void ASurvivorCharacter::EndAim()
+{
+	Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 100.0f));
+}
 

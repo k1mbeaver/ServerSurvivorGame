@@ -49,4 +49,8 @@ private:
 	void StopCrouching();
 
 	void PlayerAttack();
+
+	void ToAim();
+
+	void EndAim();
 };
