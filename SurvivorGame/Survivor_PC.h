@@ -53,4 +53,6 @@ private:
 	void ToAim();
 
 	void EndAim();
+
+	void Reload();
 };

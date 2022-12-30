@@ -176,6 +176,7 @@ void ASurvivorCharacter::Punching()
 void ASurvivorCharacter::OnFire()
 {
 	CharacterAnim->PlayFireMontage();
+	OnEventFire();
 }
 
 void ASurvivorCharacter::PlayerAttack()
@@ -199,5 +200,10 @@ void ASurvivorCharacter::ToAim()
 void ASurvivorCharacter::EndAim()
 {
 	Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 100.0f));
+}
+
+void ASurvivorCharacter::Reload()
+{
+	OnEventReload();
 }
 

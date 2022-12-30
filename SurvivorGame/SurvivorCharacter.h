@@ -70,6 +70,19 @@ public:
 
 	}
 
+	UFUNCTION(BlueprintNativeEvent)
+		void OnEventFire();
+	virtual void OnEventFire_Implementation()
+	{
+
+	}
+
+	UFUNCTION(BlueprintNativeEvent)
+		void OnEventReload();
+	virtual void OnEventReload_Implementation()
+	{
+
+	}
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);
 
@@ -102,4 +115,6 @@ public:
 	void ToAim();
 
 	void EndAim();
+
+	void Reload();
 };
