@@ -6,6 +6,8 @@
 #include "GameFrameWork/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/ChildActorComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "GameFrameWork/CharacterMovementComponent.h"
 #include "Animation/AnimInstance.h"
 #include "PlayerAnimInstance.h"
@@ -41,7 +43,6 @@ ASurvivorCharacter::ASurvivorCharacter()
 
 	CurrentPlayerState = EPlayerState::ALIVE;
 	CurrentWeaponState = EWeaponState::PUNCH;
-
 }
 
 // Called when the game starts or when spawned
