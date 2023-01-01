@@ -54,6 +54,9 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Category = Animation)
 		class UPlayerAnimInstance* CharacterAnim;
 
+	UPROPERTY(BlueprintReadWrite, Category = Weapon)
+		class USkeletalMeshComponent* WeaponMesh;
+
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
 		EPlayerState CurrentPlayerState;
 
