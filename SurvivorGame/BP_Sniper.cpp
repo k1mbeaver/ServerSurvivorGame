@@ -2,6 +2,9 @@
 
 
 #include "BP_Sniper.h"
+#include "GunAnimInstance.h"
+#include "Engine/SkeletalMesh.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 ABP_Sniper::ABP_Sniper()

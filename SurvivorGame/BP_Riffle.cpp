@@ -4,6 +4,7 @@
 #include "BP_Riffle.h"
 #include "GunAnimInstance.h"
 #include "Engine/SkeletalMesh.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 ABP_Riffle::ABP_Riffle()
