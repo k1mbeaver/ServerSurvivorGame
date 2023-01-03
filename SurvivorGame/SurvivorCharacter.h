@@ -37,6 +37,8 @@ private:
 	bool bCanRun;
 	bool bCanCrouching;
 
+	class UMyGameInstance* myGameInstance;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

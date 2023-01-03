@@ -52,7 +52,10 @@ void ASurvivorCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	CharacterAnim = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
+
+	GetMesh()->SetSkeletalMesh(myGameInstance->GetPlayerSkeletalMesh("1"));
 }
 
 // Called every frame

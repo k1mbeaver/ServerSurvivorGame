@@ -7,6 +7,7 @@
 #include "MyGameInstance.generated.h"
 
 struct FItemDataTable;
+struct FPlayerDataTable;
 
 class UDataTable;
 /**
@@ -19,11 +20,25 @@ class SURVIVORGAME_API UMyGameInstance : public UGameInstance
 public:
 	UMyGameInstance();
 
+	// 아이템 값 얻어오기
 	FString GetItemName(FString ItemID);
 	FString GetItemEquipType(FString ItemID);
 	USkeletalMesh* GetItemSkeletalMesh(FString ItemID);
 
+	// 캐릭터 값 얻어오기
+	FString GetPlayerName(FString PlayerID);
+	int GetPlayerKill(FString PlayerID);
+	int GetPlayerDeath(FString PlayerID);
+	void SetPlayerName(FString PlayerID, FString PlayerName);
+	void SetPlayerKill(FString PlayerID, int PlayerKill);
+	void SetPlayerDeath(FString PlayerID, int PlayerDeath);
+	USkeletalMesh* GetPlayerSkeletalMesh(FString PlayerID);
+	void SetPlayerSkeletalMesh(FString PlayerID, USkeletalMesh* PlayerSkeletalMesh);
+
 private:
 	UPROPERTY()
 		UDataTable* FItemFileTable;
+
+	UPROPERTY()
+		UDataTable* FPlayerFileTable;
 };
