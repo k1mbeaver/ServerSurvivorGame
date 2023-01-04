@@ -70,6 +70,36 @@ void ASurvivorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// 캐릭터 이동 함수
+	InputComponent->BindAxis(TEXT("MoveForward"), this, &ASurvivorCharacter::UpDown);
+	InputComponent->BindAxis(TEXT("MoveRight"), this, &ASurvivorCharacter::LeftRight);
+	InputComponent->BindAxis(TEXT("LookUp"), this, &ASurvivorCharacter::LookUp);
+	InputComponent->BindAxis(TEXT("Turn"), this, &ASurvivorCharacter::Turn);
+
+	// 캐릭터 달리기
+	InputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ASurvivorCharacter::Run);
+	InputComponent->BindAction(TEXT("Run"), IE_Released, this, &ASurvivorCharacter::StopRun);
+
+	// 캐릭터 점프
+	InputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ASurvivorCharacter::Jump);
+	InputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ASurvivorCharacter::StopJumping);
+
+	// 캐릭터 앉기
+	InputComponent->BindAction(TEXT("Crouch"), IE_Pressed, this, &ASurvivorCharacter::Crouching);
+	InputComponent->BindAction(TEXT("Crouch"), IE_Released, this, &ASurvivorCharacter::StopCrouching);
+
+	// 캐릭터 아이템 얻기
+	InputComponent->BindAction(TEXT("ItemGet"), IE_Pressed, this, &ASurvivorCharacter::GetItem);
+
+	// 캐릭터 공격
+	InputComponent->BindAction(TEXT("Attack"), IE_Pressed, this, &ASurvivorCharacter::PlayerAttack);
+
+	// 캐릭터 장전
+	InputComponent->BindAction(TEXT("Reload"), IE_Pressed, this, &ASurvivorCharacter::Reload);
+
+	// 캐릭터 견착
+	InputComponent->BindAction(TEXT("Aim"), IE_Pressed, this, &ASurvivorCharacter::ToAim);
+	InputComponent->BindAction(TEXT("Aim"), IE_Released, this, &ASurvivorCharacter::EndAim);
 }
 
 void ASurvivorCharacter::UpDown(float NewAxisValue)

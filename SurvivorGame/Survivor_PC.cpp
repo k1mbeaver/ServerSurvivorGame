@@ -28,6 +28,7 @@ void ASurvivor_PC::PostInitializeComponents()
 	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Possess!"));
 }
 
+/*
 void ASurvivor_PC::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -63,7 +64,7 @@ void ASurvivor_PC::SetupInputComponent()
 	InputComponent->BindAction(TEXT("Aim"), IE_Pressed, this, &ASurvivor_PC::ToAim);
 	InputComponent->BindAction(TEXT("Aim"), IE_Released, this, &ASurvivor_PC::EndAim);
 }
-
+*/
 void ASurvivor_PC::UpDown(float NewAxisValue)
 {
 	if (myCharacter)

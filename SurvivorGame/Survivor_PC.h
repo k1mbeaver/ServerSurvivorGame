@@ -19,7 +19,7 @@ class SURVIVORGAME_API ASurvivor_PC : public APlayerController
 public:
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void PostInitializeComponents() override; // 여기서 빙의되는지 알 수 있음
-	virtual void SetupInputComponent() override;
+	//virtual void SetupInputComponent() override;
 
 private:
 	UPROPERTY()
