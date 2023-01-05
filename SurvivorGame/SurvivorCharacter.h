@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Net/UnrealNetwork.h"
 #include "SurvivorCharacter.generated.h"
 
 UENUM(BlueprintType)
@@ -34,7 +35,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = HiddenMision)
 	bool bCanRun;
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = HiddenMision)
 	bool bCanCrouching;
 
 	class UMyGameInstance* myGameInstance;
@@ -45,6 +48,8 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class USpringArmComponent* SpringArm;

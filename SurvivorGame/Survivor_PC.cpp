@@ -4,6 +4,8 @@
 #include "Survivor_PC.h"
 #include "SurvivorCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ASurvivor_PC::ASurvivor_PC()
 {
@@ -18,6 +20,9 @@ void ASurvivor_PC::OnPossess(APawn* aPawn)
 		myCharacter = Cast<ASurvivorCharacter>(aPawn);
 		//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Success!"));
 		SetInputMode(FInputModeGameOnly());
+
+		bCanRun = true;
+		bCanCrouching = true;
 	}
 }
 
@@ -28,24 +33,24 @@ void ASurvivor_PC::PostInitializeComponents()
 	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Possess!"));
 }
 
-/*
+
 void ASurvivor_PC::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
 	// 캐릭터 이동 함수
-	InputComponent->BindAxis(TEXT("MoveForward"), this, &ASurvivor_PC::UpDown);
-	InputComponent->BindAxis(TEXT("MoveRight"), this, &ASurvivor_PC::LeftRight);
-	InputComponent->BindAxis(TEXT("LookUp"), this, &ASurvivor_PC::LookUp);
-	InputComponent->BindAxis(TEXT("Turn"), this, &ASurvivor_PC::Turn);
+	//InputComponent->BindAxis(TEXT("MoveForward"), this, &ASurvivor_PC::UpDown);
+	//InputComponent->BindAxis(TEXT("MoveRight"), this, &ASurvivor_PC::LeftRight);
+	//InputComponent->BindAxis(TEXT("LookUp"), this, &ASurvivor_PC::LookUp);
+	//InputComponent->BindAxis(TEXT("Turn"), this, &ASurvivor_PC::Turn);
 
-	// 캐릭터 달리기
+	//캐릭터 달리기
 	InputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ASurvivor_PC::Run);
 	InputComponent->BindAction(TEXT("Run"), IE_Released, this, &ASurvivor_PC::StopRun);
 
 	// 캐릭터 점프
-	InputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ASurvivor_PC::Jump);
-	InputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ASurvivor_PC::StopJumping);
+	//InputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ASurvivor_PC::Jump);
+	//InputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ASurvivor_PC::StopJumping);
 
 	// 캐릭터 앉기
 	InputComponent->BindAction(TEXT("Crouch"), IE_Pressed, this, &ASurvivor_PC::Crouching);
@@ -64,7 +69,8 @@ void ASurvivor_PC::SetupInputComponent()
 	InputComponent->BindAction(TEXT("Aim"), IE_Pressed, this, &ASurvivor_PC::ToAim);
 	InputComponent->BindAction(TEXT("Aim"), IE_Released, this, &ASurvivor_PC::EndAim);
 }
-*/
+
+/*
 void ASurvivor_PC::UpDown(float NewAxisValue)
 {
 	if (myCharacter)
@@ -97,21 +103,72 @@ void ASurvivor_PC::Turn(float NewAxisValue)
 		myCharacter->Turn(NewAxisValue);
 	}
 }
+*/
 
 void ASurvivor_PC::Run()
 {
-	if (myCharacter)
+	if (bCanRun == true)
 	{
-		myCharacter->Run();
+		if (myCharacter == nullptr) return;
+
+		myCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+		Server_Run(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_Run_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_Run(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_Run_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 }
 
 void ASurvivor_PC::StopRun()
 {
-	if (myCharacter)
+	if (bCanRun == true)
 	{
-		myCharacter->StopRun();
+		if (myCharacter == nullptr) return;
+
+		myCharacter->GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+		Server_StopRun(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_StopRun_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_StopRun(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_StopRun_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->GetCharacterMovement()->MaxWalkSpeed = 200.0f;
 }
 
 void ASurvivor_PC::Jump()
@@ -184,4 +241,14 @@ void ASurvivor_PC::Reload()
 	{
 		myCharacter->Reload();
 	}
+}
+
+void ASurvivor_PC::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ASurvivor_PC, bCanRun);
+	DOREPLIFETIME(ASurvivor_PC, bCanCrouching); 
+	DOREPLIFETIME(ASurvivor_PC, myCharacter);
+
 }
