@@ -70,6 +70,12 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
 		EWeaponState CurrentWeaponState;
 
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Run)
+		float fCurrentPawnSpeed;
+
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Run)
+		float fSprintPawnSpeed;
+
 public:
 
 	// ¿Ã∫•∆Æ

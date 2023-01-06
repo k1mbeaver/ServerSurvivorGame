@@ -135,7 +135,7 @@ void ASurvivor_PC::Client_Run_Implementation(ASurvivorCharacter* ClientCharacter
 {
 	if (ClientCharacter == nullptr) return;
 
-	ClientCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	ClientCharacter->GetCharacterMovement()->MaxWalkSpeed = ClientCharacter->fSprintPawnSpeed;
 }
 
 void ASurvivor_PC::StopRun()
@@ -144,7 +144,7 @@ void ASurvivor_PC::StopRun()
 	{
 		if (myCharacter == nullptr) return;
 
-		myCharacter->GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+		//myCharacter->GetCharacterMovement()->MaxWalkSpeed = 200.0f;
 		Server_StopRun(myCharacter);
 	}
 }
@@ -168,7 +168,7 @@ void ASurvivor_PC::Client_StopRun_Implementation(ASurvivorCharacter* ClientChara
 {
 	if (ClientCharacter == nullptr) return;
 
-	ClientCharacter->GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+	ClientCharacter->GetCharacterMovement()->MaxWalkSpeed = ClientCharacter->fCurrentPawnSpeed;
 }
 
 void ASurvivor_PC::Jump()

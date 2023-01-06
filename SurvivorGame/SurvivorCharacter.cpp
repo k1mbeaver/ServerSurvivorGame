@@ -43,6 +43,9 @@ ASurvivorCharacter::ASurvivorCharacter()
 	bCanRun = true;
 	bCanCrouching = true;
 
+	fCurrentPawnSpeed = 200.0f;
+	fSprintPawnSpeed = 400.0f;
+
 	CurrentPlayerState = EPlayerState::ALIVE;
 	CurrentWeaponState = EWeaponState::PUNCH;
 }
@@ -250,4 +253,6 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 
 	DOREPLIFETIME(ASurvivorCharacter, bCanRun);
 	DOREPLIFETIME(ASurvivorCharacter, bCanCrouching);
+	DOREPLIFETIME(ASurvivorCharacter, fCurrentPawnSpeed);
+	DOREPLIFETIME(ASurvivorCharacter, fSprintPawnSpeed);
 }
