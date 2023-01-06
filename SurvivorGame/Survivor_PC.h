@@ -64,17 +64,59 @@ private:
 
 	void StopJumping();
 
+	UFUNCTION(Server, Reliable)
+		void Server_GetItem(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_GetItem(ASurvivorCharacter* ClientCharacter);
+
 	void GetItem();
+
+	UFUNCTION(Server, Reliable)
+		void Server_Crouching(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_Crouching(ASurvivorCharacter* ClientCharacter);
 
 	void Crouching();
 
+	UFUNCTION(Server, Reliable)
+		void Server_StopCrouching(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_StopCrouching(ASurvivorCharacter* ClientCharacter);
+
 	void StopCrouching();
+
+	UFUNCTION(Server, Reliable)
+		void Server_PlayerAttack(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_PlayerAttack(ASurvivorCharacter* ClientCharacter);
 
 	void PlayerAttack();
 
+	UFUNCTION(Server, Reliable)
+		void Server_ToAim(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_ToAim(ASurvivorCharacter* ClientCharacter);
+
 	void ToAim();
 
+	UFUNCTION(Server, Reliable)
+		void Server_EndAim(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_EndAim(ASurvivorCharacter* ClientCharacter);
+
 	void EndAim();
+
+	UFUNCTION(Server, Reliable)
+		void Server_Reload(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_Reload(ASurvivorCharacter* ClientCharacter);
 
 	void Reload();
 };

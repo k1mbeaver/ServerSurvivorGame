@@ -18,7 +18,7 @@ void ASurvivor_PC::OnPossess(APawn* aPawn)
 	if (aPawn)
 	{
 		myCharacter = Cast<ASurvivorCharacter>(aPawn);
-		//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Success!"));
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Success!"));
 		SetInputMode(FInputModeGameOnly());
 
 		bCanRun = true;
@@ -111,7 +111,7 @@ void ASurvivor_PC::Run()
 	{
 		if (myCharacter == nullptr) return;
 
-		myCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+		//myCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 		Server_Run(myCharacter);
 	}
 }
@@ -191,56 +191,210 @@ void ASurvivor_PC::Crouching()
 {
 	if (myCharacter)
 	{
-		myCharacter->Crouching();
+		Server_Crouching(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_Crouching_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_Crouching(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_Crouching_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->Crouching();
 }
 
 void ASurvivor_PC::StopCrouching()
 {
 	if (myCharacter)
 	{
-		myCharacter->StopCrouching();
+		Server_StopCrouching(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_StopCrouching_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_StopCrouching(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_StopCrouching_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->StopCrouching();
 }
 
 void ASurvivor_PC::GetItem()
 {
 	if (myCharacter)
 	{
-		myCharacter->GetItem();
+		Server_GetItem(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_GetItem_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_GetItem(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_GetItem_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->GetItem();
 }
 
 void ASurvivor_PC::PlayerAttack()
 {
 	if (myCharacter)
 	{
-		myCharacter->PlayerAttack();
+		Server_PlayerAttack(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_PlayerAttack_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_PlayerAttack(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_PlayerAttack_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->PlayerAttack();
 }
 
 void ASurvivor_PC::ToAim()
 {
 	if (myCharacter)
 	{
-		myCharacter->ToAim();
+		Server_ToAim(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_ToAim_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_ToAim(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_ToAim_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->ToAim();
 }
 
 void ASurvivor_PC::EndAim()
 {
 	if (myCharacter)
 	{
-		myCharacter->EndAim();
+		Server_EndAim(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_EndAim_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_EndAim(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_EndAim_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->EndAim();
 }
 
 void ASurvivor_PC::Reload()
 {
 	if (myCharacter)
 	{
-		myCharacter->Reload();
+		Server_Reload(myCharacter);
 	}
+}
+
+void ASurvivor_PC::Server_Reload_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_Reload(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_Reload_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->Reload();
 }
 
 void ASurvivor_PC::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
