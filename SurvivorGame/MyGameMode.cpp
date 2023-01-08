@@ -21,10 +21,9 @@ AMyGameMode::AMyGameMode()
 	//HUDClass = APlayerUI_HUD::StaticClass();
 }
 
-//void AMyGameMode::PostLogin(APlayerController* NewPlayer)
-//{
-	//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("PostLogin Begin"));
-	//Super::PostLogin(NewPlayer);
-	//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("PostLogin End"));
-
-//}
+void AMyGameMode::PostLogin(APlayerController* NewPlayer)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("PostLogin Begin"));
+	Super::PostLogin(NewPlayer);
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("PostLogin End"));
+}

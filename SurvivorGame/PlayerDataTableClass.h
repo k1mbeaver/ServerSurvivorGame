@@ -24,6 +24,15 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int PlayerDeath;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float PlayerCurrentWalk;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float PlayerCurrentRun;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float PlayerCurrentCrouchWalk;
 };
 UCLASS()
 class SURVIVORGAME_API APlayerDataTableClass : public AActor

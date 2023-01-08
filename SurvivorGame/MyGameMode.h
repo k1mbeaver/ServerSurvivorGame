@@ -17,5 +17,5 @@ class SURVIVORGAME_API AMyGameMode : public AGameMode
 		AMyGameMode();
 
 public:
-	//virtual void PostLogin(APlayerController* NewPlayer) override; // 이과정에서 플레이어 설정이 진행된다.
+	virtual void PostLogin(APlayerController* NewPlayer) override; // 이과정에서 플레이어 설정이 진행된다.
 };
