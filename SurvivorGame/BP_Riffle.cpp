@@ -14,27 +14,19 @@ ABP_Riffle::ABP_Riffle()
 
 	GunSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	GunSkeletalMesh->SetupAttachment(RootComponent);
-	// 여기는 나중에 GameInstance에서 받아오는거로 교체하자
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_EASYMODEL(TEXT("SkeletalMesh'/Game/MilitaryWeapDark/Weapons/Assault_Rifle_B.Assault_Rifle_B'"));
-	if (SK_EASYMODEL.Succeeded())
-	{
-		GunSkeletalMesh->SetSkeletalMesh(SK_EASYMODEL.Object);
-	}
 
-	GunSkeletalMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-
-	static ConstructorHelpers::FClassFinder<UAnimInstance> GUN_ANIM(TEXT("/Game/Animation/RiffleAnimation.RiffleAnimation_C"));
-	if (GUN_ANIM.Succeeded())
-	{
-		GunSkeletalMesh->SetAnimInstanceClass(GUN_ANIM.Class);
-		MyGunAnimInstance = Cast<UGunAnimInstance>(GUN_ANIM.Class);
-	}
+	nCurrentBullet = 30;
+	nDefaultBullet = 30;
 }
 
 // Called when the game starts or when spawned
 void ABP_Riffle::BeginPlay()
 {
 	Super::BeginPlay();
+
+	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+
+	GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh("1"));
 }
 
 // Called every frame
@@ -52,4 +44,13 @@ void ABP_Riffle::OnFire()
 void ABP_Riffle::OnReload()
 {
 	MyGunAnimInstance->IsReload = true;
+}
+
+void ABP_Riffle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ABP_Riffle, nCurrentBullet);
+	DOREPLIFETIME(ABP_Riffle, nDefaultBullet);
+
 }
