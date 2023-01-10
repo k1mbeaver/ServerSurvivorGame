@@ -74,18 +74,18 @@ void ASurvivorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	// 캐릭터 이동 함수
-	InputComponent->BindAxis(TEXT("MoveForward"), this, &ASurvivorCharacter::UpDown);
-	InputComponent->BindAxis(TEXT("MoveRight"), this, &ASurvivorCharacter::LeftRight);
-	InputComponent->BindAxis(TEXT("LookUp"), this, &ASurvivorCharacter::LookUp);
-	InputComponent->BindAxis(TEXT("Turn"), this, &ASurvivorCharacter::Turn);
+	//InputComponent->BindAxis(TEXT("MoveForward"), this, &ASurvivorCharacter::UpDown);
+	//InputComponent->BindAxis(TEXT("MoveRight"), this, &ASurvivorCharacter::LeftRight);
+	//InputComponent->BindAxis(TEXT("LookUp"), this, &ASurvivorCharacter::LookUp);
+	//InputComponent->BindAxis(TEXT("Turn"), this, &ASurvivorCharacter::Turn);
 
 	// 캐릭터 달리기
 	//InputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ASurvivorCharacter::Run);
 	//InputComponent->BindAction(TEXT("Run"), IE_Released, this, &ASurvivorCharacter::StopRun);
 
 	// 캐릭터 점프
-	InputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ASurvivorCharacter::Jump);
-	InputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ASurvivorCharacter::StopJumping);
+	//InputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ASurvivorCharacter::Jump);
+	//InputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ASurvivorCharacter::StopJumping);
 
 	// 캐릭터 앉기
 	//InputComponent->BindAction(TEXT("Crouch"), IE_Pressed, this, &ASurvivorCharacter::Crouching);
@@ -147,7 +147,7 @@ void ASurvivorCharacter::Run()
 {
 	if (bCanRun)
 	{
-		GetCharacterMovement()->MaxWalkSpeed *= 2;
+		GetCharacterMovement()->MaxWalkSpeed = fSprintPawnSpeed;
 		bCanCrouching = false;
 	}
 }
@@ -157,7 +157,7 @@ void ASurvivorCharacter::StopRun()
 {
 	if (bCanRun)
 	{
-		GetCharacterMovement()->MaxWalkSpeed /= 2;
+		GetCharacterMovement()->MaxWalkSpeed = fCurrentPawnSpeed;
 		bCanCrouching = true;
 	}
 }
@@ -255,4 +255,5 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, bCanCrouching);
 	DOREPLIFETIME(ASurvivorCharacter, fCurrentPawnSpeed);
 	DOREPLIFETIME(ASurvivorCharacter, fSprintPawnSpeed);
+	DOREPLIFETIME(ASurvivorCharacter, WeaponMesh);
 }
