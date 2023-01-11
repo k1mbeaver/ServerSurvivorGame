@@ -121,6 +121,9 @@ void ASurvivor_PC::Server_Run_Implementation(ASurvivorCharacter* ClientCharacter
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->Run();
+
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
@@ -156,6 +159,9 @@ void ASurvivor_PC::Server_StopRun_Implementation(ASurvivorCharacter* ClientChara
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->StopRun();
+
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
@@ -203,6 +209,9 @@ void ASurvivor_PC::Server_Crouching_Implementation(ASurvivorCharacter* ClientCha
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->Crouching();
+
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
@@ -233,6 +242,9 @@ void ASurvivor_PC::Server_StopCrouching_Implementation(ASurvivorCharacter* Clien
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->StopCrouching();
+
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
@@ -263,6 +275,9 @@ void ASurvivor_PC::Server_GetItem_Implementation(ASurvivorCharacter* ClientChara
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->GetItem();
+
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
@@ -293,6 +308,9 @@ void ASurvivor_PC::Server_PlayerAttack_Implementation(ASurvivorCharacter* Client
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->PlayerAttack();
+
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
@@ -383,6 +401,9 @@ void ASurvivor_PC::Server_Reload_Implementation(ASurvivorCharacter* ClientCharac
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->Reload();
+
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
