@@ -70,13 +70,11 @@ void ASurvivor_PC::SetupInputComponent()
 	InputComponent->BindAction(TEXT("Aim"), IE_Released, this, &ASurvivor_PC::EndAim);
 }
 
-
 void ASurvivor_PC::UpDown(float NewAxisValue)
 {
 	if (myCharacter)
 	{
 		myCharacter->UpDown(NewAxisValue);
-
 	}
 }
 

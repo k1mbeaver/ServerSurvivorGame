@@ -108,9 +108,11 @@ void ASurvivorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 void ASurvivorCharacter::UpDown(float NewAxisValue)
 {
 	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X);
+	
 	Direction.Z = 0.0f;
 	Direction.Normalize();
 
+	/*
 	if (NewAxisValue < 0)
 	{
 		CharacterAnim->IsBack = true;
@@ -120,16 +122,27 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 	{
 		CharacterAnim->IsBack = false;
 	}
-
+	*/
 	AddMovementInput(Direction, NewAxisValue);
 }
 
 void ASurvivorCharacter::LeftRight(float NewAxisValue)
 {
 	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y);
+
 	Direction.Z = 0.0f;
 	Direction.Normalize();
+	/*
+	if (NewAxisValue > 0)
+	{
+		CharacterAnim->CurrentLeftRight = 1.0f;
+	}
 
+	else
+	{
+		CharacterAnim->CurrentLeftRight = -1.0f;
+	}
+	*/
 	AddMovementInput(Direction, NewAxisValue);
 }
 

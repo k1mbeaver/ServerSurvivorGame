@@ -8,6 +8,7 @@
 UPlayerAnimInstance::UPlayerAnimInstance()
 {
 	CurrentPawnSpeed = 0.0f;
+	CurrentLeftRight = 0.0f;
 	IsInAir = false;
 	IsDead = false;
 	IsAttacking = false;
