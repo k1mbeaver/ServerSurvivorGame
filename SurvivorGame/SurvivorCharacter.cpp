@@ -42,6 +42,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 
 	bCanRun = true;
 	bCanCrouching = true;
+	IsRight = true;
 
 	fCurrentPawnSpeed = 200.0f;
 	fSprintPawnSpeed = 400.0f;
@@ -112,7 +113,7 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 	Direction.Z = 0.0f;
 	Direction.Normalize();
 
-	/*
+	
 	if (NewAxisValue < 0)
 	{
 		CharacterAnim->IsBack = true;
@@ -122,7 +123,7 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 	{
 		CharacterAnim->IsBack = false;
 	}
-	*/
+	
 	AddMovementInput(Direction, NewAxisValue);
 }
 
@@ -132,8 +133,23 @@ void ASurvivorCharacter::LeftRight(float NewAxisValue)
 
 	Direction.Z = 0.0f;
 	Direction.Normalize();
-	/*
+	
 	if (NewAxisValue > 0)
+	{
+		IsRight = true;
+	}
+
+	else
+	{
+		IsRight = false;
+	}
+	
+	AddMovementInput(Direction, NewAxisValue);
+}
+
+void ASurvivorCharacter::GoRightOrLeft()
+{
+	if (IsRight == true)
 	{
 		CharacterAnim->CurrentLeftRight = 1.0f;
 	}
@@ -142,8 +158,11 @@ void ASurvivorCharacter::LeftRight(float NewAxisValue)
 	{
 		CharacterAnim->CurrentLeftRight = -1.0f;
 	}
-	*/
-	AddMovementInput(Direction, NewAxisValue);
+}
+
+void ASurvivorCharacter::StopRightOrLeft()
+{
+	CharacterAnim->CurrentLeftRight = 0;
 }
 
 void ASurvivorCharacter::LookUp(float NewAxisValue)

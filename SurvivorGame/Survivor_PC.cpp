@@ -43,6 +43,8 @@ void ASurvivor_PC::SetupInputComponent()
 	InputComponent->BindAxis(TEXT("MoveRight"), this, &ASurvivor_PC::LeftRight);
 	InputComponent->BindAxis(TEXT("LookUp"), this, &ASurvivor_PC::LookUp);
 	InputComponent->BindAxis(TEXT("Turn"), this, &ASurvivor_PC::Turn);
+	InputComponent->BindAction(TEXT("RightLeft"), IE_Pressed, this, &ASurvivor_PC::GoRightOrLeft);
+	InputComponent->BindAction(TEXT("RightLeft"), IE_Released, this, &ASurvivor_PC::StopRightOrLeft);
 
 	//캐릭터 달리기
 	InputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ASurvivor_PC::Run);
@@ -84,6 +86,76 @@ void ASurvivor_PC::LeftRight(float NewAxisValue)
 	{
 		myCharacter->LeftRight(NewAxisValue);
 	}
+}
+
+void ASurvivor_PC::GoRightOrLeft()
+{
+	if (myCharacter)
+	{
+		myCharacter->GoRightOrLeft();
+		Server_GoRightOrLeft(myCharacter);
+	}
+}
+
+void ASurvivor_PC::Server_GoRightOrLeft_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->GoRightOrLeft();
+
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_GoRightOrLeft(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_GoRightOrLeft_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->GoRightOrLeft();
+	//ClientCharacter->GetCharacterMovement()->MaxWalkSpeed = ClientCharacter->fSprintPawnSpeed;
+}
+
+void ASurvivor_PC::StopRightOrLeft()
+{
+	if (myCharacter)
+	{
+		myCharacter->StopRightOrLeft();
+		Server_StopRightOrLeft(myCharacter);
+	}
+}
+
+void ASurvivor_PC::Server_StopRightOrLeft_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->StopRightOrLeft();
+
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_StopRightOrLeft(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_StopRightOrLeft_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->StopRightOrLeft();
+	//ClientCharacter->GetCharacterMovement()->MaxWalkSpeed = ClientCharacter->fSprintPawnSpeed;
 }
 
 void ASurvivor_PC::LookUp(float NewAxisValue)

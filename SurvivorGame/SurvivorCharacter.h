@@ -76,6 +76,9 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Run)
 		float fSprintPawnSpeed;
 
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Direction)
+		bool IsRight;
+
 public:
 
 	// ¿Ã∫•∆Æ
@@ -103,6 +106,10 @@ public:
 	void UpDown(float NewAxisValue);
 
 	void LeftRight(float NewAxisValue);
+
+	void GoRightOrLeft();
+
+	void StopRightOrLeft();
 
 	void LookUp(float NewAxisValue);
 

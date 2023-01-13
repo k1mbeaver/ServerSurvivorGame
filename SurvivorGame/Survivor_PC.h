@@ -38,6 +38,22 @@ private:
 
 	void LeftRight(float NewAxisValue);
 
+	UFUNCTION(Server, Reliable)
+		void Server_GoRightOrLeft(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_GoRightOrLeft(ASurvivorCharacter* ClientCharacter);
+
+	void GoRightOrLeft();
+
+	UFUNCTION(Server, Reliable)
+		void Server_StopRightOrLeft(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_StopRightOrLeft(ASurvivorCharacter* ClientCharacter);
+
+	void StopRightOrLeft();
+
 	void LookUp(float NewAxisValue);
 
 	void Turn(float NewAxisValue);
