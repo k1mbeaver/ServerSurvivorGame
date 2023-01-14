@@ -76,6 +76,9 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Run)
 		float fSprintPawnSpeed;
 
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Crouch)
+		float fCrouchingPawnSpeed;
+
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Direction)
 		bool IsRight;
 

@@ -46,6 +46,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 
 	fCurrentPawnSpeed = 200.0f;
 	fSprintPawnSpeed = 400.0f;
+	fCrouchingPawnSpeed = 100.0f;
 
 	CurrentPlayerState = EPlayerState::ALIVE;
 	CurrentWeaponState = EWeaponState::PUNCH;
@@ -224,7 +225,7 @@ void ASurvivorCharacter::Crouching()
 {
 	if (bCanCrouching)
 	{
-		GetCharacterMovement()->MaxWalkSpeed /= 2;
+		GetCharacterMovement()->MaxWalkSpeed = fCrouchingPawnSpeed;
 		CharacterAnim->IsCrouching = true;
 		bCanRun = false;
 	}
@@ -234,7 +235,7 @@ void ASurvivorCharacter::StopCrouching()
 {
 	if (bCanCrouching)
 	{
-		GetCharacterMovement()->MaxWalkSpeed *= 2;
+		GetCharacterMovement()->MaxWalkSpeed = fCurrentPawnSpeed;
 		CharacterAnim->IsCrouching = false;
 		bCanRun = true;
 	}
