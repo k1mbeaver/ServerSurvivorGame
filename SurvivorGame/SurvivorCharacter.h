@@ -36,9 +36,13 @@ protected:
 
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = HiddenMision)
-	bool bCanRun;
+		bool bCanRun;
+
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = HiddenMision)
-	bool bCanCrouching;
+		bool bCanCrouching;
+
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = HiddenMision)
+		bool bCanBasicAttack;
 
 	class UMyGameInstance* myGameInstance;
 
