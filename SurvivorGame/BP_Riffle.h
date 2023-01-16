@@ -16,6 +16,9 @@ private:
 	class UGunAnimInstance* MyGunAnimInstance;
 	class UMyGameInstance* MyGameInstance;
 
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = ItemID)
+		FString ItemID = "1";
+
 public:	
 	// Sets default values for this actor's properties
 	ABP_Riffle();

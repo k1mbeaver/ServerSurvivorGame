@@ -10,6 +10,10 @@ UCLASS()
 class SURVIVORGAME_API ABP_Grenade : public AActor
 {
 	GENERATED_BODY()
+
+private:
+	//UPROPERTY(VisibleInstanceOnly, Replicated, Category = ItemID)
+		//FString ItemID = "3";
 	
 public:	
 	// Sets default values for this actor's properties

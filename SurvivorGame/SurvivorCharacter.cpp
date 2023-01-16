@@ -41,6 +41,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 	bCanRun = true;
 	bCanCrouching = true;
 	bCanBasicAttack = true;
+	bCanGetItem = false;
 	IsRight = true;
 
 	fCurrentPawnSpeed = 200.0f;
@@ -82,7 +83,6 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 	Direction.Z = 0.0f;
 	Direction.Normalize();
 
-	
 	if (NewAxisValue < 0)
 	{
 		CharacterAnim->IsBack = true;
@@ -189,6 +189,19 @@ void ASurvivorCharacter::GetItem()
 	}
 }
 
+void ASurvivorCharacter::SetCanGetItem()
+{
+	if (bCanGetItem)
+	{
+		bCanGetItem = false;
+	}
+
+	else
+	{
+		bCanGetItem = true;
+	}
+}
+
 void ASurvivorCharacter::Crouching()
 {
 	if (bCanCrouching)
@@ -258,4 +271,5 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, fSprintPawnSpeed);
 	DOREPLIFETIME(ASurvivorCharacter, WeaponMesh);
 	DOREPLIFETIME(ASurvivorCharacter, bCanBasicAttack);
+	DOREPLIFETIME(ASurvivorCharacter, bCanGetItem);
 }

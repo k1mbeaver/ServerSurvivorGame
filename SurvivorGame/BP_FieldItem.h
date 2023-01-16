@@ -5,38 +5,37 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Net/UnrealNetwork.h"
-#include "BP_Sniper.generated.h"
+#include "BP_FieldItem.generated.h"
 
 UCLASS()
-class SURVIVORGAME_API ABP_Sniper : public AActor
+class SURVIVORGAME_API ABP_FieldItem : public AActor
 {
 	GENERATED_BODY()
 	
 private:
 	class UMyGameInstance* MyGameInstance;
 
-	UPROPERTY(VisibleInstanceOnly, Replicated, Category = ItemID)
-		FString ItemID = "2";
-public:	
+	//UPROPERTY(VisibleInstanceOnly, Replicated, Category = ItemID)
+		//FString ItemID;
+
+public:
 	// Sets default values for this actor's properties
-	ABP_Sniper();
+	ABP_FieldItem();
 
-	class USkeletalMeshComponent* GunSkeletalMesh;
+	class USkeletalMeshComponent* ItemSkeletalMesh;
 
-	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Current)
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Gun)
 		int nCurrentBullet;
 
-	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Default)
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Gun)
 		int nDefaultBullet;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-
-public:	
+	//virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-
 };

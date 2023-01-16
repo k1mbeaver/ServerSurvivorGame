@@ -26,7 +26,7 @@ void ABP_Riffle::BeginPlay()
 
 	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 
-	GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh("1"));
+	GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh(ItemID));
 }
 
 // Called every frame
@@ -52,5 +52,5 @@ void ABP_Riffle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifeti
 
 	DOREPLIFETIME(ABP_Riffle, nCurrentBullet);
 	DOREPLIFETIME(ABP_Riffle, nDefaultBullet);
-
+	DOREPLIFETIME(ABP_Riffle, ItemID);
 }

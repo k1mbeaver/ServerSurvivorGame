@@ -29,7 +29,7 @@ void ABP_Sniper::BeginPlay()
 	
 	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 
-	GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh("2"));
+	GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh(ItemID));
 }
 
 // Called every frame
@@ -45,4 +45,5 @@ void ABP_Sniper::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifeti
 
 	DOREPLIFETIME(ABP_Sniper, nCurrentBullet);
 	DOREPLIFETIME(ABP_Sniper, nDefaultBullet);
+	DOREPLIFETIME(ABP_Sniper, ItemID);
 }

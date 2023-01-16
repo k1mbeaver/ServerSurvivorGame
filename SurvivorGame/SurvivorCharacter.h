@@ -44,6 +44,9 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = HiddenMision)
 		bool bCanBasicAttack;
 
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		bool bCanGetItem;
+
 	class UMyGameInstance* myGameInstance;
 
 public:	
@@ -109,6 +112,10 @@ public:
 	{
 
 	}
+
+	UFUNCTION(BlueprintCallable)
+		void SetCanGetItem();
+
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);
 
