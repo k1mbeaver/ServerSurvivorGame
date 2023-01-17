@@ -54,3 +54,18 @@ void ABP_Riffle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifeti
 	DOREPLIFETIME(ABP_Riffle, nDefaultBullet);
 	DOREPLIFETIME(ABP_Riffle, ItemID);
 }
+
+int ABP_Riffle::GetCurrentBullet()
+{
+	return nCurrentBullet;
+}
+
+int ABP_Riffle::GetDefaultBullet()
+{
+	return nDefaultBullet;
+}
+
+USkeletalMesh* ABP_Riffle::GetSkeletalMesh()
+{
+	return MyGameInstance->GetItemSkeletalMesh(ItemID);
+}

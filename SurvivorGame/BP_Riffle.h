@@ -45,4 +45,13 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void OnReload();
+
+	UFUNCTION(BlueprintCallable)
+		int GetCurrentBullet();
+
+	UFUNCTION(BlueprintCallable)
+		int GetDefaultBullet();
+
+	UFUNCTION(BlueprintCallable)
+		USkeletalMesh* GetSkeletalMesh();
 };
