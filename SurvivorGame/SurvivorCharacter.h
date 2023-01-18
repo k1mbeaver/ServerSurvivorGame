@@ -58,6 +58,9 @@ public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
+	UPROPERTY()
+		class UGameplayStatics* GameStatic;
+
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class USpringArmComponent* SpringArm;
 
@@ -70,6 +73,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Replicated, Category = Weapon)
 		class USkeletalMeshComponent* WeaponMesh;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		USceneComponent* MuzzleLocation;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
 		EPlayerState CurrentPlayerState;

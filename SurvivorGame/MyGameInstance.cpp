@@ -4,6 +4,7 @@
 #include "MyGameInstance.h"
 #include "ItemDataTableClass.h"
 #include "PlayerDataTableClass.h"
+#include "ParticleDataTableClass.h"
 
 UMyGameInstance::UMyGameInstance()
 {
@@ -23,6 +24,15 @@ UMyGameInstance::UMyGameInstance()
 	if (DT_MYPLAYERFILE.Succeeded())
 	{
 		FPlayerFileTable = DT_MYPLAYERFILE.Object;
+	}
+
+	FString ParticleFileDataPath = TEXT("DataTable'/Game/DataTable/ParticleDataTable.ParticleDataTable'");
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MYPARTICLEFILE(*ParticleFileDataPath);
+
+	if (DT_MYPARTICLEFILE.Succeeded())
+	{
+		FParticleFileTable = DT_MYPARTICLEFILE.Object;
 	}
 }
 
@@ -97,4 +107,11 @@ void UMyGameInstance::SetPlayerSkeletalMesh(FString PlayerID, USkeletalMesh* Pla
 {
 	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
 	PlayerData->CurrentPlayerSkeletalMesh = PlayerSkeletalMesh;
+}
+
+UParticleSystem* UMyGameInstance::GetParticle(FString ParticleID)
+{
+	FParticleDataTable* ParticleData = FParticleFileTable->FindRow<FParticleDataTable>(*ParticleID, TEXT(""));
+	UParticleSystem* GetParticleData = ParticleData->MyParticle;
+	return GetParticleData;
 }

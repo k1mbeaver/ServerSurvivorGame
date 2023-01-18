@@ -8,6 +8,7 @@
 
 struct FItemDataTable;
 struct FPlayerDataTable;
+struct FParticleDataTable;
 
 class UDataTable;
 /**
@@ -35,10 +36,17 @@ public:
 	USkeletalMesh* GetPlayerSkeletalMesh(FString PlayerID);
 	void SetPlayerSkeletalMesh(FString PlayerID, USkeletalMesh* PlayerSkeletalMesh);
 
+	// 파티클 값 얻어오기
+
+	UParticleSystem* GetParticle(FString ParticleID);
+
 private:
 	UPROPERTY()
 		UDataTable* FItemFileTable;
 
 	UPROPERTY()
 		UDataTable* FPlayerFileTable;
+
+	UPROPERTY()
+		UDataTable* FParticleFileTable;
 };

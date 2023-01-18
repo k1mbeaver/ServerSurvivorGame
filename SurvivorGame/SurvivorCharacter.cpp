@@ -23,10 +23,14 @@ ASurvivorCharacter::ASurvivorCharacter()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WEAPON"));
+	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 	WeaponMesh->SetupAttachment(GetCapsuleComponent());
+
+	MuzzleLocation->SetupAttachment(WeaponMesh);
+	MuzzleLocation->SetRelativeLocation(FVector(100.0f, 15.0f, 40.0f));
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
@@ -230,6 +234,7 @@ void ASurvivorCharacter::Punching()
 void ASurvivorCharacter::OnFire()
 {
 	CharacterAnim->PlayFireMontage();
+	GameStatic->SpawnEmitterAttached(myGameInstance->GetParticle("Riffle"), MuzzleLocation, FName("MuzzleLocation"));
 	OnEventFire();
 }
 
