@@ -24,6 +24,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USkeletalMesh* ItemSkeletalMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector ParticleMuzzleLocation;
 };
 
 UCLASS()

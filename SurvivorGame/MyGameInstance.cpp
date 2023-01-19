@@ -57,6 +57,13 @@ USkeletalMesh* UMyGameInstance::GetItemSkeletalMesh(FString ItemID)
 	return ItemSkeletalMesh;
 }
 
+FVector UMyGameInstance::GetParticleMuzzleLocation(FString ItemID)
+{
+	FItemDataTable* ItemData = FItemFileTable->FindRow<FItemDataTable>(*ItemID, TEXT(""));
+	FVector ParticleMuzzleLocation = ItemData->ParticleMuzzleLocation;
+	return ParticleMuzzleLocation;
+}
+
 FString UMyGameInstance::GetPlayerName(FString PlayerID)
 {
 	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));

@@ -30,7 +30,6 @@ ASurvivorCharacter::ASurvivorCharacter()
 	WeaponMesh->SetupAttachment(GetCapsuleComponent());
 
 	MuzzleLocation->SetupAttachment(WeaponMesh);
-	MuzzleLocation->SetRelativeLocation(FVector(100.0f, 15.0f, 40.0f));
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
@@ -65,6 +64,9 @@ void ASurvivorCharacter::BeginPlay()
 	CharacterAnim = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
 
 	GetMesh()->SetSkeletalMesh(myGameInstance->GetPlayerSkeletalMesh("1"));
+
+	// 여기다가 아이템의 MuzzleLocation 값을 얻어와서 적용하자
+	MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("Riffle"));
 }
 
 // Called every frame
