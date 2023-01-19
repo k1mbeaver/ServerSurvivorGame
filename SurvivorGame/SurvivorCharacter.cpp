@@ -66,7 +66,11 @@ void ASurvivorCharacter::BeginPlay()
 	GetMesh()->SetSkeletalMesh(myGameInstance->GetPlayerSkeletalMesh("1"));
 
 	// 여기다가 아이템의 MuzzleLocation 값을 얻어와서 적용하자
-	MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("Riffle"));
+	MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("1"));
+
+	// 테스트 전용입니다
+	CharacterAnim->IsFire = true;
+	CurrentWeaponState = EWeaponState::SHOOT;
 }
 
 // Called every frame
