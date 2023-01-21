@@ -74,7 +74,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, Replicated, Category = Weapon)
 		class USkeletalMeshComponent* WeaponMesh;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class ASurvivorGameProjectile> ProjectileClass;
+
+	UPROPERTY(BlueprintReadOnly, Category = Mesh)
 		USceneComponent* MuzzleLocation;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)

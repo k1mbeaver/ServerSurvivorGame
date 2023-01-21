@@ -13,6 +13,7 @@
 #include "PlayerAnimInstance.h"
 #include "Survivor_PC.h"
 #include "MyGameInstance.h"
+#include "SurvivorGameProjectile.h"
 #include "MyGameMode.h"
 
 // Sets default values
@@ -241,7 +242,7 @@ void ASurvivorCharacter::OnFire()
 {
 	CharacterAnim->PlayFireMontage();
 	GameStatic->SpawnEmitterAttached(myGameInstance->GetParticle("Riffle"), MuzzleLocation, FName("MuzzleLocation"));
-	OnEventFire();
+	OnEventFire(); // 이벤트를 받아서 블루프린트에서 총 발사하는거 설정
 }
 
 void ASurvivorCharacter::PlayerAttack()

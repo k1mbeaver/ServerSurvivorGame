@@ -9,6 +9,7 @@
 struct FItemDataTable;
 struct FPlayerDataTable;
 struct FParticleDataTable;
+struct FProjectileDataTable;
 
 class UDataTable;
 /**
@@ -41,6 +42,12 @@ public:
 
 	UParticleSystem* GetParticle(FString ParticleID);
 
+	// Projectile 값 얻어오기
+
+	UStaticMesh* GetProjectileStaticMesh(FString ProjectileID);
+	float GetProjectilePower(FString ProjectileID);
+	float GetProjectileSpeed(FString ProjectileID);
+
 private:
 	UPROPERTY()
 		UDataTable* FItemFileTable;
@@ -50,4 +57,7 @@ private:
 
 	UPROPERTY()
 		UDataTable* FParticleFileTable;
+
+	UPROPERTY()
+		UDataTable* FProjectileFileTable;
 };

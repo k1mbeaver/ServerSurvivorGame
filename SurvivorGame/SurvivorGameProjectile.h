@@ -18,6 +18,10 @@ class ASurvivorGameProjectile : public AActor
 	UPROPERTY(VisibleDefaultsOnly, Category=Projectile)
 	USphereComponent* CollisionComp;
 
+	/** Sphere collision component */
+	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
+		UStaticMeshComponent* ProjectileStaticMesh;
+
 	/** Projectile movement component */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
@@ -29,9 +33,22 @@ public:
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
+private:
+	class UMyGameInstance* myGameInstance;
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:
 	/** Returns CollisionComp subobject **/
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
+		float ProjectilePower;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
+		float ProjectileSpeed;
 };
 

@@ -3,6 +3,8 @@
 #include "SurvivorGameProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "MyGameInstance.h"
 
 ASurvivorGameProjectile::ASurvivorGameProjectile() 
 {
@@ -19,6 +21,8 @@ ASurvivorGameProjectile::ASurvivorGameProjectile()
 	// Set as root component
 	RootComponent = CollisionComp;
 
+	ProjectileStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
@@ -29,6 +33,17 @@ ASurvivorGameProjectile::ASurvivorGameProjectile()
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
+}
+
+void ASurvivorGameProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+
+	myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+
+	ProjectileStaticMesh->SetStaticMesh(myGameInstance->GetProjectileStaticMesh("Riffle"));
+	ProjectilePower = myGameInstance->GetProjectilePower("Riffle");
+	ProjectileSpeed = myGameInstance->GetProjectileSpeed("Riffle");
 }
 
 void ASurvivorGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)

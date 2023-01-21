@@ -5,6 +5,7 @@
 #include "ItemDataTableClass.h"
 #include "PlayerDataTableClass.h"
 #include "ParticleDataTableClass.h"
+#include "ProjectileDataTableClass.h"
 
 UMyGameInstance::UMyGameInstance()
 {
@@ -33,6 +34,15 @@ UMyGameInstance::UMyGameInstance()
 	if (DT_MYPARTICLEFILE.Succeeded())
 	{
 		FParticleFileTable = DT_MYPARTICLEFILE.Object;
+	}
+
+	FString ProjectileFileDataPath = TEXT("DataTable'/Game/DataTable/ProjectileDataTable.ProjectileDataTable'");
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MYPROJECTILEFILE(*ProjectileFileDataPath);
+
+	if (DT_MYPROJECTILEFILE.Succeeded())
+	{
+		FProjectileFileTable = DT_MYPROJECTILEFILE.Object;
 	}
 }
 
@@ -121,4 +131,25 @@ UParticleSystem* UMyGameInstance::GetParticle(FString ParticleID)
 	FParticleDataTable* ParticleData = FParticleFileTable->FindRow<FParticleDataTable>(*ParticleID, TEXT(""));
 	UParticleSystem* GetParticleData = ParticleData->MyParticle;
 	return GetParticleData;
+}
+
+UStaticMesh* UMyGameInstance::GetProjectileStaticMesh(FString ProjectileID)
+{
+	FProjectileDataTable* ProjectileData = FProjectileFileTable->FindRow<FProjectileDataTable>(*ProjectileID, TEXT(""));
+	UStaticMesh* GetProjectileData = ProjectileData->ProjectileMesh;
+	return GetProjectileData;
+}
+
+float UMyGameInstance::GetProjectilePower(FString ProjectileID)
+{
+	FProjectileDataTable* ProjectileData = FProjectileFileTable->FindRow<FProjectileDataTable>(*ProjectileID, TEXT(""));
+	float GetProjectileData = ProjectileData->ProjectilePower;
+	return GetProjectileData;
+}
+
+float UMyGameInstance::GetProjectileSpeed(FString ProjectileID)
+{
+	FProjectileDataTable* ProjectileData = FProjectileFileTable->FindRow<FProjectileDataTable>(*ProjectileID, TEXT(""));
+	float GetProjectileData = ProjectileData->ProjectileSpeed;
+	return GetProjectileData;
 }
