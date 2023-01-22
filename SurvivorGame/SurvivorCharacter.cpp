@@ -213,6 +213,11 @@ void ASurvivorCharacter::SetCanGetItem()
 	}
 }
 
+TSubclassOf<class ASurvivorGameProjectile> ASurvivorCharacter::GetProjectileClass()
+{
+	return ProjectileClass;
+}
+
 void ASurvivorCharacter::Crouching()
 {
 	if (bCanCrouching)

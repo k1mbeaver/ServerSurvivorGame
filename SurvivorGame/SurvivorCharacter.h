@@ -125,6 +125,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SetCanGetItem();
 
+	UFUNCTION(BlueprintCallable)
+		TSubclassOf<class ASurvivorGameProjectile> GetProjectileClass();
+
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);
 
