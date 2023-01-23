@@ -98,6 +98,9 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Direction)
 		bool IsRight;
 
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Projectile)
+		int nProjectileMagazine;
+
 public:
 
 	// ¿Ã∫•∆Æ

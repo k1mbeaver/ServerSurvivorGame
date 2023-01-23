@@ -21,6 +21,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float ProjectileSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int ProjectileMagazine;
 };
 
 UCLASS()

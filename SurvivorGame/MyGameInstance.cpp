@@ -153,3 +153,10 @@ float UMyGameInstance::GetProjectileSpeed(FString ProjectileID)
 	float GetProjectileData = ProjectileData->ProjectileSpeed;
 	return GetProjectileData;
 }
+
+int UMyGameInstance::GetProjectileMagazine(FString ProjectileID)
+{
+	FProjectileDataTable* ProjectileData = FProjectileFileTable->FindRow<FProjectileDataTable>(*ProjectileID, TEXT(""));
+	int GetProjectileData = ProjectileData->ProjectileMagazine;
+	return GetProjectileData;
+}

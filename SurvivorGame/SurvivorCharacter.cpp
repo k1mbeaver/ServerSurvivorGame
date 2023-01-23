@@ -52,6 +52,8 @@ ASurvivorCharacter::ASurvivorCharacter()
 	fSprintPawnSpeed = 400.0f;
 	fCrouchingPawnSpeed = 100.0f;
 
+	nProjectileMagazine = 0;
+
 	CurrentPlayerState = EPlayerState::ALIVE;
 	CurrentWeaponState = EWeaponState::PUNCH;
 }
@@ -190,6 +192,8 @@ void ASurvivorCharacter::GetItem()
 	{
 		CurrentWeaponState = EWeaponState::SHOOT;
 		CharacterAnim->IsFire = true;
+
+		nProjectileMagazine = myGameInstance->GetProjectileMagazine("Riffle");
 		OnWeaponEquip();
 	}
 
@@ -245,6 +249,11 @@ void ASurvivorCharacter::Punching()
 
 void ASurvivorCharacter::OnFire()
 {
+	if (nProjectileMagazine <= 0)
+	{
+		return;
+	}
+
 	CharacterAnim->PlayFireMontage();
 	GameStatic->SpawnEmitterAttached(myGameInstance->GetParticle("Riffle"), MuzzleLocation, FName("MuzzleLocation"));
 	OnEventFire(); // 이벤트를 받아서 블루프린트에서 총 발사하는거 설정

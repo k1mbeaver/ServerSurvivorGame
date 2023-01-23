@@ -47,6 +47,7 @@ public:
 	UStaticMesh* GetProjectileStaticMesh(FString ProjectileID);
 	float GetProjectilePower(FString ProjectileID);
 	float GetProjectileSpeed(FString ProjectileID);
+	int GetProjectileMagazine(FString ProjectileID);
 
 private:
 	UPROPERTY()
