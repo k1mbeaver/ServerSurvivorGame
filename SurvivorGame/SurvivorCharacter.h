@@ -101,6 +101,12 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Projectile)
 		int nProjectileMagazine;
 
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Projectile)
+		int nDefaultMagazine;
+
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Projectile)
+		int nCurrentMagazine;
+
 public:
 
 	// ¿Ã∫•∆Æ

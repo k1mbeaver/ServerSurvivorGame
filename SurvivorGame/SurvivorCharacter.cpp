@@ -52,7 +52,9 @@ ASurvivorCharacter::ASurvivorCharacter()
 	fSprintPawnSpeed = 400.0f;
 	fCrouchingPawnSpeed = 100.0f;
 
-	nProjectileMagazine = 0;
+	nProjectileMagazine = 0; // 소모할 탄창
+	nDefaultMagazine = 0; // 갖게될 총의 디폴트 총알 갯수 예) 저격총 = 5발, 라이플 = 30발
+	nCurrentMagazine = 0; // 현재 소유하고 있는 총알의 갯수
 
 	CurrentPlayerState = EPlayerState::ALIVE;
 	CurrentWeaponState = EWeaponState::PUNCH;
@@ -194,6 +196,8 @@ void ASurvivorCharacter::GetItem()
 		CharacterAnim->IsFire = true;
 
 		nProjectileMagazine = myGameInstance->GetProjectileMagazine("Riffle");
+		nDefaultMagazine = myGameInstance->GetProjectileMagazine("Riffle");
+
 		OnWeaponEquip();
 	}
 
@@ -285,6 +289,25 @@ void ASurvivorCharacter::EndAim()
 void ASurvivorCharacter::Reload()
 {
 	OnEventReload();
+
+	if (nCurrentMagazine < 0)
+	{
+		return;
+	}
+
+	else if(nCurrentMagazine < nDefaultMagazine)
+	{
+		nCurrentMagazine = 0;
+
+		nProjectileMagazine = nCurrentMagazine;
+	}
+
+	else if (nCurrentMagazine > nDefaultMagazine)
+	{
+		nCurrentMagazine = nCurrentMagazine - nDefaultMagazine;
+
+		nProjectileMagazine = nDefaultMagazine;
+	}
 }
 
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
