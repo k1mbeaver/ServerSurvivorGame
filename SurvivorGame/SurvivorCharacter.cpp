@@ -52,7 +52,9 @@ ASurvivorCharacter::ASurvivorCharacter()
 	fSprintPawnSpeed = 400.0f;
 	fCrouchingPawnSpeed = 100.0f;
 
-	nProjectileMagazine = 0; // 소모할 탄창
+	GunOffset = FVector(200.0f, 0.0f, 10.0f);
+
+	nProjectileMagazine = 30; // 소모할 탄창
 	nDefaultMagazine = 0; // 갖게될 총의 디폴트 총알 갯수 예) 저격총 = 5발, 라이플 = 30발
 	nCurrentMagazine = 0; // 현재 소유하고 있는 총알의 갯수
 
@@ -72,6 +74,7 @@ void ASurvivorCharacter::BeginPlay()
 
 	// 여기다가 아이템의 MuzzleLocation 값을 얻어와서 적용하자
 	MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("1"));
+	GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
 
 	// 테스트 전용입니다
 	CharacterAnim->IsFire = true;
@@ -258,9 +261,40 @@ void ASurvivorCharacter::OnFire()
 		return;
 	}
 
+	// try and fire a projectile
+	if (ProjectileClass != nullptr)
+	{
+		UWorld* const World = GetWorld();
+
+		if (World != nullptr)
+		{
+			/*
+			if (bUsingMotionControllers)
+			{
+				const FRotator SpawnRotation = VR_MuzzleLocation->GetComponentRotation();
+				const FVector SpawnLocation = VR_MuzzleLocation->GetComponentLocation();
+				World->SpawnActor<ASurvivorGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+			}
+			*/
+
+			const FRotator SpawnRotation = GetControlRotation();
+			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+			const FVector SpawnLocation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
+
+			//Set Spawn Collision Handling Override
+			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+			// spawn the projectile at the muzzle
+			World->SpawnActor<ASurvivorGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+		}
+	}
+
 	CharacterAnim->PlayFireMontage();
 	GameStatic->SpawnEmitterAttached(myGameInstance->GetParticle("Riffle"), MuzzleLocation, FName("MuzzleLocation"));
-	OnEventFire(); // 이벤트를 받아서 블루프린트에서 총 발사하는거 설정
+
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ProjectileStart!!"));
+	//OnEventFire(); // 이벤트를 받아서 블루프린트에서 총 발사하는거 설정
 }
 
 void ASurvivorCharacter::PlayerAttack()

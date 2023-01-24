@@ -77,6 +77,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class ASurvivorGameProjectile> ProjectileClass;
 
+	/** Gun muzzle's offset from the characters location */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+		FVector GunOffset;
+
 	UPROPERTY(BlueprintReadOnly, Category = Mesh)
 		USceneComponent* MuzzleLocation;
 

@@ -26,24 +26,13 @@ ASurvivorGameProjectile::ASurvivorGameProjectile()
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
-	ProjectileMovement->InitialSpeed = 3000.f;
-	ProjectileMovement->MaxSpeed = 3000.f;
+	ProjectileMovement->InitialSpeed = 5000.f;
+	ProjectileMovement->MaxSpeed = 5000.f;
 	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->bShouldBounce = true;
+	ProjectileMovement->bShouldBounce = false;
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
-}
-
-void ASurvivorGameProjectile::BeginPlay()
-{
-	Super::BeginPlay();
-
-	myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
-
-	ProjectileStaticMesh->SetStaticMesh(myGameInstance->GetProjectileStaticMesh("Riffle"));
-	ProjectilePower = myGameInstance->GetProjectilePower("Riffle");
-	ProjectileSpeed = myGameInstance->GetProjectileSpeed("Riffle");
 }
 
 void ASurvivorGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -52,6 +41,8 @@ void ASurvivorGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics())
 	{
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ProjectileDestroy!!"));
 
 		Destroy();
 	}
