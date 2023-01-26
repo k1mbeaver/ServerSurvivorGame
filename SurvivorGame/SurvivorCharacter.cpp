@@ -277,9 +277,11 @@ void ASurvivorCharacter::OnFire()
 			}
 			*/
 
-			const FRotator SpawnRotation = GetControlRotation();
+			const FRotator SpawnRotation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentRotation() : GetActorRotation());
+				//GetControlRotation();
 			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-			const FVector SpawnLocation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
+			const FVector SpawnLocation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentLocation() : GetActorLocation());
+			//  + SpawnRotation.RotateVector(GunOffset)
 
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters ActorSpawnParams;
@@ -353,6 +355,8 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, fCurrentPawnSpeed);
 	DOREPLIFETIME(ASurvivorCharacter, fSprintPawnSpeed);
 	DOREPLIFETIME(ASurvivorCharacter, WeaponMesh);
+	DOREPLIFETIME(ASurvivorCharacter, MuzzleLocation);
+	DOREPLIFETIME(ASurvivorCharacter, GunOffset);
 	DOREPLIFETIME(ASurvivorCharacter, bCanBasicAttack);
 	DOREPLIFETIME(ASurvivorCharacter, bCanGetItem);
 }
