@@ -74,6 +74,7 @@ void ASurvivorCharacter::BeginPlay()
 
 	// 여기다가 아이템의 MuzzleLocation 값을 얻어와서 적용하자
 	MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("1"));
+	MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
 	GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
 
 	// 테스트 전용입니다
@@ -277,10 +278,12 @@ void ASurvivorCharacter::OnFire()
 			}
 			*/
 
-			const FRotator SpawnRotation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentRotation() : GetActorRotation());
+			const FRotator SpawnRotation = MuzzleLocation->GetComponentRotation();
+				//((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentRotation() : GetActorRotation());
 				//GetControlRotation();
 			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-			const FVector SpawnLocation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentLocation() : GetActorLocation());
+			const FVector SpawnLocation = MuzzleLocation->GetComponentLocation();
+				//((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentLocation() : GetActorLocation());
 			//  + SpawnRotation.RotateVector(GunOffset)
 
 			//Set Spawn Collision Handling Override
@@ -325,6 +328,8 @@ void ASurvivorCharacter::EndAim()
 void ASurvivorCharacter::Reload()
 {
 	OnEventReload();
+
+	CharacterAnim->PlayReloadMontage();
 
 	if (nCurrentMagazine < 0)
 	{

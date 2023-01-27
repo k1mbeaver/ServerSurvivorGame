@@ -15,6 +15,7 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 	IsBack = false;
 	IsCrouching = false;
 	IsFire = false;
+	IsReload = false;
 
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> ATTACK_MONTAGE(TEXT("AnimMontage'/Game/Animation/fbx/CrossPunch4UE4_Montage.CrossPunch4UE4_Montage'"));
 	if (ATTACK_MONTAGE.Succeeded())
@@ -26,6 +27,12 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 	if (FIRE_MONTAGE.Succeeded())
 	{
 		FireMontage = FIRE_MONTAGE.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> RELOAD_MONTAGE(TEXT("AnimMontage'/Game/Animation/fbx/Reloading4UE4_Montage.Reloading4UE4_Montage'"));
+	if (RELOAD_MONTAGE.Succeeded())
+	{
+		ReloadMontage = RELOAD_MONTAGE.Object;
 	}
 }
 
@@ -56,6 +63,12 @@ void UPlayerAnimInstance::PlayFireMontage()
 {
 	Montage_Play(FireMontage, 2.0f);
 }
+
+void UPlayerAnimInstance::PlayReloadMontage()
+{
+	Montage_Play(ReloadMontage, 1.0f);
+}
+
 
 void UPlayerAnimInstance::SetDeadAnim()
 {
