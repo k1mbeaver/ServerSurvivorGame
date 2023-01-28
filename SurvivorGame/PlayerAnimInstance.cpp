@@ -74,3 +74,8 @@ void UPlayerAnimInstance::SetDeadAnim()
 {
 	IsDead = true;
 }
+
+void UPlayerAnimInstance::AnimNotify_ReloadEnd()
+{
+	ReloadEnd_Reload.Broadcast();
+}

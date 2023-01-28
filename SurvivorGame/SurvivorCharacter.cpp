@@ -77,6 +77,9 @@ void ASurvivorCharacter::BeginPlay()
 	MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
 	GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
 
+	// AnimNotify
+	CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
+
 	// 테스트 전용입니다
 	CharacterAnim->IsFire = true;
 	CurrentWeaponState = EWeaponState::SHOOT;
@@ -262,6 +265,9 @@ void ASurvivorCharacter::OnFire()
 		return;
 	}
 
+	// 탄알의 갯수를 줄인다.
+	nProjectileMagazine--;
+
 	// try and fire a projectile
 	if (ProjectileClass != nullptr)
 	{
@@ -330,13 +336,16 @@ void ASurvivorCharacter::Reload()
 	OnEventReload();
 
 	CharacterAnim->PlayReloadMontage();
+}
 
+void ASurvivorCharacter::ReloadEnd()
+{
 	if (nCurrentMagazine < 0)
 	{
 		return;
 	}
 
-	else if(nCurrentMagazine < nDefaultMagazine)
+	else if (nCurrentMagazine < nDefaultMagazine)
 	{
 		nCurrentMagazine = 0;
 

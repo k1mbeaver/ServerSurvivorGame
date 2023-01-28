@@ -179,4 +179,6 @@ public:
 	void EndAim();
 
 	void Reload();
+
+	void ReloadEnd();
 };

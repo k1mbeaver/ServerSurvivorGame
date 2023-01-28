@@ -6,6 +6,8 @@
 #include "Animation/AnimInstance.h"
 #include "PlayerAnimInstance.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FReloadEnd_ReloadDelegate); // АјАн
+
 /**
  * 
  */
@@ -61,4 +63,11 @@ public:
 
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		float CurrentLeftRight;
+
+private:
+	UFUNCTION()
+		void AnimNotify_ReloadEnd();
+
+public:
+	FReloadEnd_ReloadDelegate ReloadEnd_Reload;
 };
