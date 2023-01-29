@@ -54,7 +54,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 
 	GunOffset = FVector(200.0f, 0.0f, 10.0f);
 
-	nProjectileMagazine = 30; // 소모할 탄창
+	nProjectileMagazine = 0; // 소모할 탄창
 	nDefaultMagazine = 0; // 갖게될 총의 디폴트 총알 갯수 예) 저격총 = 5발, 라이플 = 30발
 	nCurrentMagazine = 0; // 현재 소유하고 있는 총알의 갯수
 
@@ -82,6 +82,8 @@ void ASurvivorCharacter::BeginPlay()
 
 	// 테스트 전용입니다
 	CharacterAnim->IsFire = true;
+	nProjectileMagazine = 30;
+	nCurrentMagazine = 30;
 	CurrentWeaponState = EWeaponState::SHOOT;
 }
 
@@ -205,6 +207,8 @@ void ASurvivorCharacter::GetItem()
 		nProjectileMagazine = myGameInstance->GetProjectileMagazine("Riffle");
 		nDefaultMagazine = myGameInstance->GetProjectileMagazine("Riffle");
 
+		// nCurrentMagazine 나중에 탄 아이템 획득할 때 여기다가 추가
+
 		OnWeaponEquip();
 	}
 
@@ -260,7 +264,7 @@ void ASurvivorCharacter::Punching()
 
 void ASurvivorCharacter::OnFire()
 {
-	if (nProjectileMagazine <= 0)
+	if (nProjectileMagazine < 1)
 	{
 		return;
 	}
@@ -333,6 +337,11 @@ void ASurvivorCharacter::EndAim()
 
 void ASurvivorCharacter::Reload()
 {
+	if (nCurrentMagazine <= 0) // 현재 소유중인 해당 총알의 갯수가 0보다 작으면
+	{
+		return;
+	}
+
 	OnEventReload();
 
 	CharacterAnim->PlayReloadMontage();
@@ -340,24 +349,16 @@ void ASurvivorCharacter::Reload()
 
 void ASurvivorCharacter::ReloadEnd()
 {
-	if (nCurrentMagazine < 0)
-	{
-		return;
-	}
-
-	else if (nCurrentMagazine < nDefaultMagazine)
+	if (nCurrentMagazine < nDefaultMagazine) // 
 	{
 		nCurrentMagazine = 0;
 
 		nProjectileMagazine = nCurrentMagazine;
+		return;
 	}
 
-	else if (nCurrentMagazine > nDefaultMagazine)
-	{
-		nCurrentMagazine = nCurrentMagazine - nDefaultMagazine;
-
-		nProjectileMagazine = nDefaultMagazine;
-	}
+	nCurrentMagazine = nCurrentMagazine - nDefaultMagazine;
+	nProjectileMagazine = nDefaultMagazine;
 }
 
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
