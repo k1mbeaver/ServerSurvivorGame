@@ -135,4 +135,12 @@ private:
 		void Client_Reload(ASurvivorCharacter* ClientCharacter);
 
 	void Reload();
+
+	UFUNCTION(Server, Reliable)
+		void Server_ReloadEnd(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_ReloadEnd(ASurvivorCharacter* ClientCharacter);
+
+	void ReloadEnd();
 };

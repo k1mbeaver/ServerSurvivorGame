@@ -5,6 +5,7 @@
 #include "SurvivorCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "PlayerAnimInstance.h"
 #include "Kismet/KismetMathLibrary.h"
 
 ASurvivor_PC::ASurvivor_PC()
@@ -23,6 +24,8 @@ void ASurvivor_PC::OnPossess(APawn* aPawn)
 
 		bCanRun = true;
 		bCanCrouching = true;
+
+		myCharacter->CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivor_PC::ReloadEnd);
 	}
 }
 
@@ -489,6 +492,39 @@ void ASurvivor_PC::Client_Reload_Implementation(ASurvivorCharacter* ClientCharac
 	if (ClientCharacter == nullptr) return;
 
 	ClientCharacter->Reload();
+}
+
+void ASurvivor_PC::ReloadEnd()
+{
+	if (myCharacter)
+	{
+		Server_ReloadEnd(myCharacter);
+	}
+}
+
+void ASurvivor_PC::Server_ReloadEnd_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->ReloadEnd();
+
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_ReloadEnd(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_ReloadEnd_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->ReloadEnd();
 }
 
 void ASurvivor_PC::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -78,7 +78,7 @@ void ASurvivorCharacter::BeginPlay()
 	GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
 
 	// AnimNotify
-	CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
+	//CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
 
 	// 테스트 전용입니다
 	CharacterAnim->IsFire = true;
@@ -351,11 +351,14 @@ void ASurvivorCharacter::ReloadEnd()
 {
 	if (nCurrentMagazine < nDefaultMagazine) // 
 	{
-		nCurrentMagazine = 0;
-
 		nProjectileMagazine = nCurrentMagazine;
+
+		nCurrentMagazine = 0;
 		return;
 	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ReloadEnd!!"));
+
 
 	nCurrentMagazine = nCurrentMagazine - nDefaultMagazine;
 	nProjectileMagazine = nDefaultMagazine;
@@ -374,4 +377,7 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, GunOffset);
 	DOREPLIFETIME(ASurvivorCharacter, bCanBasicAttack);
 	DOREPLIFETIME(ASurvivorCharacter, bCanGetItem);
+	DOREPLIFETIME(ASurvivorCharacter, nCurrentMagazine);
+	DOREPLIFETIME(ASurvivorCharacter, nDefaultMagazine);
+	DOREPLIFETIME(ASurvivorCharacter, nProjectileMagazine);
 }
