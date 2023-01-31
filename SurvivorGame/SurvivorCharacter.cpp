@@ -361,7 +361,7 @@ void ASurvivorCharacter::ReloadEnd()
 
 
 	nCurrentMagazine = nCurrentMagazine - nDefaultMagazine;
-	nProjectileMagazine = nDefaultMagazine;
+	nProjectileMagazine = 30; // nDefaultMagazine 나중에 UI 작업할 때 같이 편집
 }
 
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
