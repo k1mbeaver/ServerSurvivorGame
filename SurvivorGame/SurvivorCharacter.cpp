@@ -364,6 +364,11 @@ void ASurvivorCharacter::ReloadEnd()
 	nProjectileMagazine = 30; // nDefaultMagazine 나중에 UI 작업할 때 같이 편집
 }
 
+void ASurvivorCharacter::SetDead()
+{
+	CharacterAnim->SetDeadAnim();
+}
+
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

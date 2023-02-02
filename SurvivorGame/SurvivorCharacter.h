@@ -139,6 +139,9 @@ public:
 		void SetCanGetItem();
 
 	UFUNCTION(BlueprintCallable)
+		void SetDead();
+
+	UFUNCTION(BlueprintCallable)
 		TSubclassOf<class ASurvivorGameProjectile> GetProjectileClass();
 
 	// ÇÔ¼ö
