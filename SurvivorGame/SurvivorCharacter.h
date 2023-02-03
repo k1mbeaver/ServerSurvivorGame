@@ -47,6 +47,9 @@ private:
 	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		bool bCanGetItem;
 
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		float PlayerHP;
+
 	class UMyGameInstance* myGameInstance;
 
 public:	
@@ -140,6 +143,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void SetDead();
+
+	UFUNCTION(BlueprintCallable)
+		void GetDamage(float fDamage);
 
 	UFUNCTION(BlueprintCallable)
 		TSubclassOf<class ASurvivorGameProjectile> GetProjectileClass();

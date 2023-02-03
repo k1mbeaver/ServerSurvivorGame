@@ -47,3 +47,10 @@ void ASurvivorGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 		Destroy();
 	}
 }
+
+float ASurvivorGameProjectile::GetBulletDamage()
+{
+	myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	ProjectilePower = myGameInstance->GetProjectilePower("1");
+	return ProjectilePower;
+}

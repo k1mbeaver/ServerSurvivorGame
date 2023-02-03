@@ -51,6 +51,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 	fCurrentPawnSpeed = 200.0f;
 	fSprintPawnSpeed = 400.0f;
 	fCrouchingPawnSpeed = 100.0f;
+	PlayerHP = 200.0f;
 
 	GunOffset = FVector(200.0f, 0.0f, 10.0f);
 
@@ -369,6 +370,11 @@ void ASurvivorCharacter::SetDead()
 	CharacterAnim->SetDeadAnim();
 }
 
+void ASurvivorCharacter::GetDamage(float fDamage)
+{
+	PlayerHP = PlayerHP - fDamage;
+}
+
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -385,4 +391,5 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, nCurrentMagazine);
 	DOREPLIFETIME(ASurvivorCharacter, nDefaultMagazine);
 	DOREPLIFETIME(ASurvivorCharacter, nProjectileMagazine);
+	DOREPLIFETIME(ASurvivorCharacter, PlayerHP);
 }
