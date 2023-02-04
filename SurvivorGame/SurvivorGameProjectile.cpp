@@ -4,6 +4,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "SurvivorCharacter.h"
 #include "MyGameInstance.h"
 
 ASurvivorGameProjectile::ASurvivorGameProjectile() 
@@ -35,9 +36,40 @@ ASurvivorGameProjectile::ASurvivorGameProjectile()
 	InitialLifeSpan = 3.0f;
 }
 
+void ASurvivorGameProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+
+	myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	ProjectilePower = myGameInstance->GetProjectilePower("Riffle");
+	ProjectileSpeed = myGameInstance->GetProjectileSpeed("Riffle");
+
+	ProjectileMovement->MaxSpeed = ProjectileSpeed;
+}
+
 void ASurvivorGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// Only add impulse and destroy projectile if we hit a physics
+	/*
+	UMyGameInstance* MyGI = GetGameInstance<UMyGameInstance>();
+	ProjectilePower = MyGI->GetProjectilePower("1");
+
+	if (Cast<ASurvivorCharacter>(OtherActor))
+	{
+		ASurvivorCharacter* HitCharacter = Cast<ASurvivorCharacter>(Hit.Actor);
+
+		HitCharacter->GetDamage(ProjectilePower);
+
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ProjectileDestroy!!"));
+		Destroy();
+	}
+
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ProjectileDestroy!!"));
+		Destroy();
+	}
+	
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics())
 	{
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
@@ -46,11 +78,10 @@ void ASurvivorGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 
 		Destroy();
 	}
+	*/
 }
 
 float ASurvivorGameProjectile::GetBulletDamage()
 {
-	UMyGameInstance* MyGI = GetGameInstance<UMyGameInstance>();
-	ProjectilePower = MyGI->GetProjectilePower("1");
 	return ProjectilePower;
 }

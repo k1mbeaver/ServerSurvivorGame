@@ -373,6 +373,11 @@ void ASurvivorCharacter::SetDead()
 void ASurvivorCharacter::GetDamage(float fDamage)
 {
 	PlayerHP = PlayerHP - fDamage;
+
+	if (PlayerHP <= 0)
+	{
+		SetDead();
+	}
 }
 
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
