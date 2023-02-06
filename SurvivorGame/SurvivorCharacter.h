@@ -87,7 +87,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Replicated, Category = Mesh)
 		USceneComponent* MuzzleLocation;
 
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
+	UPROPERTY(VisibleInstanceOnly, Replicated, BlueprintReadOnly)
 		EPlayerState CurrentPlayerState;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)

@@ -103,6 +103,11 @@ void ASurvivorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void ASurvivorCharacter::UpDown(float NewAxisValue)
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X);
 	
 	Direction.Z = 0.0f;
@@ -123,6 +128,11 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 
 void ASurvivorCharacter::LeftRight(float NewAxisValue)
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y);
 
 	Direction.Z = 0.0f;
@@ -143,6 +153,11 @@ void ASurvivorCharacter::LeftRight(float NewAxisValue)
 
 void ASurvivorCharacter::GoRightOrLeft()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (IsRight == true)
 	{
 		CharacterAnim->CurrentLeftRight = 1.0f;
@@ -156,21 +171,41 @@ void ASurvivorCharacter::GoRightOrLeft()
 
 void ASurvivorCharacter::StopRightOrLeft()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	CharacterAnim->CurrentLeftRight = 0;
 }
 
 void ASurvivorCharacter::LookUp(float NewAxisValue)
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	AddControllerPitchInput(NewAxisValue);
 }
 
 void ASurvivorCharacter::Turn(float NewAxisValue)
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	AddControllerYawInput(NewAxisValue);
 }
 
 void ASurvivorCharacter::Run()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (bCanRun)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = fSprintPawnSpeed;
@@ -181,6 +216,11 @@ void ASurvivorCharacter::Run()
 
 void ASurvivorCharacter::StopRun()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (bCanRun)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = fCurrentPawnSpeed;
@@ -191,15 +231,30 @@ void ASurvivorCharacter::StopRun()
 void ASurvivorCharacter::Jump()
 {
 	Super::Jump();
+
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
 }
 
 void ASurvivorCharacter::StopJumping()
 {
 	Super::StopJumping();
+
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
 }
 
 void ASurvivorCharacter::GetItem()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (CurrentWeaponState == EWeaponState::PUNCH)
 	{
 		CurrentWeaponState = EWeaponState::SHOOT;
@@ -222,6 +277,11 @@ void ASurvivorCharacter::GetItem()
 
 void ASurvivorCharacter::SetCanGetItem()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (bCanGetItem)
 	{
 		bCanGetItem = false;
@@ -240,6 +300,11 @@ TSubclassOf<class ASurvivorGameProjectile> ASurvivorCharacter::GetProjectileClas
 
 void ASurvivorCharacter::Crouching()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (bCanCrouching)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = fCrouchingPawnSpeed;
@@ -250,6 +315,11 @@ void ASurvivorCharacter::Crouching()
 
 void ASurvivorCharacter::StopCrouching()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (bCanCrouching)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = fCurrentPawnSpeed;
@@ -260,11 +330,21 @@ void ASurvivorCharacter::StopCrouching()
 
 void ASurvivorCharacter::Punching()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	CharacterAnim->PlayAttackMontage();
 }
 
 void ASurvivorCharacter::OnFire()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (nProjectileMagazine < 1)
 	{
 		return;
@@ -315,6 +395,11 @@ void ASurvivorCharacter::OnFire()
 
 void ASurvivorCharacter::PlayerAttack()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (CurrentWeaponState == EWeaponState::SHOOT)
 	{
 		OnFire();
@@ -328,16 +413,31 @@ void ASurvivorCharacter::PlayerAttack()
 
 void ASurvivorCharacter::ToAim()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	Camera->SetRelativeLocation(FVector(450.0f, 0.0f, 50.0f));
 }
 
 void ASurvivorCharacter::EndAim()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 100.0f));
 }
 
 void ASurvivorCharacter::Reload()
 {
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
 	if (nCurrentMagazine <= 0) // 현재 소유중인 해당 총알의 갯수가 0보다 작으면
 	{
 		return;
@@ -377,6 +477,7 @@ void ASurvivorCharacter::GetDamage(float fDamage)
 	if (PlayerHP <= 0)
 	{
 		SetDead();
+		CurrentPlayerState = EPlayerState::DEAD;
 	}
 }
 
@@ -397,4 +498,5 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, nDefaultMagazine);
 	DOREPLIFETIME(ASurvivorCharacter, nProjectileMagazine);
 	DOREPLIFETIME(ASurvivorCharacter, PlayerHP);
+	DOREPLIFETIME(ASurvivorCharacter, CurrentPlayerState);
 }
