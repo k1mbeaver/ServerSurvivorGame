@@ -468,6 +468,10 @@ void ASurvivorCharacter::ReloadEnd()
 void ASurvivorCharacter::SetDead()
 {
 	CharacterAnim->SetDeadAnim();
+
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
 }
 
 void ASurvivorCharacter::GetDamage(float fDamage)
