@@ -59,7 +59,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 	nDefaultMagazine = 0; // 갖게될 총의 디폴트 총알 갯수 예) 저격총 = 5발, 라이플 = 30발
 	nCurrentMagazine = 0; // 현재 소유하고 있는 총알의 갯수
 
-	CurrentPlayerState = EPlayerState::ALIVE;
+	CurrentPlayerState = 1;
 	CurrentWeaponState = EWeaponState::PUNCH;
 }
 
@@ -103,7 +103,7 @@ void ASurvivorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void ASurvivorCharacter::UpDown(float NewAxisValue)
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -128,7 +128,7 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 
 void ASurvivorCharacter::LeftRight(float NewAxisValue)
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0) 
 	{
 		return;
 	}
@@ -153,7 +153,7 @@ void ASurvivorCharacter::LeftRight(float NewAxisValue)
 
 void ASurvivorCharacter::GoRightOrLeft()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0) 
 	{
 		return;
 	}
@@ -171,7 +171,7 @@ void ASurvivorCharacter::GoRightOrLeft()
 
 void ASurvivorCharacter::StopRightOrLeft()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0) 
 	{
 		return;
 	}
@@ -181,7 +181,7 @@ void ASurvivorCharacter::StopRightOrLeft()
 
 void ASurvivorCharacter::LookUp(float NewAxisValue)
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0) 
 	{
 		return;
 	}
@@ -191,7 +191,7 @@ void ASurvivorCharacter::LookUp(float NewAxisValue)
 
 void ASurvivorCharacter::Turn(float NewAxisValue)
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0) 
 	{
 		return;
 	}
@@ -201,7 +201,7 @@ void ASurvivorCharacter::Turn(float NewAxisValue)
 
 void ASurvivorCharacter::Run()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0) 
 	{
 		return;
 	}
@@ -216,7 +216,7 @@ void ASurvivorCharacter::Run()
 
 void ASurvivorCharacter::StopRun()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0) 
 	{
 		return;
 	}
@@ -230,19 +230,19 @@ void ASurvivorCharacter::StopRun()
 
 void ASurvivorCharacter::Jump()
 {
-	Super::Jump();
-
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
+
+	Super::Jump();
 }
 
 void ASurvivorCharacter::StopJumping()
 {
 	Super::StopJumping();
 
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -250,7 +250,7 @@ void ASurvivorCharacter::StopJumping()
 
 void ASurvivorCharacter::GetItem()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -277,7 +277,7 @@ void ASurvivorCharacter::GetItem()
 
 void ASurvivorCharacter::SetCanGetItem()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -300,7 +300,7 @@ TSubclassOf<class ASurvivorGameProjectile> ASurvivorCharacter::GetProjectileClas
 
 void ASurvivorCharacter::Crouching()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -315,7 +315,7 @@ void ASurvivorCharacter::Crouching()
 
 void ASurvivorCharacter::StopCrouching()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -330,28 +330,18 @@ void ASurvivorCharacter::StopCrouching()
 
 void ASurvivorCharacter::Punching()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
-	{
-		return;
-	}
-
 	CharacterAnim->PlayAttackMontage();
 }
 
 void ASurvivorCharacter::OnFire()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
-	{
-		return;
-	}
-
 	if (nProjectileMagazine < 1)
 	{
 		return;
 	}
 
 	// 탄알의 갯수를 줄인다.
-	nProjectileMagazine--;
+	nProjectileMagazine -= 1;
 
 	// try and fire a projectile
 	if (ProjectileClass != nullptr)
@@ -395,7 +385,7 @@ void ASurvivorCharacter::OnFire()
 
 void ASurvivorCharacter::PlayerAttack()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -413,7 +403,7 @@ void ASurvivorCharacter::PlayerAttack()
 
 void ASurvivorCharacter::ToAim()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -423,7 +413,7 @@ void ASurvivorCharacter::ToAim()
 
 void ASurvivorCharacter::EndAim()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -433,7 +423,7 @@ void ASurvivorCharacter::EndAim()
 
 void ASurvivorCharacter::Reload()
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
+	if (CurrentPlayerState == 0)
 	{
 		return;
 	}
@@ -469,6 +459,8 @@ void ASurvivorCharacter::SetDead()
 {
 	CharacterAnim->SetDeadAnim();
 
+	CurrentPlayerState = 0;
+
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
@@ -478,11 +470,13 @@ void ASurvivorCharacter::GetDamage(float fDamage)
 {
 	PlayerHP = PlayerHP - fDamage;
 
+	
 	if (PlayerHP <= 0)
 	{
 		SetDead();
-		CurrentPlayerState = EPlayerState::DEAD;
+		//CurrentPlayerState = EPlayerState::DEAD;
 	}
+	
 }
 
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

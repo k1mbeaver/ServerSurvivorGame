@@ -88,7 +88,7 @@ public:
 		USceneComponent* MuzzleLocation;
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, BlueprintReadOnly)
-		EPlayerState CurrentPlayerState;
+		bool CurrentPlayerState; // 0 = Dead, 1 = Alive
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
 		EWeaponState CurrentWeaponState;
