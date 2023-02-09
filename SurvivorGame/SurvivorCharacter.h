@@ -87,9 +87,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, Replicated, Category = Mesh)
 		USceneComponent* MuzzleLocation;
 
-	UPROPERTY(VisibleInstanceOnly, Replicated, BlueprintReadOnly)
-		bool CurrentPlayerState; // 0 = Dead, 1 = Alive
-
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
 		EWeaponState CurrentWeaponState;
 
@@ -113,6 +110,9 @@ public:
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Projectile)
 		int nCurrentMagazine;
+
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Player)
+		EPlayerState CurrentPlayerState;
 
 public:
 

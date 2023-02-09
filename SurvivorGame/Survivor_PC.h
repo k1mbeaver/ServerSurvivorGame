@@ -32,7 +32,6 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Crouch)
 		bool bCanCrouching;
-
 private:
 	void UpDown(float NewAxisValue);
 

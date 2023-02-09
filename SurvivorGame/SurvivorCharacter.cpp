@@ -59,7 +59,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 	nDefaultMagazine = 0; // 갖게될 총의 디폴트 총알 갯수 예) 저격총 = 5발, 라이플 = 30발
 	nCurrentMagazine = 0; // 현재 소유하고 있는 총알의 갯수
 
-	CurrentPlayerState = 1;
+	CurrentPlayerState = EPlayerState::ALIVE;
 	CurrentWeaponState = EWeaponState::PUNCH;
 }
 
@@ -103,7 +103,7 @@ void ASurvivorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void ASurvivorCharacter::UpDown(float NewAxisValue)
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -128,7 +128,7 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 
 void ASurvivorCharacter::LeftRight(float NewAxisValue)
 {
-	if (CurrentPlayerState == 0) 
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -153,7 +153,7 @@ void ASurvivorCharacter::LeftRight(float NewAxisValue)
 
 void ASurvivorCharacter::GoRightOrLeft()
 {
-	if (CurrentPlayerState == 0) 
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -171,7 +171,7 @@ void ASurvivorCharacter::GoRightOrLeft()
 
 void ASurvivorCharacter::StopRightOrLeft()
 {
-	if (CurrentPlayerState == 0) 
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -181,7 +181,7 @@ void ASurvivorCharacter::StopRightOrLeft()
 
 void ASurvivorCharacter::LookUp(float NewAxisValue)
 {
-	if (CurrentPlayerState == 0) 
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -191,7 +191,7 @@ void ASurvivorCharacter::LookUp(float NewAxisValue)
 
 void ASurvivorCharacter::Turn(float NewAxisValue)
 {
-	if (CurrentPlayerState == 0) 
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -201,7 +201,7 @@ void ASurvivorCharacter::Turn(float NewAxisValue)
 
 void ASurvivorCharacter::Run()
 {
-	if (CurrentPlayerState == 0) 
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -216,7 +216,7 @@ void ASurvivorCharacter::Run()
 
 void ASurvivorCharacter::StopRun()
 {
-	if (CurrentPlayerState == 0) 
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -230,7 +230,7 @@ void ASurvivorCharacter::StopRun()
 
 void ASurvivorCharacter::Jump()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -240,21 +240,21 @@ void ASurvivorCharacter::Jump()
 
 void ASurvivorCharacter::StopJumping()
 {
-	Super::StopJumping();
-
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
+
+	Super::StopJumping();
 }
 
 void ASurvivorCharacter::GetItem()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
-	}
 
+	}
 	if (CurrentWeaponState == EWeaponState::PUNCH)
 	{
 		CurrentWeaponState = EWeaponState::SHOOT;
@@ -277,9 +277,10 @@ void ASurvivorCharacter::GetItem()
 
 void ASurvivorCharacter::SetCanGetItem()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
+
 	}
 
 	if (bCanGetItem)
@@ -300,7 +301,7 @@ TSubclassOf<class ASurvivorGameProjectile> ASurvivorCharacter::GetProjectileClas
 
 void ASurvivorCharacter::Crouching()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -315,7 +316,7 @@ void ASurvivorCharacter::Crouching()
 
 void ASurvivorCharacter::StopCrouching()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -385,7 +386,7 @@ void ASurvivorCharacter::OnFire()
 
 void ASurvivorCharacter::PlayerAttack()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -403,7 +404,7 @@ void ASurvivorCharacter::PlayerAttack()
 
 void ASurvivorCharacter::ToAim()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -413,7 +414,7 @@ void ASurvivorCharacter::ToAim()
 
 void ASurvivorCharacter::EndAim()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -423,7 +424,7 @@ void ASurvivorCharacter::EndAim()
 
 void ASurvivorCharacter::Reload()
 {
-	if (CurrentPlayerState == 0)
+	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
@@ -440,6 +441,7 @@ void ASurvivorCharacter::Reload()
 
 void ASurvivorCharacter::ReloadEnd()
 {
+
 	if (nCurrentMagazine < nDefaultMagazine) // 
 	{
 		nProjectileMagazine = nCurrentMagazine;
@@ -457,9 +459,10 @@ void ASurvivorCharacter::ReloadEnd()
 
 void ASurvivorCharacter::SetDead()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("PlayerDead!!"));
 	CharacterAnim->SetDeadAnim();
 
-	CurrentPlayerState = 0;
+	this->CurrentPlayerState = EPlayerState::DEAD;
 
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -468,13 +471,13 @@ void ASurvivorCharacter::SetDead()
 
 void ASurvivorCharacter::GetDamage(float fDamage)
 {
-	PlayerHP = PlayerHP - fDamage;
+	float myHp = this->PlayerHP;
 
-	
+	this->PlayerHP =  myHp - fDamage;
+
 	if (PlayerHP <= 0)
 	{
 		SetDead();
-		//CurrentPlayerState = EPlayerState::DEAD;
 	}
 	
 }

@@ -534,5 +534,4 @@ void ASurvivor_PC::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 	DOREPLIFETIME(ASurvivor_PC, bCanRun);
 	DOREPLIFETIME(ASurvivor_PC, bCanCrouching); 
 	DOREPLIFETIME(ASurvivor_PC, myCharacter);
-
 }
