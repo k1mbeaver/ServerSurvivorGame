@@ -3,7 +3,7 @@
 
 #include "MyGameMode.h"
 #include "Survivor_PC.h"
-
+#include "PlayerHUD.h"
 AMyGameMode::AMyGameMode()
 //: Super()
 {
@@ -18,7 +18,7 @@ AMyGameMode::AMyGameMode()
 	PlayerControllerClass = ASurvivor_PC::StaticClass();
 
 	// use our custom HUD class
-	//HUDClass = APlayerUI_HUD::StaticClass();
+	HUDClass = APlayerHUD::StaticClass();
 }
 
 void AMyGameMode::PostLogin(APlayerController* NewPlayer)

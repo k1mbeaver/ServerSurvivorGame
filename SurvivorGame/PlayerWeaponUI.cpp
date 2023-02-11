@@ -2,11 +2,13 @@
 
 
 #include "PlayerWeaponUI.h"
+#include "Components/TextBlock.h"
+#include "Components/Image.h"
+#include "MyGameInstance.h"
 
-PlayerWeaponUI::PlayerWeaponUI()
+void UPlayerWeaponUI::NativeOnInitialized()
 {
-}
-
-PlayerWeaponUI::~PlayerWeaponUI()
-{
+	ProjectileText = Cast<UTextBlock>(GetWidgetFromName(TEXT("ProjectileText")));
+	WeaponUI = Cast<UImage>(GetWidgetFromName(TEXT("WeaponUI")));
+	ProjectileUI = Cast<UImage>(GetWidgetFromName(TEXT("ProjectileUI")));
 }

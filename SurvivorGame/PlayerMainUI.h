@@ -14,4 +14,9 @@ class SURVIVORGAME_API UPlayerMainUI : public UUserWidget
 {
 	GENERATED_BODY()
 	
+	UPROPERTY(Meta = (BindWidget))
+		class UPlayerGageUI* PlayerGageUI;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UPlayerWeaponUI* PlayerWeaponUI;
 };

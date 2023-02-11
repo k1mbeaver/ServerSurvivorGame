@@ -2,4 +2,5 @@
 
 
 #include "PlayerMainUI.h"
-
+#include "PlayerGageUI.h"
+#include "PlayerWeaponUI.h"

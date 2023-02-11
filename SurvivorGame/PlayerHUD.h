@@ -3,15 +3,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "GameFramework/HUD.h"
 #include "PlayerHUD.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SURVIVORGAME_API UPlayerHUD : public UUserWidget
+class SURVIVORGAME_API APlayerHUD : public AHUD
 {
 	GENERATED_BODY()
 	
+public:
+	APlayerHUD();
+	virtual void BeginPlay() override;
+
+public:
+	// 함수 정리
+
+private:
+	TSubclassOf<class UPlayerMainUI> MainUIClass;
+	class UPlayerMainUI* MainUIObject;
+
+private:
+	bool CheckUIObject();
+	bool CreateUIObject();
 };

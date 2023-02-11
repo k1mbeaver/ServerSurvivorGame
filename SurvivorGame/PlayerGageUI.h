@@ -14,4 +14,16 @@ class SURVIVORGAME_API UPlayerGageUI : public UUserWidget
 {
 	GENERATED_BODY()
 	
+private:
+	UPROPERTY(Meta = (BindWidget))
+		class UProgressBar* HealthPersent;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UProgressBar* StaminaPersent;
+
+protected:
+	virtual void NativeOnInitialized() override;
+
+public:
+	// 사용할 함수들을 정리
 };
