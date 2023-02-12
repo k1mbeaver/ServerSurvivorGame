@@ -14,6 +14,7 @@
 #include "Survivor_PC.h"
 #include "MyGameInstance.h"
 #include "SurvivorGameProjectile.h"
+#include "PlayerHUD.h"
 #include "MyGameMode.h"
 
 // Sets default values
@@ -52,6 +53,9 @@ ASurvivorCharacter::ASurvivorCharacter()
 	fSprintPawnSpeed = 400.0f;
 	fCrouchingPawnSpeed = 100.0f;
 	PlayerHP = 200.0f;
+	PlayerDefaultHP = 200.0f;
+	PlayerStamina = 100.0f;
+	PlayerDefaultStamina = 100.0f;
 
 	GunOffset = FVector(200.0f, 0.0f, 10.0f);
 
@@ -475,7 +479,11 @@ void ASurvivorCharacter::GetDamage(float fDamage)
 
 	this->PlayerHP =  myHp - fDamage;
 
-	if (PlayerHP <= 0)
+	APlayerHUD* HUD = Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+
+	HUD->SetHealthPersent(this->PlayerHP / this->PlayerDefaultHP);
+
+	if (this->PlayerHP <= 0)
 	{
 		SetDead();
 	}
@@ -499,5 +507,8 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, nDefaultMagazine);
 	DOREPLIFETIME(ASurvivorCharacter, nProjectileMagazine);
 	DOREPLIFETIME(ASurvivorCharacter, PlayerHP);
+	DOREPLIFETIME(ASurvivorCharacter, PlayerStamina);
+	DOREPLIFETIME(ASurvivorCharacter, PlayerDefaultHP);
+	DOREPLIFETIME(ASurvivorCharacter, PlayerDefaultStamina);
 	DOREPLIFETIME(ASurvivorCharacter, CurrentPlayerState);
 }

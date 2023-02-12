@@ -50,6 +50,15 @@ private:
 	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		float PlayerHP;
 
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		float PlayerDefaultHP;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		float PlayerStamina;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		float PlayerDefaultStamina;
+
 	class UMyGameInstance* myGameInstance;
 
 public:	

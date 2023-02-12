@@ -21,6 +21,9 @@ public:
 public:
 	// 함수 정리
 
+	void SetHealthPersent(float PlayerHP);
+	void SetStaminaPersent(float PlayerStamina);
+
 private:
 	TSubclassOf<class UPlayerMainUI> MainUIClass;
 	class UPlayerMainUI* MainUIObject;

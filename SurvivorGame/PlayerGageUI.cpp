@@ -12,3 +12,13 @@ void UPlayerGageUI::NativeOnInitialized()
 	HealthPersent = Cast<UProgressBar>(GetWidgetFromName(TEXT("HealthPersent")));
 	StaminaPersent = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaPersent")));
 }
+
+void UPlayerGageUI::SetHealthPersent(float PlayerHP)
+{
+	HealthPersent->SetPercent(PlayerHP);
+}
+
+void UPlayerGageUI::SetStaminaPersent(float PlayerStamina)
+{
+	StaminaPersent->SetPercent(PlayerStamina);
+}

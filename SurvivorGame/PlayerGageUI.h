@@ -26,4 +26,6 @@ protected:
 
 public:
 	// 사용할 함수들을 정리
+	void SetHealthPersent(float PlayerHP);
+	void SetStaminaPersent(float PlayerStamina);
 };

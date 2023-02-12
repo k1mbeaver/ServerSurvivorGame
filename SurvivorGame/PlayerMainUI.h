@@ -19,4 +19,8 @@ class SURVIVORGAME_API UPlayerMainUI : public UUserWidget
 
 	UPROPERTY(Meta = (BindWidget))
 		class UPlayerWeaponUI* PlayerWeaponUI;
+
+public:
+	void SetHealthPersent(float PlayerHP);
+	void SetStaminaPersent(float PlayerStamina);
 };

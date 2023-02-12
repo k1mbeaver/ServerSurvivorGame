@@ -42,3 +42,14 @@ bool APlayerHUD::CreateUIObject()
 	}
 	return false; // 못 만들었다면 false.
 }
+
+void APlayerHUD::SetHealthPersent(float PlayerHP)
+{
+	MainUIObject->SetHealthPersent(PlayerHP);
+}
+
+void APlayerHUD::SetStaminaPersent(float PlayerStamina)
+{
+	MainUIObject->SetStaminaPersent(PlayerStamina);
+}
+
