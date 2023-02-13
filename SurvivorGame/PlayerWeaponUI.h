@@ -29,4 +29,9 @@ protected:
 
 public:
 	// 사용할 함수들을 정리
+	void SetImage(UTexture2D* CurrentImage);
+	void SetImageUse();
+	void SetImageNotUse();
+	void SetImageVisible();
+	void SetImageHidden();
 };

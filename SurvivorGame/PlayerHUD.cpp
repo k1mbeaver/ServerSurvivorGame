@@ -53,3 +53,27 @@ void APlayerHUD::SetStaminaPersent(float PlayerStamina)
 	MainUIObject->SetStaminaPersent(PlayerStamina);
 }
 
+void APlayerHUD::SetImage(UTexture2D* CurrentImage)
+{
+	MainUIObject->SetImage(CurrentImage);
+}
+
+void APlayerHUD::SetImageUse()
+{
+	MainUIObject->SetImageUse();
+}
+
+void APlayerHUD::SetImageNotUse()
+{
+	MainUIObject->SetImageNotUse();
+}
+
+void APlayerHUD::SetImageVisible()
+{
+	MainUIObject->SetImageVisible();
+}
+
+void APlayerHUD::SetImageHidden()
+{
+	MainUIObject->SetImageHidden();
+}

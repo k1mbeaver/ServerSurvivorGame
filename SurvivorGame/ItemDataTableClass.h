@@ -27,6 +27,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector ParticleMuzzleLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UTexture2D* ItemImage;
 };
 
 UCLASS()

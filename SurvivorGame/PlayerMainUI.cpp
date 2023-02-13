@@ -14,3 +14,27 @@ void UPlayerMainUI::SetStaminaPersent(float PlayerStamina)
 {
 	PlayerGageUI->SetStaminaPersent(PlayerStamina);
 }
+
+void UPlayerMainUI::SetImage(UTexture2D* CurrentImage)
+{
+	PlayerWeaponUI->SetImage(CurrentImage);
+}
+void UPlayerMainUI::SetImageUse()
+{
+	PlayerWeaponUI->SetImageUse();
+}
+
+void UPlayerMainUI::SetImageNotUse()
+{
+	PlayerWeaponUI->SetImageNotUse();
+}
+
+void UPlayerMainUI::SetImageVisible()
+{
+	PlayerWeaponUI->SetImageVisible();
+}
+
+void UPlayerMainUI::SetImageHidden()
+{
+	PlayerWeaponUI->SetImageHidden();
+}

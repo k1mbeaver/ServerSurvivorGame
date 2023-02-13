@@ -12,3 +12,28 @@ void UPlayerWeaponUI::NativeOnInitialized()
 	WeaponUI = Cast<UImage>(GetWidgetFromName(TEXT("WeaponUI")));
 	ProjectileUI = Cast<UImage>(GetWidgetFromName(TEXT("ProjectileUI")));
 }
+
+void UPlayerWeaponUI::SetImage(UTexture2D* CurrentImage)
+{
+	WeaponUI->SetBrushFromTexture(CurrentImage);
+}
+
+void UPlayerWeaponUI::SetImageUse()
+{
+	WeaponUI->SetColorAndOpacity(FLinearColor::White);
+}
+
+void UPlayerWeaponUI::SetImageNotUse()
+{
+	WeaponUI->SetColorAndOpacity(FLinearColor::Gray);
+}
+
+void UPlayerWeaponUI::SetImageVisible()
+{
+	WeaponUI->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UPlayerWeaponUI::SetImageHidden()
+{
+	WeaponUI->SetVisibility(ESlateVisibility::Hidden);
+}

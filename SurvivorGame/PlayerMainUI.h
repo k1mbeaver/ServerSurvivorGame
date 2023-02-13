@@ -21,6 +21,14 @@ class SURVIVORGAME_API UPlayerMainUI : public UUserWidget
 		class UPlayerWeaponUI* PlayerWeaponUI;
 
 public:
+	// GageUI
 	void SetHealthPersent(float PlayerHP);
 	void SetStaminaPersent(float PlayerStamina);
+
+	// WeaponUI
+	void SetImage(UTexture2D* CurrentImage);
+	void SetImageUse();
+	void SetImageNotUse();
+	void SetImageVisible();
+	void SetImageHidden();
 };

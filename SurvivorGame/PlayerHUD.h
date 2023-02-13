@@ -23,6 +23,11 @@ public:
 
 	void SetHealthPersent(float PlayerHP);
 	void SetStaminaPersent(float PlayerStamina);
+	void SetImage(UTexture2D* CurrentImage);
+	void SetImageUse();
+	void SetImageNotUse();
+	void SetImageVisible();
+	void SetImageHidden();
 
 private:
 	TSubclassOf<class UPlayerMainUI> MainUIClass;
