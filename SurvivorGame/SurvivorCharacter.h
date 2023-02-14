@@ -180,7 +180,8 @@ public:
 	
 	virtual void StopJumping() override;
 
-	void GetItem();
+	UFUNCTION(BlueprintCallable)
+		void GetItem();
 
 	void Crouching();
 

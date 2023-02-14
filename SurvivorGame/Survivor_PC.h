@@ -32,6 +32,8 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Crouch)
 		bool bCanCrouching;
+
+	class UMyGameInstance* myGameInstance;
 private:
 	void UpDown(float NewAxisValue);
 

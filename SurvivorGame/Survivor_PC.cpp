@@ -6,6 +6,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "PlayerAnimInstance.h"
+#include "PlayerHUD.h"
+#include "MyGameInstance.h"
 #include "Kismet/KismetMathLibrary.h"
 
 ASurvivor_PC::ASurvivor_PC()
@@ -26,6 +28,8 @@ void ASurvivor_PC::OnPossess(APawn* aPawn)
 		bCanCrouching = true;
 
 		myCharacter->CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivor_PC::ReloadEnd);
+
+		myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	}
 }
 
@@ -339,7 +343,14 @@ void ASurvivor_PC::GetItem()
 {
 	if (myCharacter)
 	{
-		Server_GetItem(myCharacter);
+		// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
+		APlayerHUD* HUD = Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+
+		HUD->SetImage(myGameInstance->GetItemImage("1"));
+		HUD->SetImageUse();
+		HUD->SetImageVisible();
+
+		//Server_GetItem(myCharacter);
 	}
 }
 

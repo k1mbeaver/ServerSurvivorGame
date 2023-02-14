@@ -67,6 +67,13 @@ USkeletalMesh* UMyGameInstance::GetItemSkeletalMesh(FString ItemID)
 	return ItemSkeletalMesh;
 }
 
+UTexture2D* UMyGameInstance::GetItemImage(FString ItemID)
+{
+	FItemDataTable* ItemData = FItemFileTable->FindRow<FItemDataTable>(*ItemID, TEXT(""));
+	UTexture2D* ItemImage = ItemData->ItemImage;
+	return ItemImage;
+}
+
 FVector UMyGameInstance::GetParticleMuzzleLocation(FString ItemID)
 {
 	FItemDataTable* ItemData = FItemFileTable->FindRow<FItemDataTable>(*ItemID, TEXT(""));

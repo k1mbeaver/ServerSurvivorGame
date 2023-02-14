@@ -27,6 +27,7 @@ public:
 	FString GetItemEquipType(FString ItemID);
 	USkeletalMesh* GetItemSkeletalMesh(FString ItemID);
 	FVector GetParticleMuzzleLocation(FString ItemID);
+	UTexture2D* GetItemImage(FString ItemID);
 
 	// 캐릭터 값 얻어오기
 	FString GetPlayerName(FString PlayerID);

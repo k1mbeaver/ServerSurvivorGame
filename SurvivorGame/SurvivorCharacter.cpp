@@ -86,10 +86,10 @@ void ASurvivorCharacter::BeginPlay()
 	//CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
 
 	// 테스트 전용입니다
-	CharacterAnim->IsFire = true;
-	nProjectileMagazine = 30;
-	nCurrentMagazine = 30;
-	CurrentWeaponState = EWeaponState::SHOOT;
+	//CharacterAnim->IsFire = true;
+	//nProjectileMagazine = 30;
+	//nCurrentMagazine = 30;
+	//CurrentWeaponState = EWeaponState::SHOOT;
 }
 
 // Called every frame
@@ -254,11 +254,14 @@ void ASurvivorCharacter::StopJumping()
 
 void ASurvivorCharacter::GetItem()
 {
+	// 2/14 나중에 E 버튼을 눌렀을 때 아이템을 획득하게 이 함수에서는 1. 총 발사준비, 2. 총 내려놓기 두가지로 분류
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 
 	}
+
 	if (CurrentWeaponState == EWeaponState::PUNCH)
 	{
 		CurrentWeaponState = EWeaponState::SHOOT;
@@ -267,6 +270,7 @@ void ASurvivorCharacter::GetItem()
 		nProjectileMagazine = myGameInstance->GetProjectileMagazine("Riffle");
 		nDefaultMagazine = myGameInstance->GetProjectileMagazine("Riffle");
 
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GetItem!!"));
 		// nCurrentMagazine 나중에 탄 아이템 획득할 때 여기다가 추가
 
 		OnWeaponEquip();
