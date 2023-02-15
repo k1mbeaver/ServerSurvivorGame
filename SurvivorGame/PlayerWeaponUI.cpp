@@ -9,6 +9,7 @@
 void UPlayerWeaponUI::NativeOnInitialized()
 {
 	ProjectileText = Cast<UTextBlock>(GetWidgetFromName(TEXT("ProjectileText")));
+	DefaultText = Cast<UTextBlock>(GetWidgetFromName(TEXT("DefaultText")));
 	WeaponUI = Cast<UImage>(GetWidgetFromName(TEXT("WeaponUI")));
 	ProjectileUI = Cast<UImage>(GetWidgetFromName(TEXT("ProjectileUI")));
 }
@@ -36,4 +37,20 @@ void UPlayerWeaponUI::SetImageVisible()
 void UPlayerWeaponUI::SetImageHidden()
 {
 	WeaponUI->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UPlayerWeaponUI::SetProjectileText(int nProjectile)
+{
+	FString myStr = FString::FromInt(nProjectile);
+	FText myText = FText::FromString(myStr);
+
+	ProjectileText->SetText(myText);
+}
+
+void UPlayerWeaponUI::SetDefaultText(int nProjectile)
+{
+	FString myStr = FString::FromInt(nProjectile);
+	FText myText = FText::FromString(myStr);
+
+	DefaultText->SetText(myText);
 }

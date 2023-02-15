@@ -23,6 +23,8 @@ public:
 	virtual void SetupInputComponent() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
+	void GetDamageHUD(float fDamage);
+
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Pawn)
 		class ASurvivorCharacter* myCharacter;

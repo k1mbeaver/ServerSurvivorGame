@@ -38,3 +38,13 @@ void UPlayerMainUI::SetImageHidden()
 {
 	PlayerWeaponUI->SetImageHidden();
 }
+
+void UPlayerMainUI::SetProjectileText(int nProjectile)
+{
+	PlayerWeaponUI->SetProjectileText(nProjectile);
+}
+
+void UPlayerMainUI::SetDefaultText(int nProjectile)
+{
+	PlayerWeaponUI->SetDefaultText(nProjectile);
+}

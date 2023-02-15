@@ -77,3 +77,13 @@ void APlayerHUD::SetImageHidden()
 {
 	MainUIObject->SetImageHidden();
 }
+
+void APlayerHUD::SetProjectileText(int nProjectile)
+{
+	MainUIObject->SetProjectileText(nProjectile);
+}
+
+void APlayerHUD::SetDefaultText(int nProjectile)
+{
+	MainUIObject->SetDefaultText(nProjectile);
+}

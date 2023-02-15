@@ -344,13 +344,17 @@ void ASurvivor_PC::GetItem()
 	if (myCharacter)
 	{
 		// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
-		APlayerHUD* HUD = Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+			//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		if (HUD == nullptr) return;
 
-		HUD->SetImage(myGameInstance->GetItemImage("1"));
-		HUD->SetImageUse();
+		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+
 		HUD->SetImageVisible();
+		HUD->SetImage(MyGI->GetItemImage("1"));
+		HUD->SetImageUse();
 
-		//Server_GetItem(myCharacter);
+		Server_GetItem(myCharacter);
 	}
 }
 
@@ -536,6 +540,19 @@ void ASurvivor_PC::Client_ReloadEnd_Implementation(ASurvivorCharacter* ClientCha
 	if (ClientCharacter == nullptr) return;
 
 	ClientCharacter->ReloadEnd();
+}
+
+void ASurvivor_PC::GetDamageHUD(float fDamage)
+{
+	if (myCharacter)
+	{
+		// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		if (HUD == nullptr) return;
+
+		HUD->SetHealthPersent(fDamage);
+	}
 }
 
 void ASurvivor_PC::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

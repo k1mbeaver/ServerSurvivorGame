@@ -31,4 +31,6 @@ public:
 	void SetImageNotUse();
 	void SetImageVisible();
 	void SetImageHidden();
+	void SetProjectileText(int nProjectile);
+	void SetDefaultText(int nProjectile);
 };
