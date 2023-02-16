@@ -480,10 +480,14 @@ void ASurvivorCharacter::SetDead()
 void ASurvivorCharacter::GetDamage(float fDamage)
 {
 	float myHp = this->PlayerHP;
-	this->PlayerHP =  myHp - fDamage;
+	this->PlayerHP = myHp - fDamage;
 
+	CharacterAnim->PlayHitMontage();
+
+	//HitDamage_Hit.Broadcast();
 	// 2/15 현재 한 캐릭터가 데미지를 입으면 모든 캐릭터들이 데미지를 입는것으로 UI의 체력이 깎임
-	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController());
+	ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	myPlayerController->GetDamageHUD();
 
 	//myPlayerController->GetDamageHUD(this->PlayerHP / this->PlayerDefaultHP);
 

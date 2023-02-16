@@ -23,7 +23,7 @@ public:
 	virtual void SetupInputComponent() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
-	void GetDamageHUD(float fDamage);
+	void GetDamageHUD();
 
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Pawn)

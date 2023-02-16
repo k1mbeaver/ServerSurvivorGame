@@ -7,6 +7,8 @@
 #include "Net/UnrealNetwork.h"
 #include "SurvivorCharacter.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FHitDamage_HitDelegate); // ÇÇ°Ý
+
 UENUM(BlueprintType)
 enum class EWeaponState : uint8
 {
@@ -46,18 +48,6 @@ private:
 
 	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		bool bCanGetItem;
-
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
-		float PlayerHP;
-
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
-		float PlayerDefaultHP;
-
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
-		float PlayerStamina;
-
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
-		float PlayerDefaultStamina;
 
 	class UMyGameInstance* myGameInstance;
 
@@ -122,6 +112,20 @@ public:
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Player)
 		EPlayerState CurrentPlayerState;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		float PlayerHP;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		float PlayerDefaultHP;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		float PlayerStamina;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		float PlayerDefaultStamina;
+
+	FHitDamage_HitDelegate HitDamage_Hit;
 
 public:
 
