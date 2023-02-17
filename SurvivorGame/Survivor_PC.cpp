@@ -390,11 +390,21 @@ void ASurvivor_PC::PlayerAttack()
 	{
 		if (myCharacter->CurrentWeaponState == EWeaponState::SHOOT)
 		{
+			if (myCharacter->nProjectileMagazine < 1)
+			{
+				return;
+			}
+
+			// Åº¾ËÀÇ °¹¼ö¸¦ ÁÙÀÎ´Ù.
+			myCharacter->nProjectileMagazine -= 1;
+
+
 			APlayerHUD* HUD = GetHUD<APlayerHUD>();
 			//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 			if (HUD == nullptr) return;
 
 			HUD->SetProjectileText(myCharacter->nProjectileMagazine);
+			HUD->SetDefaultText(myCharacter->nCurrentMagazine);
 		}
 		Server_PlayerAttack(myCharacter);
 	}

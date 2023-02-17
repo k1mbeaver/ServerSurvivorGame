@@ -61,7 +61,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 
 	nProjectileMagazine = 0; // 소모할 탄창
 	nDefaultMagazine = 0; // 갖게될 총의 디폴트 총알 갯수 예) 저격총 = 5발, 라이플 = 30발
-	nCurrentMagazine = 0; // 현재 소유하고 있는 총알의 갯수
+	nCurrentMagazine = 200; // 현재 소유하고 있는 총알의 갯수
 
 	CurrentPlayerState = EPlayerState::ALIVE;
 	CurrentWeaponState = EWeaponState::PUNCH;
@@ -344,14 +344,6 @@ void ASurvivorCharacter::Punching()
 
 void ASurvivorCharacter::OnFire()
 {
-	if (nProjectileMagazine < 1)
-	{
-		return;
-	}
-
-	// 탄알의 갯수를 줄인다.
-	nProjectileMagazine -= 1;
-
 	// try and fire a projectile
 	if (ProjectileClass != nullptr)
 	{
