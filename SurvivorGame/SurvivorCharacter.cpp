@@ -493,6 +493,32 @@ void ASurvivorCharacter::GetDamage(float fDamage)
 	
 }
 
+void ASurvivorCharacter::WeaponUIVisible()
+{
+	ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	myPlayerController->WeaponUIVisible();
+}
+
+void ASurvivorCharacter::WeaponUIHidden()
+{
+	ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	myPlayerController->WeaponUIHidden();
+}
+
+void ASurvivorCharacter::WeaponUIManage()
+{
+	if (CurrentWeaponState == EWeaponState::PUNCH)
+	{
+		WeaponUIHidden();
+	}
+
+	else if (CurrentWeaponState == EWeaponState::SHOOT)
+	{
+		WeaponUIVisible();
+	}
+}
+
+
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

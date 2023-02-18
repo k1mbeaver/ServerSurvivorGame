@@ -573,6 +573,26 @@ void ASurvivor_PC::GetDamageHUD()
 	}
 }
 
+void ASurvivor_PC::WeaponUIVisible()
+{
+	if (myCharacter)
+	{
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		if (HUD == nullptr) return;
+		HUD->SetImageUse();
+	}
+}
+
+void ASurvivor_PC::WeaponUIHidden()
+{
+	if (myCharacter)
+	{
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		if (HUD == nullptr) return;
+		HUD->SetImageNotUse();
+	}
+}
+
 void ASurvivor_PC::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

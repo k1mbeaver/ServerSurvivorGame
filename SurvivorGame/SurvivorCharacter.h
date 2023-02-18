@@ -163,6 +163,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		TSubclassOf<class ASurvivorGameProjectile> GetProjectileClass();
 
+	UFUNCTION(BlueprintCallable)
+		void WeaponUIManage();
+
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);
 
@@ -204,4 +207,8 @@ public:
 	void Reload();
 
 	void ReloadEnd();
+
+	void WeaponUIVisible();
+
+	void WeaponUIHidden();
 };

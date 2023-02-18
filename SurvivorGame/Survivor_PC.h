@@ -24,7 +24,8 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	void GetDamageHUD();
-
+	void WeaponUIVisible();
+	void WeaponUIHidden();
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Pawn)
 		class ASurvivorCharacter* myCharacter;
