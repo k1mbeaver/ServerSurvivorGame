@@ -342,7 +342,7 @@ void ASurvivor_PC::Client_StopCrouching_Implementation(ASurvivorCharacter* Clien
 
 void ASurvivor_PC::GetItem()
 {
-	if (myCharacter)
+	if (myCharacter->CurrentWeaponState == EWeaponState::PUNCH)
 	{
 		// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
 		APlayerHUD* HUD = GetHUD<APlayerHUD>();
@@ -354,6 +354,21 @@ void ASurvivor_PC::GetItem()
 		HUD->SetImageVisible();
 		HUD->SetImage(MyGI->GetItemImage("1"));
 		HUD->SetImageUse();
+
+		Server_GetItem(myCharacter);
+	}
+
+	else if (myCharacter->CurrentWeaponState == EWeaponState::SHOOT)
+	{
+		// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		if (HUD == nullptr) return;
+
+		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+
+		HUD->SetImageHidden();
+		HUD->SetImageNotUse();
 
 		Server_GetItem(myCharacter);
 	}
