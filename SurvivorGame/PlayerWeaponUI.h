@@ -22,6 +22,9 @@ private:
 		class UTextBlock* DefaultText;
 
 	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextSlash;
+
+	UPROPERTY(Meta = (BindWidget))
 		class UImage* WeaponUI;
 
 	UPROPERTY(Meta = (BindWidget))
@@ -39,4 +42,6 @@ public:
 	void SetImageHidden();
 	void SetProjectileText(int nProjectile);
 	void SetDefaultText(int nProjectile);
+	void SetTextVisible();
+	void SetTextHidden();
 };

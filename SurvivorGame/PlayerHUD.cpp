@@ -87,3 +87,13 @@ void APlayerHUD::SetDefaultText(int nProjectile)
 {
 	MainUIObject->SetDefaultText(nProjectile);
 }
+
+void APlayerHUD::SetTextVisible()
+{
+	MainUIObject->SetTextVisible();
+}
+
+void APlayerHUD::SetTextHidden()
+{
+	MainUIObject->SetTextHidden();
+}

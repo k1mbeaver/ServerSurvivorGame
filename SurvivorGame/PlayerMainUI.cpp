@@ -48,3 +48,13 @@ void UPlayerMainUI::SetDefaultText(int nProjectile)
 {
 	PlayerWeaponUI->SetDefaultText(nProjectile);
 }
+
+void UPlayerMainUI::SetTextVisible()
+{
+	PlayerWeaponUI->SetTextVisible();
+}
+
+void UPlayerMainUI::SetTextHidden()
+{
+	PlayerWeaponUI->SetTextHidden();
+}

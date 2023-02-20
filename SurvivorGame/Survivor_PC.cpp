@@ -351,6 +351,7 @@ void ASurvivor_PC::GetItem()
 
 		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 
+		HUD->SetTextVisible();
 		HUD->SetImageVisible();
 		HUD->SetImage(MyGI->GetItemImage("1"));
 		HUD->SetImageUse();
@@ -367,6 +368,7 @@ void ASurvivor_PC::GetItem()
 
 		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 
+		HUD->SetTextHidden();
 		HUD->SetImageHidden();
 		HUD->SetImageNotUse();
 
