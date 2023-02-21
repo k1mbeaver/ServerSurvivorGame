@@ -69,6 +69,9 @@ void ASurvivor_PC::SetupInputComponent()
 	// 캐릭터 아이템 얻기
 	InputComponent->BindAction(TEXT("ItemGet"), IE_Pressed, this, &ASurvivor_PC::GetItem);
 
+	// 캐릭터 총 장착
+	InputComponent->BindAction(TEXT("EquipGun"), IE_Pressed, this, &ASurvivor_PC::EquipGun);
+
 	// 캐릭터 공격
 	InputComponent->BindAction(TEXT("Attack"), IE_Pressed, this, &ASurvivor_PC::PlayerAttack);
 
@@ -342,36 +345,8 @@ void ASurvivor_PC::Client_StopCrouching_Implementation(ASurvivorCharacter* Clien
 
 void ASurvivor_PC::GetItem()
 {
-	if (myCharacter->CurrentWeaponState == EWeaponState::PUNCH)
+	if (myCharacter)
 	{
-		// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
-		APlayerHUD* HUD = GetHUD<APlayerHUD>();
-			//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-		if (HUD == nullptr) return;
-
-		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
-
-		HUD->SetTextVisible();
-		HUD->SetImageVisible();
-		HUD->SetImage(MyGI->GetItemImage("1"));
-		HUD->SetImageUse();
-
-		Server_GetItem(myCharacter);
-	}
-
-	else if (myCharacter->CurrentWeaponState == EWeaponState::SHOOT)
-	{
-		// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
-		APlayerHUD* HUD = GetHUD<APlayerHUD>();
-		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-		if (HUD == nullptr) return;
-
-		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
-
-		HUD->SetTextHidden();
-		HUD->SetImageHidden();
-		HUD->SetImageNotUse();
-
 		Server_GetItem(myCharacter);
 	}
 }
@@ -516,6 +491,34 @@ void ASurvivor_PC::Reload()
 {
 	if (myCharacter)
 	{
+		if (myCharacter->nCurrentMagazine <= 0) // 현재 소유중인 해당 총알의 갯수가 0보다 작으면
+		{
+			return;
+		}
+
+		if (myCharacter->nCurrentMagazine < myCharacter->nDefaultMagazine) // 
+		{
+			myCharacter->nProjectileMagazine = myCharacter->nCurrentMagazine;
+
+			myCharacter->nCurrentMagazine = 0;
+			return;
+		}
+
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ReloadEnd!!"));
+
+
+		myCharacter->nCurrentMagazine = myCharacter->nCurrentMagazine - myCharacter->nProjectileMagazine;
+		myCharacter->nProjectileMagazine = 30; // nDefaultMagazine 나중에 UI 작업할 때 같이 편집
+
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		if (HUD == nullptr) return;
+
+		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+
+		HUD->SetProjectileText(myCharacter->nProjectileMagazine);
+		HUD->SetDefaultText(myCharacter->nCurrentMagazine);
+
 		Server_Reload(myCharacter);
 	}
 }
@@ -576,6 +579,72 @@ void ASurvivor_PC::Client_ReloadEnd_Implementation(ASurvivorCharacter* ClientCha
 	if (ClientCharacter == nullptr) return;
 
 	ClientCharacter->ReloadEnd();
+}
+
+void ASurvivor_PC::EquipGun()
+{
+	if (myCharacter)
+	{
+		if (myCharacter->CurrentWeaponState == EWeaponState::PUNCH)
+		{
+			// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
+			APlayerHUD* HUD = GetHUD<APlayerHUD>();
+			//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+			if (HUD == nullptr) return;
+
+			UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+
+			HUD->SetProjectileText(myCharacter->nProjectileMagazine);
+			HUD->SetDefaultText(myCharacter->nCurrentMagazine);
+			HUD->SetTextVisible();
+			HUD->SetImageVisible();
+			HUD->SetImage(MyGI->GetItemImage("1"));
+			HUD->SetImageUse();
+
+			Server_EquipGun(myCharacter);
+		}
+
+		else if (myCharacter->CurrentWeaponState == EWeaponState::SHOOT)
+		{
+			// 나중에 E 버튼을 눌러서 이 함수가 실행되게 하자(지금은 닿기만 해도 아이템 획득)
+			APlayerHUD* HUD = GetHUD<APlayerHUD>();
+			//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+			if (HUD == nullptr) return;
+
+			UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+
+			HUD->SetTextHidden();
+			HUD->SetImageHidden();
+			HUD->SetImageNotUse();
+
+			Server_EquipGun(myCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Server_EquipGun_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->EquipGun();
+
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_EquipGun(ClientCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_EquipGun_Implementation(ASurvivorCharacter* ClientCharacter)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->EquipGun();
 }
 
 void ASurvivor_PC::GetDamageHUD()

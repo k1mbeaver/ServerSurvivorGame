@@ -46,9 +46,6 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = HiddenMision)
 		bool bCanBasicAttack;
 
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
-		bool bCanGetItem;
-
 	class UMyGameInstance* myGameInstance;
 
 public:	
@@ -125,6 +122,21 @@ public:
 	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		float PlayerDefaultStamina;
 
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		bool bHasGun = false;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		bool bCanGetItem;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		bool bPlayerGet;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		class UObject* NearItem;
+
+	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		bool bCanFire = true;
+
 	FHitDamage_HitDelegate HitDamage_Hit;
 
 public:
@@ -133,6 +145,14 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 		void OnWeaponEquip();
 	virtual void OnWeaponEquip_Implementation()
+	{
+
+	}
+
+	// 이벤트
+	UFUNCTION(BlueprintNativeEvent)
+		void OnGetItem();
+	virtual void OnGetItem_Implementation()
 	{
 
 	}
@@ -152,9 +172,6 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-		void SetCanGetItem();
-
-	UFUNCTION(BlueprintCallable)
 		void SetDead();
 
 	UFUNCTION(BlueprintCallable)
@@ -165,6 +182,24 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void WeaponUIManage();
+
+	UFUNCTION(BlueprintCallable)
+		void PlayerHasGun();
+
+	UFUNCTION(BlueprintCallable)
+		void PlayerCantGetItem();
+
+	UFUNCTION(BlueprintCallable)
+		void SetCanGetItem();
+
+	UFUNCTION(BlueprintCallable)
+		void SetNearItem(UObject* objNearItem);
+
+	UFUNCTION(BlueprintCallable)
+		void InitNearItem();
+
+	UFUNCTION(BlueprintCallable)
+		void InitGun(int GunMagazine);
 
 	// 함수
 	void UpDown(float NewAxisValue);
@@ -189,6 +224,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void GetItem();
+
+	void EquipGun();
 
 	void Crouching();
 

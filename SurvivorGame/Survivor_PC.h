@@ -147,4 +147,13 @@ private:
 		void Client_ReloadEnd(ASurvivorCharacter* ClientCharacter);
 
 	void ReloadEnd();
+
+	UFUNCTION(Server, Reliable)
+		void Server_EquipGun(ASurvivorCharacter* ClientCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_EquipGun(ASurvivorCharacter* ClientCharacter);
+
+	void EquipGun();
 };
+

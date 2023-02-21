@@ -83,7 +83,7 @@ void ASurvivorCharacter::BeginPlay()
 	GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
 
 	// AnimNotify
-	//CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
+	CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
 
 	// 테스트 전용입니다
 	//CharacterAnim->IsFire = true;
@@ -259,21 +259,57 @@ void ASurvivorCharacter::GetItem()
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
-
 	}
+
+	if (bCanGetItem)
+	{
+		OnGetItem();
+		bPlayerGet = true;
+	}
+}
+
+void ASurvivorCharacter::SetCanGetItem()
+{
+	bCanGetItem = true;
+}
+
+void ASurvivorCharacter::PlayerCantGetItem()
+{
+	bCanGetItem = false;
+}
+
+void ASurvivorCharacter::SetNearItem(UObject* objNearItem)
+{
+	NearItem = objNearItem;
+}
+
+void ASurvivorCharacter::InitNearItem()
+{
+	NearItem = NULL;
+}
+
+void ASurvivorCharacter::EquipGun()
+{
+	if (CurrentPlayerState == EPlayerState::DEAD)
+	{
+		return;
+	}
+
+	//if (!bHasGun)
+	//{
+		//return;
+	//}
 
 	if (CurrentWeaponState == EWeaponState::PUNCH)
 	{
 		CurrentWeaponState = EWeaponState::SHOOT;
 		CharacterAnim->IsFire = true;
 
-		nProjectileMagazine = myGameInstance->GetProjectileMagazine("Riffle");
-		nDefaultMagazine = myGameInstance->GetProjectileMagazine("Riffle");
+		//nProjectileMagazine = myGameInstance->GetProjectileMagazine("Riffle");
+		//nDefaultMagazine = myGameInstance->GetProjectileMagazine("Riffle");
 
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GetItem!!"));
 		// nCurrentMagazine 나중에 탄 아이템 획득할 때 여기다가 추가
-
-		OnWeaponEquip();
 	}
 
 	else
@@ -283,23 +319,10 @@ void ASurvivorCharacter::GetItem()
 	}
 }
 
-void ASurvivorCharacter::SetCanGetItem()
+void ASurvivorCharacter::InitGun(int GunMagazine)
 {
-	if (CurrentPlayerState == EPlayerState::DEAD)
-	{
-		return;
-
-	}
-
-	if (bCanGetItem)
-	{
-		bCanGetItem = false;
-	}
-
-	else
-	{
-		bCanGetItem = true;
-	}
+	nProjectileMagazine = GunMagazine;
+	nDefaultMagazine = GunMagazine;
 }
 
 TSubclassOf<class ASurvivorGameProjectile> ASurvivorCharacter::GetProjectileClass()
@@ -344,44 +367,47 @@ void ASurvivorCharacter::Punching()
 
 void ASurvivorCharacter::OnFire()
 {
-	// try and fire a projectile
-	if (ProjectileClass != nullptr)
+	if (bCanFire)
 	{
-		UWorld* const World = GetWorld();
-
-		if (World != nullptr)
+		// try and fire a projectile
+		if (ProjectileClass != nullptr)
 		{
-			/*
-			if (bUsingMotionControllers)
-			{
-				const FRotator SpawnRotation = VR_MuzzleLocation->GetComponentRotation();
-				const FVector SpawnLocation = VR_MuzzleLocation->GetComponentLocation();
-				World->SpawnActor<ASurvivorGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
-			}
-			*/
+			UWorld* const World = GetWorld();
 
-			const FRotator SpawnRotation = MuzzleLocation->GetComponentRotation();
+			if (World != nullptr)
+			{
+				/*
+				if (bUsingMotionControllers)
+				{
+					const FRotator SpawnRotation = VR_MuzzleLocation->GetComponentRotation();
+					const FVector SpawnLocation = VR_MuzzleLocation->GetComponentLocation();
+					World->SpawnActor<ASurvivorGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+				}
+				*/
+
+				const FRotator SpawnRotation = MuzzleLocation->GetComponentRotation();
 				//((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentRotation() : GetActorRotation());
 				//GetControlRotation();
 			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-			const FVector SpawnLocation = MuzzleLocation->GetComponentLocation();
+				const FVector SpawnLocation = MuzzleLocation->GetComponentLocation();
 				//((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentLocation() : GetActorLocation());
 			//  + SpawnRotation.RotateVector(GunOffset)
 
 			//Set Spawn Collision Handling Override
-			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+				FActorSpawnParameters ActorSpawnParams;
+				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
-			// spawn the projectile at the muzzle
-			World->SpawnActor<ASurvivorGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+				// spawn the projectile at the muzzle
+				World->SpawnActor<ASurvivorGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			}
 		}
+
+		CharacterAnim->PlayFireMontage();
+		GameStatic->SpawnEmitterAttached(myGameInstance->GetParticle("Riffle"), MuzzleLocation, FName("MuzzleLocation"));
+
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ProjectileStart!!"));
+		//OnEventFire(); // 이벤트를 받아서 블루프린트에서 총 발사하는거 설정
 	}
-
-	CharacterAnim->PlayFireMontage();
-	GameStatic->SpawnEmitterAttached(myGameInstance->GetParticle("Riffle"), MuzzleLocation, FName("MuzzleLocation"));
-
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ProjectileStart!!"));
-	//OnEventFire(); // 이벤트를 받아서 블루프린트에서 총 발사하는거 설정
 }
 
 void ASurvivorCharacter::PlayerAttack()
@@ -434,14 +460,7 @@ void ASurvivorCharacter::Reload()
 		return;
 	}
 
-	OnEventReload();
-
-	CharacterAnim->PlayReloadMontage();
-}
-
-void ASurvivorCharacter::ReloadEnd()
-{
-
+	/*
 	if (nCurrentMagazine < nDefaultMagazine) // 
 	{
 		nProjectileMagazine = nCurrentMagazine;
@@ -453,8 +472,16 @@ void ASurvivorCharacter::ReloadEnd()
 	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ReloadEnd!!"));
 
 
-	nCurrentMagazine = nCurrentMagazine - nDefaultMagazine;
+	nCurrentMagazine = nCurrentMagazine - nProjectileMagazine;
 	nProjectileMagazine = 30; // nDefaultMagazine 나중에 UI 작업할 때 같이 편집
+	*/
+	CharacterAnim->PlayReloadMontage();
+	bCanFire = false;
+}
+
+void ASurvivorCharacter::ReloadEnd()
+{
+	bCanFire = true;
 }
 
 void ASurvivorCharacter::SetDead()
@@ -518,6 +545,19 @@ void ASurvivorCharacter::WeaponUIManage()
 	}
 }
 
+void ASurvivorCharacter::PlayerHasGun()
+{
+	if (bHasGun)
+	{
+		bHasGun = false;
+	}
+
+	else
+	{
+		bHasGun = true;
+	}
+}
+
 
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
@@ -540,4 +580,5 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, PlayerDefaultHP);
 	DOREPLIFETIME(ASurvivorCharacter, PlayerDefaultStamina);
 	DOREPLIFETIME(ASurvivorCharacter, CurrentPlayerState);
+	DOREPLIFETIME(ASurvivorCharacter, bHasGun);
 }
