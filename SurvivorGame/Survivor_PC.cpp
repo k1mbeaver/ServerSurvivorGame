@@ -496,6 +496,11 @@ void ASurvivor_PC::Reload()
 			return;
 		}
 
+		if (myCharacter->nProjectileMagazine == myCharacter->nDefaultMagazine)
+		{
+			return;
+		}
+
 		if (myCharacter->nCurrentMagazine < myCharacter->nDefaultMagazine) // 
 		{
 			myCharacter->nProjectileMagazine = myCharacter->nCurrentMagazine;
@@ -507,7 +512,9 @@ void ASurvivor_PC::Reload()
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ReloadEnd!!"));
 
 
-		myCharacter->nCurrentMagazine = myCharacter->nCurrentMagazine - myCharacter->nProjectileMagazine;
+		int DeleteMagazine = myCharacter->nDefaultMagazine - myCharacter->nProjectileMagazine;
+		myCharacter->nCurrentMagazine = myCharacter->nCurrentMagazine - DeleteMagazine;
+
 		myCharacter->nProjectileMagazine = 30; // nDefaultMagazine 나중에 UI 작업할 때 같이 편집
 
 		APlayerHUD* HUD = GetHUD<APlayerHUD>();
