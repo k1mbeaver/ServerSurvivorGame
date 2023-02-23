@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+//#include "ItemDataStruct.h"
 #include "Net/UnrealNetwork.h"
 #include "SurvivorCharacter.generated.h"
 
@@ -107,6 +108,12 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Projectile)
 		int nCurrentMagazine;
 
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Gun)
+		FString GunName;
+
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Gun)
+		FString GunItemID;
+
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Player)
 		EPlayerState CurrentPlayerState;
 
@@ -136,6 +143,9 @@ public:
 
 	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		bool bCanFire = true;
+
+	//UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+		//FItemData ItemData;
 
 	FHitDamage_HitDelegate HitDamage_Hit;
 
@@ -200,6 +210,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void InitGun(int GunMagazine);
+
+	//UFUNCTION(BlueprintCallable)
+		//void GetItemData(FItemData GetItemData);
 
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);

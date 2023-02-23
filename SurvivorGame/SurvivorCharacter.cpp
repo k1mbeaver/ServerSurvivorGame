@@ -32,6 +32,8 @@ ASurvivorCharacter::ASurvivorCharacter()
 	WeaponMesh->SetupAttachment(GetCapsuleComponent());
 
 	MuzzleLocation->SetupAttachment(WeaponMesh);
+	MuzzleLocation->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
@@ -78,9 +80,9 @@ void ASurvivorCharacter::BeginPlay()
 	GetMesh()->SetSkeletalMesh(myGameInstance->GetPlayerSkeletalMesh("1"));
 
 	// 여기다가 아이템의 MuzzleLocation 값을 얻어와서 적용하자
-	MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("1"));
-	MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
-	GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
+	//MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("1"));
+	//MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
+	//GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
 
 	// AnimNotify
 	CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
@@ -319,10 +321,21 @@ void ASurvivorCharacter::EquipGun()
 	}
 }
 
+//void ASurvivorCharacter::GetItemData(FItemData GetItemData)
+//{
+	//GunName = GetItemData.ItemName;
+	//GunItemID = GetItemData.ItemID;
+	//InitGun(GetItemData.nDefaultBullet);
+//}
+
 void ASurvivorCharacter::InitGun(int GunMagazine)
 {
 	nProjectileMagazine = GunMagazine;
 	nDefaultMagazine = GunMagazine;
+
+	MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation(GunItemID));
+	MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
+	GunOffset = myGameInstance->GetParticleMuzzleLocation(GunItemID);
 }
 
 TSubclassOf<class ASurvivorGameProjectile> ASurvivorCharacter::GetProjectileClass()
@@ -403,7 +416,7 @@ void ASurvivorCharacter::OnFire()
 		}
 
 		CharacterAnim->PlayFireMontage();
-		GameStatic->SpawnEmitterAttached(myGameInstance->GetParticle("Riffle"), MuzzleLocation, FName("MuzzleLocation"));
+		GameStatic->SpawnEmitterAttached(myGameInstance->GetParticle(GunName), MuzzleLocation, FName("MuzzleLocation"));
 
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("ProjectileStart!!"));
 		//OnEventFire(); // 이벤트를 받아서 블루프린트에서 총 발사하는거 설정
@@ -581,4 +594,6 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, PlayerDefaultStamina);
 	DOREPLIFETIME(ASurvivorCharacter, CurrentPlayerState);
 	DOREPLIFETIME(ASurvivorCharacter, bHasGun);
+	DOREPLIFETIME(ASurvivorCharacter, GunName);
+	DOREPLIFETIME(ASurvivorCharacter, GunItemID);
 }
