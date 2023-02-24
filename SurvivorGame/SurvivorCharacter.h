@@ -1,10 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+// #include "ItemDataStruct.h"
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-//#include "ItemDataStruct.h"
 #include "Net/UnrealNetwork.h"
 #include "SurvivorCharacter.generated.h"
 
@@ -213,6 +212,9 @@ public:
 
 	//UFUNCTION(BlueprintCallable)
 		//void GetItemData(FItemData GetItemData);
+
+	UFUNCTION(BlueprintCallable)
+		void GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, USkeletalMesh* ItemSkeletalMesh);
 
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);

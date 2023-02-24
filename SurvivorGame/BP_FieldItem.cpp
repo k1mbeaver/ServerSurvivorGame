@@ -14,11 +14,10 @@ ABP_FieldItem::ABP_FieldItem()
 	ItemSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	ItemSkeletalMesh->SetupAttachment(RootComponent);
 
-	myItemData.bIsWeapon = false;
-	myItemData.nDefaultBullet = 0;
-	myItemData.ItemID = "";
-	myItemData.ItemSkeletalMesh = NULL;
-	myItemData.ItemName = "";
+	bIsWeapon = false;
+	nDefaultBullet = 0;
+	ItemSkeletalMesh = NULL;
+	ItemName = "";
 }
 
 // Called when the game starts or when spawned
@@ -32,11 +31,10 @@ void ABP_FieldItem::BeginPlay()
 
 	if (MyGameInstance->GetItemEquipType(ItemID) == "Weapon")
 	{
-		myItemData.bIsWeapon = true;
-		myItemData.nDefaultBullet = MyGameInstance->GetProjectileMagazine(MyGameInstance->GetItemName(ItemID));
-		myItemData.ItemID = this->ItemID;
-		myItemData.ItemSkeletalMesh = MyGameInstance->GetItemSkeletalMesh(MyGameInstance->GetItemName(ItemID));
-		myItemData.ItemName = MyGameInstance->GetItemName(ItemID);
+		bIsWeapon = true;
+		nDefaultBullet = MyGameInstance->GetProjectileMagazine(MyGameInstance->GetItemName(ItemID));;
+		ItemSkeletal = MyGameInstance->GetItemSkeletalMesh(ItemID);;
+		ItemName = MyGameInstance->GetItemName(ItemID);;
 	}
 }
 
@@ -67,20 +65,17 @@ USkeletalMesh* ABP_FieldItem::GetSkeletalMesh()
 	return MyGameInstance->GetItemSkeletalMesh(ItemID);
 }
 
-
-FItemData ABP_FieldItem::GetItemData()
+bool ABP_FieldItem::GetIsWeapon()
 {
-	return myItemData;
+	return bIsWeapon;
 }
 
 void ABP_FieldItem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ABP_FieldItem, nCurrentBullet);
 	DOREPLIFETIME(ABP_FieldItem, nDefaultBullet);
 	DOREPLIFETIME(ABP_FieldItem, ItemID);
 	DOREPLIFETIME(ABP_FieldItem, bIsWeapon); 
-	DOREPLIFETIME(ABP_FieldItem, myItemData);
 }
 

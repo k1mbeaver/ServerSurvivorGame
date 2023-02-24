@@ -1,11 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+// #include "ItemDataStruct.h"
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Net/UnrealNetwork.h"
-#include "ItemDataStruct.h"
 #include "BP_FieldItem.generated.h"
 
 
@@ -24,19 +23,22 @@ public:
 	// Sets default values for this actor's properties
 	ABP_FieldItem();
 
-	class USkeletalMeshComponent* ItemSkeletalMesh;
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Item)
+		FString ItemName;
 
-	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Gun)
-		int nCurrentBullet;
-
-	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Gun)
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Item)
 		int nDefaultBullet;
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Item)
 		bool bIsWeapon = false;
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Item)
-		FItemData myItemData;
+		class USkeletalMesh* ItemSkeletal;
+
+	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Item)
+		class USkeletalMeshComponent* ItemSkeletalMesh;
+
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -60,5 +62,5 @@ public:
 		USkeletalMesh* GetSkeletalMesh();
 
 	UFUNCTION(BlueprintCallable)
-		FItemData GetItemData();
+		bool GetIsWeapon();
 };

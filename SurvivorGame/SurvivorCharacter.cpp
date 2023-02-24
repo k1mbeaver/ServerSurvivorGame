@@ -321,12 +321,16 @@ void ASurvivorCharacter::EquipGun()
 	}
 }
 
-//void ASurvivorCharacter::GetItemData(FItemData GetItemData)
-//{
-	//GunName = GetItemData.ItemName;
-	//GunItemID = GetItemData.ItemID;
-	//InitGun(GetItemData.nDefaultBullet);
-//}
+void ASurvivorCharacter::GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, USkeletalMesh* ItemSkeletalMesh)
+{
+	if (IsWeapon)
+	{
+		InitGun(DefaultMagazine);
+		GunName = ItemName;
+		GunItemID = ItemID;
+		WeaponMesh->SetSkeletalMesh(ItemSkeletalMesh);
+	}
+}
 
 void ASurvivorCharacter::InitGun(int GunMagazine)
 {

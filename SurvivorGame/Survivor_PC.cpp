@@ -605,7 +605,8 @@ void ASurvivor_PC::EquipGun()
 			HUD->SetDefaultText(myCharacter->nCurrentMagazine);
 			HUD->SetTextVisible();
 			HUD->SetImageVisible();
-			HUD->SetImage(MyGI->GetItemImage("1"));
+			HUD->SetImage(MyGI->GetItemImage(myCharacter->GunItemID));
+			//HUD->SetImage(MyGI->GetItemImage("1"));
 			HUD->SetImageUse();
 
 			Server_EquipGun(myCharacter);
