@@ -321,6 +321,7 @@ void ASurvivorCharacter::EquipGun()
 	}
 }
 
+
 void ASurvivorCharacter::GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, USkeletalMesh* ItemSkeletalMesh)
 {
 	if (IsWeapon)

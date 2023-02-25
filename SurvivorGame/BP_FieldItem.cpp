@@ -76,6 +76,9 @@ void ABP_FieldItem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 
 	DOREPLIFETIME(ABP_FieldItem, nDefaultBullet);
 	DOREPLIFETIME(ABP_FieldItem, ItemID);
-	DOREPLIFETIME(ABP_FieldItem, bIsWeapon); 
+	DOREPLIFETIME(ABP_FieldItem, ItemName);
+	DOREPLIFETIME(ABP_FieldItem, bIsWeapon);
+	DOREPLIFETIME(ABP_FieldItem, ItemSkeletal);
+	DOREPLIFETIME(ABP_FieldItem, ItemSkeletalMesh);
 }
 
