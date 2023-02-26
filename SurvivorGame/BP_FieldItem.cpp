@@ -14,10 +14,10 @@ ABP_FieldItem::ABP_FieldItem()
 	ItemSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	ItemSkeletalMesh->SetupAttachment(RootComponent);
 
-	bIsWeapon = false;
-	nDefaultBullet = 0;
-	ItemSkeletalMesh = NULL;
-	ItemName = "";
+	//bIsWeapon = false;
+	//nDefaultBullet = 0;
+	//ItemSkeletalMesh = NULL;
+	//ItemName = "";
 }
 
 // Called when the game starts or when spawned
@@ -32,9 +32,9 @@ void ABP_FieldItem::BeginPlay()
 	if (MyGameInstance->GetItemEquipType(ItemID) == "Weapon")
 	{
 		bIsWeapon = true;
-		nDefaultBullet = MyGameInstance->GetProjectileMagazine(MyGameInstance->GetItemName(ItemID));;
-		ItemSkeletal = MyGameInstance->GetItemSkeletalMesh(ItemID);;
-		ItemName = MyGameInstance->GetItemName(ItemID);;
+		nDefaultBullet = MyGameInstance->GetProjectileMagazine(MyGameInstance->GetItemName(ItemID));
+		ItemSkeletal = MyGameInstance->GetItemSkeletalMesh(ItemID);
+		ItemName = MyGameInstance->GetItemName(ItemID);
 	}
 }
 
