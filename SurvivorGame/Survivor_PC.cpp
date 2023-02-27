@@ -515,7 +515,7 @@ void ASurvivor_PC::Reload()
 		int DeleteMagazine = myCharacter->nDefaultMagazine - myCharacter->nProjectileMagazine;
 		myCharacter->nCurrentMagazine = myCharacter->nCurrentMagazine - DeleteMagazine;
 
-		myCharacter->nProjectileMagazine = 30; // nDefaultMagazine 나중에 UI 작업할 때 같이 편집
+		myCharacter->nProjectileMagazine = myCharacter->nDefaultMagazine; // nDefaultMagazine 나중에 UI 작업할 때 같이 편집
 
 		APlayerHUD* HUD = GetHUD<APlayerHUD>();
 		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());

@@ -33,9 +33,11 @@ public:
 	FString GetPlayerName(FString PlayerID);
 	int GetPlayerKill(FString PlayerID);
 	int GetPlayerDeath(FString PlayerID);
+	FString GetPlayerCurrentWeapon(FString PlayerID);
 	void SetPlayerName(FString PlayerID, FString PlayerName);
 	void SetPlayerKill(FString PlayerID, int PlayerKill);
 	void SetPlayerDeath(FString PlayerID, int PlayerDeath);
+	void SetPlayerCurrentWeapon(FString PlayerID, FString WeaponName);
 	USkeletalMesh* GetPlayerSkeletalMesh(FString PlayerID);
 	void SetPlayerSkeletalMesh(FString PlayerID, USkeletalMesh* PlayerSkeletalMesh);
 

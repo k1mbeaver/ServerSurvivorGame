@@ -102,11 +102,19 @@ int UMyGameInstance::GetPlayerDeath(FString PlayerID)
 	return PlayerDeath;
 }
 
+
 USkeletalMesh* UMyGameInstance::GetPlayerSkeletalMesh(FString PlayerID)
 {
 	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
 	USkeletalMesh* PlayerSkeletalMesh = PlayerData->CurrentPlayerSkeletalMesh;
 	return PlayerSkeletalMesh;
+}
+
+FString UMyGameInstance::GetPlayerCurrentWeapon(FString PlayerID)
+{
+	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
+	FString WeaponName = PlayerData->PlayerCurrentWeapon;
+	return WeaponName;
 }
 
 void UMyGameInstance::SetPlayerName(FString PlayerID, FString PlayerName)
@@ -125,6 +133,12 @@ void UMyGameInstance::SetPlayerDeath(FString PlayerID, int PlayerDeath)
 {
 	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
 	PlayerData->PlayerDeath = PlayerDeath;
+}
+
+void UMyGameInstance::SetPlayerCurrentWeapon(FString PlayerID, FString WeaponName)
+{
+	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
+	PlayerData->PlayerCurrentWeapon = WeaponName;
 }
 
 void UMyGameInstance::SetPlayerSkeletalMesh(FString PlayerID, USkeletalMesh* PlayerSkeletalMesh)

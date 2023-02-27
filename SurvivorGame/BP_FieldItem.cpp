@@ -57,7 +57,7 @@ FString ABP_FieldItem::GetItemID()
 
 FString ABP_FieldItem::GetItemName()
 {
-	return MyGameInstance->GetItemName(ItemID);
+	return ItemName;
 }
 
 USkeletalMesh* ABP_FieldItem::GetSkeletalMesh()

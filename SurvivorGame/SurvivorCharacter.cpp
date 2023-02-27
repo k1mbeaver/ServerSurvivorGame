@@ -307,8 +307,7 @@ void ASurvivorCharacter::EquipGun()
 		CurrentWeaponState = EWeaponState::SHOOT;
 		CharacterAnim->IsFire = true;
 
-		//nProjectileMagazine = myGameInstance->GetProjectileMagazine("Riffle");
-		//nDefaultMagazine = myGameInstance->GetProjectileMagazine("Riffle");
+		myGameInstance->SetPlayerCurrentWeapon("1", GunName);
 
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GetItem!!"));
 		// nCurrentMagazine 나중에 탄 아이템 획득할 때 여기다가 추가
@@ -317,6 +316,7 @@ void ASurvivorCharacter::EquipGun()
 	else
 	{
 		CurrentWeaponState = EWeaponState::PUNCH;
+		myGameInstance->SetPlayerCurrentWeapon("1", "Punch");
 		CharacterAnim->IsFire = false;
 	}
 }
@@ -326,10 +326,10 @@ void ASurvivorCharacter::GetItemData(int DefaultMagazine, bool IsWeapon, FString
 {
 	if (IsWeapon)
 	{
-		InitGun(DefaultMagazine);
 		GunName = ItemName;
 		GunItemID = ItemID;
 		WeaponMesh->SetSkeletalMesh(ItemSkeletalMesh);
+		InitGun(DefaultMagazine);
 	}
 }
 

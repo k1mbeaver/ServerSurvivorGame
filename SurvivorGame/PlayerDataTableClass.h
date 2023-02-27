@@ -33,6 +33,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float PlayerCurrentCrouchWalk;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString PlayerCurrentWeapon;
 };
 UCLASS()
 class SURVIVORGAME_API APlayerDataTableClass : public AActor

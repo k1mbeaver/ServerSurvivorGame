@@ -41,8 +41,15 @@ void ASurvivorGameProjectile::BeginPlay()
 	Super::BeginPlay();
 
 	myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
-	ProjectilePower = myGameInstance->GetProjectilePower("Riffle");
-	ProjectileSpeed = myGameInstance->GetProjectileSpeed("Riffle");
+	ProjectileName = myGameInstance->GetPlayerCurrentWeapon("1");
+
+	if (ProjectileName == "Punch")
+	{
+		return;
+	}
+
+	ProjectilePower = myGameInstance->GetProjectilePower(ProjectileName);
+	ProjectileSpeed = myGameInstance->GetProjectileSpeed(ProjectileName);
 
 	ProjectileMovement->MaxSpeed = ProjectileSpeed;
 }
