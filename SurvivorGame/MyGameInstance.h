@@ -1,3 +1,4 @@
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
@@ -25,9 +26,10 @@ public:
 	// 아이템 값 얻어오기
 	FString GetItemName(FString ItemID);
 	FString GetItemEquipType(FString ItemID);
-	USkeletalMesh* GetItemSkeletalMesh(FString ItemID);
 	FVector GetParticleMuzzleLocation(FString ItemID);
 	UTexture2D* GetItemImage(FString ItemID);
+	UStaticMesh* GetItemStaticMesh(FString ItemID);
+	float GetItemHealthPercent(FString ItemID);
 
 	// 캐릭터 값 얻어오기
 	FString GetPlayerName(FString PlayerID);

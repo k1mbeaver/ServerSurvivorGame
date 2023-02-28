@@ -1,3 +1,4 @@
+
 // Fill out your copyright notice in the Description page of Project Settings.
 // #include "ItemDataStruct.h"
 #pragma once
@@ -71,7 +72,7 @@ public:
 		class UPlayerAnimInstance* CharacterAnim;
 
 	UPROPERTY(BlueprintReadWrite, Replicated, Category = Weapon)
-		class USkeletalMeshComponent* WeaponMesh;
+		class UStaticMeshComponent* WeaponMesh;
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class ASurvivorGameProjectile> ProjectileClass;
@@ -214,7 +215,7 @@ public:
 		//void GetItemData(FItemData GetItemData);
 
 	UFUNCTION(BlueprintCallable)
-		void GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, USkeletalMesh* ItemSkeletalMesh);
+		void GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, UStaticMesh* ItemStaticMesh);
 
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);

@@ -7,7 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/ChildActorComponent.h"
-#include "Components/SkeletalMeshComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "GameFrameWork/CharacterMovementComponent.h"
 #include "Animation/AnimInstance.h"
 #include "PlayerAnimInstance.h"
@@ -24,7 +24,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
-	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WEAPON"));
+	WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WEAPON"));
 	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 
 	SpringArm->SetupAttachment(GetCapsuleComponent());
@@ -322,14 +322,19 @@ void ASurvivorCharacter::EquipGun()
 }
 
 
-void ASurvivorCharacter::GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, USkeletalMesh* ItemSkeletalMesh)
+void ASurvivorCharacter::GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, UStaticMesh* ItemStaticMesh)
 {
 	if (IsWeapon)
 	{
 		GunName = ItemName;
 		GunItemID = ItemID;
-		WeaponMesh->SetSkeletalMesh(ItemSkeletalMesh);
+		WeaponMesh->SetStaticMesh(ItemStaticMesh);
 		InitGun(DefaultMagazine);
+	}
+
+	else
+	{
+		return;
 	}
 }
 

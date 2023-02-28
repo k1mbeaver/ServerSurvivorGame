@@ -26,7 +26,7 @@ void ABP_Riffle::BeginPlay()
 
 	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 
-	GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh(ItemID));
+	//GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh(ItemID));
 }
 
 // Called every frame
@@ -65,8 +65,9 @@ int ABP_Riffle::GetDefaultBullet()
 	return nDefaultBullet;
 }
 
-USkeletalMesh* ABP_Riffle::GetSkeletalMesh()
-{
+//USkeletalMesh* ABP_Riffle::GetSkeletalMesh()
+//{
 	// 코드 추가
-	return MyGameInstance->GetItemSkeletalMesh(ItemID);
-}
+	//return MyGameInstance->GetItemSkeletalMesh(ItemID);
+	//return;
+//}

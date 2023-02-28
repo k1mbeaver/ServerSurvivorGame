@@ -52,6 +52,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 		int GetDefaultBullet();
 
-	UFUNCTION(BlueprintCallable)
-		USkeletalMesh* GetSkeletalMesh();
+	//UFUNCTION(BlueprintCallable)
+		//USkeletalMesh* GetSkeletalMesh();
 };

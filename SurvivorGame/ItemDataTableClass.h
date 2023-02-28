@@ -1,3 +1,4 @@
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
@@ -23,13 +24,16 @@ public:
 		FString ItemEquipType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		USkeletalMesh* ItemSkeletalMesh;
+		UStaticMesh* ItemStaticMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector ParticleMuzzleLocation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UTexture2D* ItemImage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float ItemHealthPercent;
 };
 
 UCLASS()

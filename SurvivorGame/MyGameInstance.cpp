@@ -60,11 +60,18 @@ FString UMyGameInstance::GetItemEquipType(FString ItemID)
 	return ItemEquipType;
 }
 
-USkeletalMesh* UMyGameInstance::GetItemSkeletalMesh(FString ItemID)
+UStaticMesh* UMyGameInstance::GetItemStaticMesh(FString ItemID)
 {
 	FItemDataTable* ItemData = FItemFileTable->FindRow<FItemDataTable>(*ItemID, TEXT(""));
-	USkeletalMesh* ItemSkeletalMesh = ItemData->ItemSkeletalMesh;
-	return ItemSkeletalMesh;
+	UStaticMesh* ItemStaticMesh = ItemData->ItemStaticMesh;
+	return ItemStaticMesh;
+}
+
+float UMyGameInstance::GetItemHealthPercent(FString ItemID)
+{
+	FItemDataTable* ItemData = FItemFileTable->FindRow<FItemDataTable>(*ItemID, TEXT(""));
+	float ItemHealthPercent = ItemData->ItemHealthPercent;
+	return ItemHealthPercent;
 }
 
 UTexture2D* UMyGameInstance::GetItemImage(FString ItemID)

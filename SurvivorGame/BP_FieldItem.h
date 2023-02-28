@@ -33,10 +33,10 @@ public:
 		bool bIsWeapon = false;
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Item)
-		class USkeletalMesh* ItemSkeletal;
+		class UStaticMesh* ItemStatic;
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Item)
-		class USkeletalMeshComponent* ItemSkeletalMesh;
+		class UStaticMeshComponent* ItemStaticMesh;
 
 
 
@@ -59,7 +59,7 @@ public:
 		FString GetItemName();
 
 	UFUNCTION(BlueprintCallable)
-		USkeletalMesh* GetSkeletalMesh();
+		UStaticMesh* GetItemStaticMesh();
 
 	UFUNCTION(BlueprintCallable)
 		bool GetIsWeapon();

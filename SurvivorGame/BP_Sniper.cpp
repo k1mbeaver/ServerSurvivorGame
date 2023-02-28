@@ -1,3 +1,4 @@
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
@@ -29,7 +30,7 @@ void ABP_Sniper::BeginPlay()
 	
 	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 
-	GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh(ItemID));
+	//GunSkeletalMesh->SetSkeletalMesh(MyGameInstance->GetItemSkeletalMesh(ItemID));
 }
 
 // Called every frame
