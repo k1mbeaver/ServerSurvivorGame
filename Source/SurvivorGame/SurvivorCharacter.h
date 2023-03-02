@@ -9,6 +9,7 @@
 #include "SurvivorCharacter.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FHitDamage_HitDelegate); // 피격
+DECLARE_MULTICAST_DELEGATE(FItemHealth_HealthDelegate); // 회복
 
 UENUM(BlueprintType)
 enum class EWeaponState : uint8
@@ -151,6 +152,7 @@ public:
 		//FItemData ItemData;
 
 	FHitDamage_HitDelegate HitDamage_Hit;
+	FItemHealth_HealthDelegate ItemHealth_Health;
 
 public:
 

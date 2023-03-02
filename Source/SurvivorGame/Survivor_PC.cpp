@@ -29,6 +29,7 @@ void ASurvivor_PC::OnPossess(APawn* aPawn)
 
 		myCharacter->CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivor_PC::ReloadEnd);
 		myCharacter->HitDamage_Hit.AddUObject(this, &ASurvivor_PC::GetDamageHUD);
+		myCharacter->ItemHealth_Health.AddUObject(this, &ASurvivor_PC::GetHealthHUD);
 
 		myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	}
@@ -664,6 +665,19 @@ void ASurvivor_PC::GetDamageHUD()
 		if (HUD == nullptr) return;
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETDAMAGE(HUD)!!"));
 		HUD->SetHealthPersent(myCharacter->PlayerHP / myCharacter->PlayerDefaultHP);
+	}
+}
+
+void ASurvivor_PC::GetHealthHUD()
+{
+	if (myCharacter)
+	{
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		if (HUD == nullptr) return;
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETHEALTH(HUD)!!"));
+		HUD->SetHealthPersent(myCharacter->PlayerHP / myCharacter->PlayerDefaultHP);
+		HUD->SetStaminaPersent(myCharacter->PlayerStamina / myCharacter->PlayerDefaultStamina);
 	}
 }
 

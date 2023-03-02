@@ -326,16 +326,25 @@ void ASurvivorCharacter::GetItemData(bool IsWeapon, FString ItemID)
 {
 	if (IsWeapon)
 	{
-		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+		//UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 		GunItemID = ItemID;
-		GunName = MyGI->GetItemName(GunItemID);
-		GunSkeletalMesh = MyGI->GetItemSkeletalMesh(GunItemID);
-		InitGun(MyGI->GetProjectileMagazine(GunName));
-		WeaponMesh->SetSkeletalMesh(MyGI->GetItemSkeletalMesh(GunItemID));
+		GunName = myGameInstance->GetItemName(GunItemID);
+		GunSkeletalMesh = myGameInstance->GetItemSkeletalMesh(GunItemID);
+		InitGun(myGameInstance->GetProjectileMagazine(GunName));
+		WeaponMesh->SetSkeletalMesh(myGameInstance->GetItemSkeletalMesh(GunItemID));
 	}
 
-	else
+	else if (myGameInstance->GetItemEquipType(ItemID) == "HpItem")
 	{
+		PlayerHP += myGameInstance->GetItemHealthPercent(ItemID);
+		ItemHealth_Health.Broadcast();
+		return;
+	}
+
+	else if (myGameInstance->GetItemEquipType(ItemID) == "StaminaItem")
+	{
+		PlayerStamina += myGameInstance->GetItemHealthPercent(ItemID);
+		ItemHealth_Health.Broadcast();
 		return;
 	}
 }

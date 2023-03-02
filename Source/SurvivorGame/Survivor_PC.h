@@ -24,6 +24,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	void GetDamageHUD();
+	void GetHealthHUD();
 	void WeaponUIVisible();
 	void WeaponUIHidden();
 private:
