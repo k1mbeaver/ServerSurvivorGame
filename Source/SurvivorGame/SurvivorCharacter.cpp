@@ -336,14 +336,14 @@ void ASurvivorCharacter::GetItemData(bool IsWeapon, FString ItemID)
 
 	else if (myGameInstance->GetItemEquipType(ItemID) == "HpItem")
 	{
-		PlayerHP += myGameInstance->GetItemHealthPercent(ItemID);
+		this->PlayerHP += myGameInstance->GetItemHealthPercent(ItemID);
 		ItemHealth_Health.Broadcast();
 		return;
 	}
 
 	else if (myGameInstance->GetItemEquipType(ItemID) == "StaminaItem")
 	{
-		PlayerStamina += myGameInstance->GetItemHealthPercent(ItemID);
+		this->PlayerStamina += myGameInstance->GetItemHealthPercent(ItemID);
 		ItemHealth_Health.Broadcast();
 		return;
 	}
