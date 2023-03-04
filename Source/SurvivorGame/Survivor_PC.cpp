@@ -29,7 +29,7 @@ void ASurvivor_PC::OnPossess(APawn* aPawn)
 
 		myCharacter->CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivor_PC::ReloadEnd);
 		myCharacter->HitDamage_Hit.AddUObject(this, &ASurvivor_PC::GetDamageHUD);
-		//myCharacter->ItemHealth_Health.AddDynamic(this, &ASurvivor_PC::GetHealthHUD);
+		myCharacter->ItemHealth_Health.AddUObject(this, &ASurvivor_PC::GetHealthHUD);
 
 		myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	}
