@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "BP_FieldItem.h"
 #include "ItemSpawner.generated.h"
 
 UCLASS()
@@ -15,9 +16,21 @@ public:
 	// Sets default values for this actor's properties
 	AItemSpawner();
 
+	UPROPERTY(EditAnywhere)
+		TArray<TSubclassOf<ABP_FieldItem>> ItemClasses;
+
+	UPROPERTY(EditAnywhere)
+		int NumItemsToSpawn;
+
+	UPROPERTY(EditAnywhere)
+		float SpawnRadius;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void SpawnItems();
+	int RandomItem();
 
 public:	
 	// Called every frame
