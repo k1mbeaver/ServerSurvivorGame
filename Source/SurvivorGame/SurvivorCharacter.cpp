@@ -280,7 +280,7 @@ void ASurvivorCharacter::PlayerCantGetItem()
 	bCanGetItem = false;
 }
 
-void ASurvivorCharacter::SetNearItem(UObject* objNearItem)
+void ASurvivorCharacter::SetNearItem(AActor* objNearItem)
 {
 	NearItem = objNearItem;
 }

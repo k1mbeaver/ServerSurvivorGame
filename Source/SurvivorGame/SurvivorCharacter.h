@@ -143,7 +143,7 @@ public:
 		bool bPlayerGet;
 
 	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
-		class UObject* NearItem;
+		class AActor* NearItem;
 
 	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		bool bCanFire = true;
@@ -151,7 +151,7 @@ public:
 	//UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		//FItemData ItemData;
 
-	FHitDamage_HitDelegate HitDamage_Hit;
+	FHitDamage_HitDelegate HitDamage_Hit;	
 	FItemHealth_HealthDelegate ItemHealth_Health;
 
 public:
@@ -208,7 +208,7 @@ public:
 		void SetCanGetItem();
 
 	UFUNCTION(BlueprintCallable)
-		void SetNearItem(UObject* objNearItem);
+		void SetNearItem(AActor* objNearItem);
 
 	UFUNCTION(BlueprintCallable)
 		void InitNearItem();
