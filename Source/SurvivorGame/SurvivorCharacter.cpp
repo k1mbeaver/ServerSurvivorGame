@@ -87,6 +87,8 @@ void ASurvivorCharacter::BeginPlay()
 	// AnimNotify
 	CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
 
+	//MyPlayerController = Cast<ASurvivor_PC>(GetOwner()->GetInstigatorController());
+
 	// 테스트 전용입니다
 	//CharacterAnim->IsFire = true;
 	//nProjectileMagazine = 30;
@@ -106,6 +108,15 @@ void ASurvivorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
+
+/*
+void ASurvivorCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	MyPlayerController = Cast<ASurvivor_PC>(NewController);
+}
+*/
 
 void ASurvivorCharacter::UpDown(float NewAxisValue)
 {
@@ -336,17 +347,43 @@ void ASurvivorCharacter::GetItemData(bool IsWeapon, FString ItemID)
 
 	else if (myGameInstance->GetItemEquipType(ItemID) == "HpItem")
 	{
-		this->PlayerHP += myGameInstance->GetItemHealthPercent(ItemID);
-		ItemHealth_Health.Broadcast();
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GetHPItem!!"));
+		HealthHP();
 		return;
 	}
 
 	else if (myGameInstance->GetItemEquipType(ItemID) == "StaminaItem")
 	{
-		this->PlayerStamina += myGameInstance->GetItemHealthPercent(ItemID);
-		ItemHealth_Health.Broadcast();
+		HealthStamina();
 		return;
 	}
+}
+
+void ASurvivorCharacter::HealthHP()
+{
+	float myHP = this->PlayerHP;
+	this->PlayerHP = myHP - 20.0f; // 이건 나중에 수정하자
+		//myGameInstance->GetItemHealthPercent(ItemID);
+
+	if (!MyPlayerController)
+	{
+		return;
+	}
+	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	MyPlayerController->GetHealthHUD();
+}
+
+void ASurvivorCharacter::HealthStamina()
+{
+	//this->PlayerStamina = myStamina + myGameInstance->GetItemHealthPercent(ItemID);
+
+	if (!MyPlayerController)
+	{
+		return;
+	}
+
+	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	MyPlayerController->GetHealthHUD();
 }
 
 void ASurvivorCharacter::InitGun(int GunMagazine)
@@ -537,33 +574,45 @@ void ASurvivorCharacter::GetDamage(float fDamage)
 
 	CharacterAnim->PlayHitMontage();
 
-	//HitDamage_Hit.Broadcast();
-	// 2/15 현재 한 캐릭터가 데미지를 입으면 모든 캐릭터들이 데미지를 입는것으로 UI의 체력이 깎임
-	ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
-	myPlayerController->GetDamageHUD();
-
-	//myPlayerController->GetDamageHUD(this->PlayerHP / this->PlayerDefaultHP);
-
-	//APlayerHUD* HUD = Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-	//HUD->SetHealthPersent(this->PlayerHP / this->PlayerDefaultHP);
-
 	if (this->PlayerHP <= 0)
 	{
 		SetDead();
 	}
-	
+
+	if (!MyPlayerController)
+	{
+		return;
+	}
+
+	//HitDamage_Hit.Broadcast();
+	// 2/15 현재 한 캐릭터가 데미지를 입으면 모든 캐릭터들이 데미지를 입는것으로 UI의 체력이 깎임
+	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	MyPlayerController->GetDamageHUD();
+
+	//myPlayerController->GetDamageHUD(this->PlayerHP / this->PlayerDefaultHP);
+
+	//APlayerHUD* HUD = Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	//HUD->SetHealthPersent(this->PlayerHP / this->PlayerDefaultHP);	
 }
 
 void ASurvivorCharacter::WeaponUIVisible()
 {
-	ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
-	myPlayerController->WeaponUIVisible();
+	if (!MyPlayerController)
+	{
+		return;
+	}
+
+	MyPlayerController->WeaponUIVisible();
 }
 
 void ASurvivorCharacter::WeaponUIHidden()
 {
-	ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
-	myPlayerController->WeaponUIHidden();
+	if (!MyPlayerController)
+	{
+		return;
+	}
+
+	MyPlayerController->WeaponUIHidden();
 }
 
 void ASurvivorCharacter::WeaponUIManage()
@@ -618,4 +667,5 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, GunName);
 	DOREPLIFETIME(ASurvivorCharacter, GunItemID);
 	DOREPLIFETIME(ASurvivorCharacter, GunSkeletalMesh);
+	DOREPLIFETIME(ASurvivorCharacter, MyPlayerController);
 }

@@ -59,8 +59,13 @@ public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
+	//virtual void PossessedBy(AController* NewController);
+
 	UPROPERTY()
 		class UGameplayStatics* GameStatic;
+
+	UPROPERTY(Replicated)
+		class ASurvivor_PC* MyPlayerController;
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class USpringArmComponent* SpringArm;
@@ -222,6 +227,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void GetItemData(bool IsWeapon, FString ItemID);
 		//void GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, UStaticMesh* ItemStaticMesh);
+
+	void HealthHP();
+	void HealthStamina();
 
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);
