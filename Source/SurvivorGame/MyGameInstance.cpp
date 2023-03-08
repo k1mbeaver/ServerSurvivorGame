@@ -131,6 +131,32 @@ FString UMyGameInstance::GetPlayerCurrentWeapon(FString PlayerID)
 	return WeaponName;
 }
 
+float UMyGameInstance::GetPlayerCurrentHP(FString PlayerID)
+{
+	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
+	float CurrentHP = PlayerData->PlayerCurrentHP;
+	return CurrentHP;
+}
+
+void UMyGameInstance::SetPlayerCurrentHP(FString PlayerID, float PlayerCurrentHP)
+{
+	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
+	PlayerData->PlayerCurrentHP = PlayerCurrentHP;
+}
+
+float UMyGameInstance::GetPlayerCurrentStamina(FString PlayerID)
+{
+	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
+	float CurrentStamina = PlayerData->PlayerCurrentStamina;
+	return CurrentStamina;
+}
+
+void UMyGameInstance::SetPlayerCurrentStamina(FString PlayerID, float PlayerCurrentStamina)
+{
+	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));
+	PlayerData->PlayerCurrentStamina = PlayerCurrentStamina;
+}
+
 void UMyGameInstance::SetPlayerName(FString PlayerID, FString PlayerName)
 {
 	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerID, TEXT(""));

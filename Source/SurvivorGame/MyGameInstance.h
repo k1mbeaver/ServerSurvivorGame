@@ -43,6 +43,10 @@ public:
 	void SetPlayerCurrentWeapon(FString PlayerID, FString WeaponName);
 	USkeletalMesh* GetPlayerSkeletalMesh(FString PlayerID);
 	void SetPlayerSkeletalMesh(FString PlayerID, USkeletalMesh* PlayerSkeletalMesh);
+	float GetPlayerCurrentHP(FString PlayerID);
+	void SetPlayerCurrentHP(FString PlayerID, float PlayerCurrentHP);
+	float GetPlayerCurrentStamina(FString PlayerID);
+	void SetPlayerCurrentStamina(FString PlayerID, float PlayerCurrentStamina);
 
 	// 파티클 값 얻어오기
 

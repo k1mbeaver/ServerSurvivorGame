@@ -663,7 +663,7 @@ void ASurvivor_PC::GetDamageHUD()
 		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 		if (HUD == nullptr) return;
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETDAMAGE(HUD)!!"));
-		HUD->SetHealthPersent(myCharacter->PlayerHP / myCharacter->PlayerDefaultHP);
+		HUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
 	}
 }
 
@@ -676,8 +676,9 @@ void ASurvivor_PC::GetHealthHUD()
 		if (HUD == nullptr) return;
 
 		//myCharacter->PlayerHP += 20.0f;
-		HUD->SetHealthPersent(myCharacter->PlayerHP / myCharacter->PlayerDefaultHP);
-		HUD->SetStaminaPersent(myCharacter->PlayerStamina / myCharacter->PlayerDefaultStamina);
+		//myCharacter->GetHP()
+		HUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
+		//HUD->SetStaminaPersent(myCharacter->PlayerStamina / myCharacter->PlayerDefaultStamina);
 	}
 }
 

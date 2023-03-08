@@ -35,6 +35,8 @@ ASurvivorCharacter::ASurvivorCharacter()
 	MuzzleLocation->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 	MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
 
+	WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, "RightHand_Weapon");
+
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
 	GetCharacterMovement()->JumpZVelocity = 400.0f;
@@ -54,7 +56,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 	fCurrentPawnSpeed = 200.0f;
 	fSprintPawnSpeed = 400.0f;
 	fCrouchingPawnSpeed = 100.0f;
-	PlayerHP = 200.0f;
+	//PlayerHP = 200.0f;
 	PlayerDefaultHP = 200.0f;
 	PlayerStamina = 100.0f;
 	PlayerDefaultStamina = 100.0f;
@@ -80,12 +82,14 @@ void ASurvivorCharacter::BeginPlay()
 	GetMesh()->SetSkeletalMesh(myGameInstance->GetPlayerSkeletalMesh("1"));
 
 	// 여기다가 아이템의 MuzzleLocation 값을 얻어와서 적용하자
-	//MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("1"));
-	//MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
-	//GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
+	MuzzleLocation->SetRelativeLocation(myGameInstance->GetParticleMuzzleLocation("1"));
+	MuzzleLocation->SetRelativeRotation(FRotator(0.0f, -270.0f, 0.0f));
+	GunOffset = myGameInstance->GetParticleMuzzleLocation("1");
 
 	// AnimNotify
 	CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
+
+	PlayerHP = myGameInstance->GetPlayerCurrentHP("1");
 
 	//MyPlayerController = Cast<ASurvivor_PC>(GetOwner()->GetInstigatorController());
 
@@ -319,6 +323,7 @@ void ASurvivorCharacter::EquipGun()
 		CharacterAnim->IsFire = true;
 
 		myGameInstance->SetPlayerCurrentWeapon("1", GunName);
+		WeaponMesh->SetSkeletalMesh(GunSkeletalMesh);
 
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GetItem!!"));
 		// nCurrentMagazine 나중에 탄 아이템 획득할 때 여기다가 추가
@@ -342,10 +347,13 @@ void ASurvivorCharacter::GetItemData(bool IsWeapon, FString ItemID)
 		GunName = myGameInstance->GetItemName(GunItemID);
 		GunSkeletalMesh = myGameInstance->GetItemSkeletalMesh(GunItemID);
 		InitGun(myGameInstance->GetProjectileMagazine(GunName));
-		WeaponMesh->SetSkeletalMesh(myGameInstance->GetItemSkeletalMesh(GunItemID));
+		return;
 	}
+}
 
-	else if (myGameInstance->GetItemEquipType(ItemID) == "HpItem")
+void ASurvivorCharacter::HealthCharacter(FString ItemID)
+{
+	if (myGameInstance->GetItemEquipType(ItemID) == "HpItem")
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GetHPItem!!"));
 		HealthHP();
@@ -359,16 +367,37 @@ void ASurvivorCharacter::GetItemData(bool IsWeapon, FString ItemID)
 	}
 }
 
+float ASurvivorCharacter::GetHP()
+{
+	return this->PlayerHP;
+		//myGameInstance->GetPlayerCurrentHP("1");
+		//this->PlayerHP;
+}
+
+void ASurvivorCharacter::SetHP(float newHP)
+{
+	//myGameInstance->SetPlayerCurrentHP("1", newHP);
+
+	//FString MyString = FString::SanitizeFloat(myGameInstance->GetPlayerCurrentHP("1"));
+
+	//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, *MyString);
+	this->PlayerHP = newHP;
+	return;
+}
+
 void ASurvivorCharacter::HealthHP()
 {
-	float myHP = this->PlayerHP;
-	this->PlayerHP = myHP - 20.0f; // 이건 나중에 수정하자
+	float myHP = GetHP();
+	myHP = myHP + 20.0f; // 이건 나중에 수정하자
+	SetHP(myHP);
+
 		//myGameInstance->GetItemHealthPercent(ItemID);
 
 	if (!MyPlayerController)
 	{
 		return;
 	}
+
 	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
 	MyPlayerController->GetHealthHUD();
 }
@@ -569,12 +598,13 @@ void ASurvivorCharacter::SetDead()
 
 void ASurvivorCharacter::GetDamage(float fDamage)
 {
-	float myHp = this->PlayerHP;
-	this->PlayerHP = myHp - fDamage;
+	float myHp = GetHP();
+	myHp = myHp - fDamage;
+	SetHP(myHp);
 
 	CharacterAnim->PlayHitMontage();
 
-	if (this->PlayerHP <= 0)
+	if (myHp <= 0)
 	{
 		SetDead();
 	}

@@ -36,6 +36,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FString PlayerCurrentWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float PlayerCurrentHP;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float PlayerCurrentStamina;
 };
 UCLASS()
 class SURVIVORGAME_API APlayerDataTableClass : public AActor

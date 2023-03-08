@@ -48,6 +48,9 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = HiddenMision)
 		bool bCanBasicAttack;
 
+	UPROPERTY(VisibleInstanceOnly, Replicated)
+		float PlayerHP = 200.0f;
+
 	class UMyGameInstance* myGameInstance;
 
 public:	
@@ -77,7 +80,7 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Category = Animation)
 		class UPlayerAnimInstance* CharacterAnim;
 
-	UPROPERTY(BlueprintReadWrite, Replicated, Category = Weapon)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Replicated, Category = Weapon)
 		class USkeletalMeshComponent* WeaponMesh;
 
 	UPROPERTY(BlueprintReadWrite, Replicated, Category = Weapon)
@@ -126,16 +129,13 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Player)
 		EPlayerState CurrentPlayerState;
 
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
-		float PlayerHP;
-
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleInstanceOnly, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		float PlayerDefaultHP;
 
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleInstanceOnly, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		float PlayerStamina;
 
-	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleInstanceOnly, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		float PlayerDefaultStamina;
 
 	UPROPERTY(EditAnyWhere, Replicated, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
@@ -228,8 +228,13 @@ public:
 		void GetItemData(bool IsWeapon, FString ItemID);
 		//void GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, UStaticMesh* ItemStaticMesh);
 
+	UFUNCTION(BlueprintCallable)
+		void HealthCharacter(FString ItemID);
+
 	void HealthHP();
 	void HealthStamina();
+	float GetHP();
+	void SetHP(float newHP);
 
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);
