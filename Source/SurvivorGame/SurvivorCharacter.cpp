@@ -393,13 +393,13 @@ void ASurvivorCharacter::HealthHP()
 
 		//myGameInstance->GetItemHealthPercent(ItemID);
 
-	if (!MyPlayerController)
-	{
-		return;
-	}
+	//if (!MyPlayerController)
+	//{
+		//return;
+	//}
 
 	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
-	MyPlayerController->GetHealthHUD();
+	MyPlayerController->GetHealthHUD(GetHP());
 }
 
 void ASurvivorCharacter::HealthStamina()
@@ -412,7 +412,7 @@ void ASurvivorCharacter::HealthStamina()
 	}
 
 	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
-	MyPlayerController->GetHealthHUD();
+	//MyPlayerController->GetHealthHUD();
 }
 
 void ASurvivorCharacter::InitGun(int GunMagazine)

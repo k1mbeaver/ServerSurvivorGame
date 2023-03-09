@@ -24,7 +24,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	void GetDamageHUD();
-	void GetHealthHUD();
+	void GetHealthHUD(float CharacterInfo);
 	void WeaponUIVisible();
 	void WeaponUIHidden();
 private:
@@ -156,5 +156,16 @@ private:
 		void Client_EquipGun(ASurvivorCharacter* ClientCharacter);
 
 	void EquipGun();
+
+	// 데미지 받았을 때
+	UFUNCTION(Server, Reliable)
+		void Server_GetDamage(ASurvivorCharacter* ClientCharacter, float CharacterHP);
+
+	//UFUNCTION(Client, Reliable)
+		//void Client_GetDamage(ASurvivorCharacter* ClientCharacter);
+
+	// 체력 회복 했을 때
+	UFUNCTION(Server, Reliable)
+		void Server_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 };
 

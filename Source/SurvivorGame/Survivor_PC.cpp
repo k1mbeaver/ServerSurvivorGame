@@ -663,11 +663,12 @@ void ASurvivor_PC::GetDamageHUD()
 		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 		if (HUD == nullptr) return;
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETDAMAGE(HUD)!!"));
+		Server_GetDamage(myCharacter, myCharacter->GetHP());
 		HUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
 	}
 }
 
-void ASurvivor_PC::GetHealthHUD()
+void ASurvivor_PC::GetHealthHUD(float CharacterInfo)
 {
 	if (myCharacter)
 	{
@@ -677,9 +678,54 @@ void ASurvivor_PC::GetHealthHUD()
 
 		//myCharacter->PlayerHP += 20.0f;
 		//myCharacter->GetHP()
-		HUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
+		Server_GetHealth(myCharacter, CharacterInfo);
+
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETHEALTH(HUD)!!"));
+
+		float SetCharacterHealth = CharacterInfo;
+		HUD->SetHealthPersent(SetCharacterHealth / myCharacter->PlayerDefaultHP);
 		//HUD->SetStaminaPersent(myCharacter->PlayerStamina / myCharacter->PlayerDefaultStamina);
 	}
+}
+
+void ASurvivor_PC::Server_GetDamage_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->SetHP(CharacterHP);
+
+	/*
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_EquipGun(ClientCharacter);
+		}
+	}
+	*/
+}
+
+void ASurvivor_PC::Server_GetHealth_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	ClientCharacter->SetHP(CharacterHP);
+
+	/*
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_EquipGun(ClientCharacter);
+		}
+	}
+	*/
 }
 
 void ASurvivor_PC::WeaponUIVisible()
