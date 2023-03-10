@@ -161,11 +161,14 @@ private:
 	UFUNCTION(Server, Reliable)
 		void Server_GetDamage(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 
-	//UFUNCTION(Client, Reliable)
-		//void Client_GetDamage(ASurvivorCharacter* ClientCharacter);
+	UFUNCTION(Client, Reliable)
+		void Client_GetDamage(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 
 	// 체력 회복 했을 때
 	UFUNCTION(Server, Reliable)
 		void Server_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
+
+	UFUNCTION(Client, Reliable)
+		void Client_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 };
 

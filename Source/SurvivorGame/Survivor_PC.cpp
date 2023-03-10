@@ -696,16 +696,23 @@ void ASurvivor_PC::Server_GetDamage_Implementation(ASurvivorCharacter* ClientCha
 
 	ClientCharacter->SetHP(CharacterHP);
 
-	/*
+	
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
 		if (PC)
 		{
-			PC->Client_EquipGun(ClientCharacter);
+			PC->Client_GetDamage(ClientCharacter, CharacterHP);
 		}
 	}
-	*/
+	
+}
+
+void ASurvivor_PC::Client_GetDamage_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->SetHP(CharacterHP);
 }
 
 void ASurvivor_PC::Server_GetHealth_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
@@ -716,16 +723,23 @@ void ASurvivor_PC::Server_GetHealth_Implementation(ASurvivorCharacter* ClientCha
 
 	ClientCharacter->SetHP(CharacterHP);
 
-	/*
+	
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
 		if (PC)
 		{
-			PC->Client_EquipGun(ClientCharacter);
+			PC->Client_GetHealth(ClientCharacter, CharacterHP);
 		}
 	}
-	*/
+	
+}
+
+void ASurvivor_PC::Client_GetHealth_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
+{
+	if (ClientCharacter == nullptr) return;
+
+	ClientCharacter->SetHP(CharacterHP);
 }
 
 void ASurvivor_PC::WeaponUIVisible()
