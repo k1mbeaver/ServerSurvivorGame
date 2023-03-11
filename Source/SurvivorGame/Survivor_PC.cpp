@@ -47,7 +47,12 @@ void ASurvivor_PC::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	playerHUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
+	if (IsHealth)
+	{
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		HUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
+		IsHealth = false;
+	}
 }
 
 
@@ -667,12 +672,13 @@ void ASurvivor_PC::GetDamageHUD()
 {
 	if (myCharacter)
 	{
-		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		//APlayerHUD* HUD = GetHUD<APlayerHUD>();
 		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-		if (HUD == nullptr) return;
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETDAMAGE(HUD)!!"));
+		//if (HUD == nullptr) return;
+		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETDAMAGE(HUD)!!"));
 		Server_GetDamage(myCharacter, myCharacter->GetHP());
-		HUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
+		IsHealth = true;
+		//HUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
 	}
 }
 
@@ -680,18 +686,19 @@ void ASurvivor_PC::GetHealthHUD(float CharacterInfo)
 {
 	if (myCharacter)
 	{
-		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		//APlayerHUD* HUD = GetHUD<APlayerHUD>();
 		//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-		if (HUD == nullptr) return;
+		//if (HUD == nullptr) return;
 
 		//myCharacter->PlayerHP += 20.0f;
 		//myCharacter->GetHP()
 		Server_GetHealth(myCharacter, CharacterInfo);
 
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETHEALTH(HUD)!!"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETHEALTH(HUD)!!"));
 
-		float SetCharacterHealth = CharacterInfo;
-		HUD->SetHealthPersent(SetCharacterHealth / myCharacter->PlayerDefaultHP);
+		IsHealth = true;
+		//float SetCharacterHealth = CharacterInfo;
+		//HUD->SetHealthPersent(SetCharacterHealth / myCharacter->PlayerDefaultHP);
 		//HUD->SetStaminaPersent(myCharacter->PlayerStamina / myCharacter->PlayerDefaultStamina);
 	}
 }

@@ -42,6 +42,7 @@ private:
 		class APlayerHUD* playerHUD;
 
 	class UMyGameInstance* myGameInstance;
+	bool IsHealth = false;
 private:
 	void UpDown(float NewAxisValue);
 
