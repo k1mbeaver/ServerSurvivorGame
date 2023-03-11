@@ -382,6 +382,7 @@ void ASurvivorCharacter::SetHP(float newHP)
 
 	//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, *MyString);
 	this->PlayerHP = newHP;
+
 	return;
 }
 

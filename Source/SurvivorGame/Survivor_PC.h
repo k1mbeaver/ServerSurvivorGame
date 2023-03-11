@@ -22,6 +22,7 @@ public:
 	virtual void PostInitializeComponents() override; // 여기서 빙의되는지 알 수 있음
 	virtual void SetupInputComponent() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+	virtual void Tick(float DeltaTime) override;
 
 	void GetDamageHUD();
 	void GetHealthHUD(float CharacterInfo);
@@ -36,6 +37,9 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Crouch)
 		bool bCanCrouching;
+
+	UPROPERTY(VisibleInstanceOnly, Category = HUD)
+		class APlayerHUD* playerHUD;
 
 	class UMyGameInstance* myGameInstance;
 private:

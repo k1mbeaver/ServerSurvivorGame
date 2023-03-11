@@ -31,6 +31,8 @@ void ASurvivor_PC::OnPossess(APawn* aPawn)
 		myCharacter->MyPlayerController = this;
 
 		myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+
+		playerHUD = GetHUD<APlayerHUD>();
 	}
 }
 
@@ -39,6 +41,13 @@ void ASurvivor_PC::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Possess!"));
+}
+
+void ASurvivor_PC::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	playerHUD->SetHealthPersent(myCharacter->GetHP() / myCharacter->PlayerDefaultHP);
 }
 
 
@@ -389,7 +398,6 @@ void ASurvivor_PC::PlayerAttack()
 
 			// Åº¾ËÀÇ °¹¼ö¸¦ ÁÙÀÎ´Ù.
 			myCharacter->nProjectileMagazine -= 1;
-
 
 			APlayerHUD* HUD = GetHUD<APlayerHUD>();
 			//Cast<APlayerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
