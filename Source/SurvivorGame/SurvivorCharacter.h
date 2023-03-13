@@ -229,12 +229,21 @@ public:
 		//void GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, UStaticMesh* ItemStaticMesh);
 
 	UFUNCTION(BlueprintCallable)
-		void HealthCharacter(FString ItemID);
+		bool HealthCharacter(FString ItemID);
 
-	void HealthHP();
 	void HealthStamina();
-	float GetHP();
-	void SetHP(float newHP);
+
+	UFUNCTION(BlueprintCallable)
+		float GetHP();
+
+	UFUNCTION(BlueprintCallable)
+		void SetHP(float newHP);
+
+	UFUNCTION(BlueprintCallable)
+		float HealthHP(float myPlayerHP);
+
+	UFUNCTION(BlueprintCallable)
+		void HealthPlayerHUD(float myPlayerHP);
 
 	// ÇÔ¼ö
 	void UpDown(float NewAxisValue);

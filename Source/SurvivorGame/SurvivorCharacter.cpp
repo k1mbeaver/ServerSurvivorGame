@@ -351,56 +351,45 @@ void ASurvivorCharacter::GetItemData(bool IsWeapon, FString ItemID)
 	}
 }
 
-void ASurvivorCharacter::HealthCharacter(FString ItemID)
+bool ASurvivorCharacter::HealthCharacter(FString ItemID)
 {
 	if (myGameInstance->GetItemEquipType(ItemID) == "HpItem")
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GetHPItem!!"));
-		HealthHP();
-		return;
+		//HealthHP();
+		return true;
 	}
 
-	else if (myGameInstance->GetItemEquipType(ItemID) == "StaminaItem")
+	//(myGameInstance->GetItemEquipType(ItemID) == "StaminaItem")
+	else
 	{
-		HealthStamina();
-		return;
+		//HealthStamina();
+		return false;
 	}
 }
 
 float ASurvivorCharacter::GetHP()
 {
 	return this->PlayerHP;
-		//myGameInstance->GetPlayerCurrentHP("1");
-		//this->PlayerHP;
 }
 
 void ASurvivorCharacter::SetHP(float newHP)
 {
-	//myGameInstance->SetPlayerCurrentHP("1", newHP);
-
-	//FString MyString = FString::SanitizeFloat(myGameInstance->GetPlayerCurrentHP("1"));
-
-	//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, *MyString);
 	this->PlayerHP = newHP;
-
 	return;
 }
 
-void ASurvivorCharacter::HealthHP()
+float ASurvivorCharacter::HealthHP(float myPlayerHP)
 {
-	float myHP = GetHP();
+	float myHP = myPlayerHP;
 	myHP = myHP + 20.0f; // 이건 나중에 수정하자
-	SetHP(myHP);
 
-		//myGameInstance->GetItemHealthPercent(ItemID);
+	return myHP;
+}
 
-	//if (!MyPlayerController)
-	//{
-		//return;
-	//}
-
-	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
-	MyPlayerController->GetHealthHUD(GetHP());
+void ASurvivorCharacter::HealthPlayerHUD(float myPlayerHP)
+{
+	MyPlayerController->GetHealthHUD(myPlayerHP);
 }
 
 void ASurvivorCharacter::HealthStamina()

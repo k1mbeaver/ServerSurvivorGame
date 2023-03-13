@@ -41,6 +41,18 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Category = HUD)
 		class APlayerHUD* playerHUD;
 
+	UPROPERTY(VisibleInstanceOnly, Category = HUD)
+		float playerCharacterHP;
+
+	UPROPERTY(VisibleInstanceOnly, Category = HUD)
+		float playerCharacterDefaultHP;
+
+	UPROPERTY(VisibleInstanceOnly, Category = HUD)
+		float playerCharacterStamina;
+
+	UPROPERTY(VisibleInstanceOnly, Category = HUD)
+		float playerCharacterDefaultStamina;
+
 	class UMyGameInstance* myGameInstance;
 	bool IsHealth = false;
 private:
@@ -166,14 +178,14 @@ private:
 	UFUNCTION(Server, Reliable)
 		void Server_GetDamage(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 
-	UFUNCTION(Client, Reliable)
-		void Client_GetDamage(ASurvivorCharacter* ClientCharacter, float CharacterHP);
+	//UFUNCTION(Client, Reliable)
+		//void Client_GetDamage(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 
 	// 체력 회복 했을 때
 	UFUNCTION(Server, Reliable)
 		void Server_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 
-	UFUNCTION(Client, Reliable)
-		void Client_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
+	//UFUNCTION(Client, Reliable)
+		//void Client_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 };
 
