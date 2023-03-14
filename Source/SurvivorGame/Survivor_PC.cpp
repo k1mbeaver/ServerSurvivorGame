@@ -98,6 +98,9 @@ void ASurvivor_PC::SetupInputComponent()
 	// 캐릭터 견착
 	InputComponent->BindAction(TEXT("Aim"), IE_Pressed, this, &ASurvivor_PC::ToAim);
 	InputComponent->BindAction(TEXT("Aim"), IE_Released, this, &ASurvivor_PC::EndAim);
+
+	// 인벤토리 열기
+	InputComponent->BindAction(TEXT("Inventory"), IE_Pressed, this, &ASurvivor_PC::UseInventory);
 }
 
 void ASurvivor_PC::UpDown(float NewAxisValue)
@@ -122,6 +125,35 @@ void ASurvivor_PC::GoRightOrLeft()
 	{
 		myCharacter->GoRightOrLeft();
 		Server_GoRightOrLeft(myCharacter);
+	}
+}
+
+void ASurvivor_PC::UseInventory()
+{
+	if (IsUIopen)
+	{
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		if (HUD == nullptr) return;
+		HUD->SetInventoryHidden();
+		IsUIopen = false;
+	}
+
+	else
+	{
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		if (HUD == nullptr) return;
+		HUD->SetInventoryVisible();
+
+		for (int Index = 0; Index < 10; Index++)
+		{
+			FString strName = "Test";
+			int nCount = 0;
+			UTexture2D* setImage = NULL;
+
+			HUD->SetListView(Index, strName, nCount, setImage);
+		}
+
+		IsUIopen = true;
 	}
 }
 

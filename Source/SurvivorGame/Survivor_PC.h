@@ -55,6 +55,7 @@ private:
 
 	class UMyGameInstance* myGameInstance;
 	bool IsHealth = false;
+	bool IsUIopen = false;
 private:
 	void UpDown(float NewAxisValue);
 
@@ -101,6 +102,8 @@ private:
 	void Jump();
 
 	void StopJumping();
+
+	void UseInventory();
 
 	UFUNCTION(Server, Reliable)
 		void Server_GetItem(ASurvivorCharacter* ClientCharacter);

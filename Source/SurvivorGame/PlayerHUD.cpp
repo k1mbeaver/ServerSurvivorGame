@@ -97,3 +97,28 @@ void APlayerHUD::SetTextHidden()
 {
 	MainUIObject->SetTextHidden();
 }
+
+void APlayerHUD::SetInventoryHidden()
+{
+	MainUIObject->SetInventoryHidden();
+}
+
+void APlayerHUD::SetInventoryVisible()
+{
+	MainUIObject->SetInventoryVisible();
+}
+
+void APlayerHUD::SetListInit(int nIndex, FString strName, int nCount, UTexture2D* setImage)
+{
+	MainUIObject->SetListInit(nIndex, strName, nCount, setImage);
+}
+
+void APlayerHUD::SetListCount(int nIndex, int nCount)
+{
+	MainUIObject->SetListCount(nIndex, nCount);
+}
+
+void APlayerHUD::SetListView(int nIndex, FString strName, int nCount, UTexture2D* setImage)
+{
+	MainUIObject->SetListView(nIndex, strName, nCount, setImage);
+}

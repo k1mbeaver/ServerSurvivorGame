@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "BP_FieldItem.h"
+#include "PlayerItemData.h"
 #include "InventorySystem.generated.h"
 
 /**
@@ -16,8 +16,8 @@ class SURVIVORGAME_API UInventorySystem : public UObject
 	GENERATED_BODY()
 	
 public:
-	TArray<ABP_FieldItem*> InventoryItems;
+	TArray<UPlayerItemData*> InventoryItems;
 
-	void AddItem(ABP_FieldItem* Item);
-	void RemoveItem(ABP_FieldItem* Item);
+	void AddItem(UPlayerItemData* Item);
+	void RemoveItem(UPlayerItemData* Item);
 };

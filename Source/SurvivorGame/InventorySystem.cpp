@@ -3,11 +3,11 @@
 
 #include "InventorySystem.h"
 
-void UInventorySystem::AddItem(ABP_FieldItem* Item)
+void UInventorySystem::AddItem(UPlayerItemData* Item)
 {
     if (InventoryItems.Contains(Item))
     {
-        //Item->Quantity++; -> 이건 아이템의 수량을 증가시킨다.
+        Item->ItemCount++; //-> 이건 아이템의 수량을 증가시킨다.
     }
     else
     {
@@ -15,15 +15,15 @@ void UInventorySystem::AddItem(ABP_FieldItem* Item)
     }
 }
 
-void UInventorySystem::RemoveItem(ABP_FieldItem* Item)
+void UInventorySystem::RemoveItem(UPlayerItemData* Item)
 {
     if (InventoryItems.Contains(Item))
     {
-        // Item->Quantity--; -> 이건 아이템의 수량을 감소시킨다.
+        Item->ItemCount--; //-> 이건 아이템의 수량을 감소시킨다.
 
-        //if (Item->Quantity == 0) // 만약 아이템의 수가 0가 되면 삭제
-        //{
-            //InventoryItems.Remove(Item);
-        //}
+        if (Item->ItemCount == 0) // 만약 아이템의 수가 0가 되면 삭제
+        {
+            InventoryItems.Remove(Item);
+        }
     }
 }

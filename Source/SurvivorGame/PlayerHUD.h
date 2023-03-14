@@ -33,6 +33,13 @@ public:
 	void SetTextVisible();
 	void SetTextHidden();
 
+	// 인벤토리
+	void SetInventoryVisible();
+	void SetInventoryHidden();
+	void SetListCount(int nIndex, int nCount);
+	void SetListInit(int nIndex, FString strName, int nCount, UTexture2D* setImage);
+	void SetListView(int nIndex, FString strName, int nCount, UTexture2D* setImage);
+
 private:
 	TSubclassOf<class UPlayerMainUI> MainUIClass;
 	class UPlayerMainUI* MainUIObject;
