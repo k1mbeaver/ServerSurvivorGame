@@ -7,6 +7,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
 #include "MyGameInstance.h"
+#include "PlayerItemData.h"
 
 // Sets default values
 ABP_FieldItem::ABP_FieldItem()
@@ -28,22 +29,22 @@ void ABP_FieldItem::BeginPlay()
 {
 	Super::BeginPlay();
 
-	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 
-	if (MyGameInstance->GetItemEquipType(ItemID) == "Weapon")
+	if (MyGI->GetItemEquipType(ItemID) == "Weapon")
 	{
 		bIsWeapon = true;
-		nDefaultBullet = MyGameInstance->GetProjectileMagazine(MyGameInstance->GetItemName(ItemID));
-		ItemStatic = MyGameInstance->GetItemStaticMesh(ItemID);
-		ItemName = MyGameInstance->GetItemName(ItemID);
-		ItemStaticMesh->SetStaticMesh(MyGameInstance->GetItemStaticMesh(ItemID));
+		nDefaultBullet = MyGI->GetProjectileMagazine(MyGI->GetItemName(ItemID));
+		ItemStatic = MyGI->GetItemStaticMesh(ItemID);
+		ItemName = MyGI->GetItemName(ItemID);
+		ItemStaticMesh->SetStaticMesh(MyGI->GetItemStaticMesh(ItemID));
 	}
 
 	else
 	{
 		bIsWeapon = false;
-		ItemName = MyGameInstance->GetItemName(ItemID);
-		ItemStaticMesh->SetStaticMesh(MyGameInstance->GetItemStaticMesh(ItemID));
+		ItemName = MyGI->GetItemName(ItemID);
+		ItemStaticMesh->SetStaticMesh(MyGI->GetItemStaticMesh(ItemID));
 	}
 }
 
@@ -77,13 +78,27 @@ UStaticMesh* ABP_FieldItem::GetItemStaticMesh()
 
 USkeletalMesh* ABP_FieldItem::GetItemSkeletalMesh()
 {
-	return MyGameInstance->GetItemSkeletalMesh(ItemID);
+	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+
+	return MyGI->GetItemSkeletalMesh(ItemID);
 	//MyGameInstance->GetItemStaticMesh(ItemID);
 }
 
 bool ABP_FieldItem::GetIsWeapon()
 {
 	return bIsWeapon;
+}
+
+UPlayerItemData* ABP_FieldItem::GetPlayerItemData()
+{
+	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+	UPlayerItemData* ItemData = NewObject<UPlayerItemData>(this, UPlayerItemData::StaticClass());;
+	ItemData->SetItemCount(0);
+	ItemData->SetItemName(MyGI->GetItemName(ItemID));
+	ItemData->SetItemID(ItemID);
+	ItemData->SetItemImage(MyGI->GetItemImage(ItemID));
+	ItemData->SetItemType(MyGI->GetItemEquipType(ItemID));
+	return ItemData;
 }
 
 void ABP_FieldItem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

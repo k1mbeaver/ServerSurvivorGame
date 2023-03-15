@@ -38,8 +38,6 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Item)
 		class UStaticMeshComponent* ItemStaticMesh;
 
-
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -66,4 +64,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		bool GetIsWeapon();
+
+	UFUNCTION(BlueprintCallable)
+		UPlayerItemData* GetPlayerItemData();
 };

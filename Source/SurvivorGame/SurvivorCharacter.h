@@ -86,6 +86,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Replicated, Category = Weapon)
 		class USkeletalMesh* GunSkeletalMesh;
 
+	UPROPERTY(BlueprintReadWrite, Replicated, Category = Weapon)
+		class UInventorySystem* CharacterInventory;
+
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class ASurvivorGameProjectile> ProjectileClass;
 
@@ -227,6 +230,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void GetItemData(bool IsWeapon, FString ItemID);
 		//void GetItemData(int DefaultMagazine, bool IsWeapon, FString ItemName, FString ItemID, UStaticMesh* ItemStaticMesh);
+
+	UFUNCTION(BlueprintCallable)
+		void AddItemInventory(UPlayerItemData* myPlayerItemData);
+
+	UFUNCTION(BlueprintCallable)
+		TArray<UPlayerItemData*> GetItemInventory();
 
 	UFUNCTION(BlueprintCallable)
 		bool HealthCharacter(FString ItemID);

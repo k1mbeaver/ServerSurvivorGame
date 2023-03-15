@@ -20,4 +20,5 @@ public:
 
 	void AddItem(UPlayerItemData* Item);
 	void RemoveItem(UPlayerItemData* Item);
+	int GetInventorySize();
 };

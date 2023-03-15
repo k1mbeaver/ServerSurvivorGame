@@ -27,3 +27,8 @@ void UInventorySystem::RemoveItem(UPlayerItemData* Item)
         }
     }
 }
+
+int UInventorySystem::GetInventorySize()
+{
+    return InventoryItems.Num();
+}

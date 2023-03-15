@@ -9,6 +9,8 @@
 #include "PlayerHUD.h"
 #include "MyGameInstance.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "InventorySystem.h"
+#include "PlayerItemData.h"
 
 ASurvivor_PC::ASurvivor_PC()
 {
@@ -134,6 +136,8 @@ void ASurvivor_PC::UseInventory()
 	{
 		APlayerHUD* HUD = GetHUD<APlayerHUD>();
 		if (HUD == nullptr) return;
+		FInputModeGameOnly InputMode;
+		UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(false);
 		HUD->SetInventoryHidden();
 		IsUIopen = false;
 	}
@@ -142,17 +146,35 @@ void ASurvivor_PC::UseInventory()
 	{
 		APlayerHUD* HUD = GetHUD<APlayerHUD>();
 		if (HUD == nullptr) return;
-		HUD->SetInventoryVisible();
 
-		for (int Index = 0; Index < 10; Index++)
+		FInputModeUIOnly InputMode;
+		UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(true);
+		ASurvivorCharacter* myPlayerCharacter = Cast<ASurvivorCharacter>(GetPawn());
+		TArray<UPlayerItemData*> GetInventoryData = myPlayerCharacter->GetItemInventory();
+
+		//if (GetInventoryData == nullptr)
+		//{
+			//return;
+		//} 
+
+		//GetInventoryData.Num()
+
+		for (int Index = 0; Index < GetInventoryData.Num(); Index++)
 		{
-			FString strName = "Test";
-			int nCount = 0;
-			UTexture2D* setImage = NULL;
+			UPlayerItemData* GetItemData = GetInventoryData[Index];
+			FString strName = GetItemData->GetItemName();
+			int nCount = GetItemData->GetItemCount();
+			UTexture2D* setImage = GetItemData->GetItemImage();
+			
 
+			//UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+			//FString strName = "Test";
+			//int nCount = 0;
+			//UTexture2D* setImage = MyGI->GetItemImage("5");
 			HUD->SetListView(Index, strName, nCount, setImage);
 		}
 
+		HUD->SetInventoryVisible();
 		IsUIopen = true;
 	}
 }

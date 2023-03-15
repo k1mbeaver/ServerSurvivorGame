@@ -45,4 +45,5 @@ public:
 	void SetListCount(int nIndex, int nCount);
 	void SetListInit(int nIndex, FString strName, int nCount, UTexture2D* setImage);
 	void SetListView(int nIndex, FString strName, int nCount, UTexture2D* setImage);
+	void ListUpdate();
 };

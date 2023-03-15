@@ -16,6 +16,7 @@
 #include "SurvivorGameProjectile.h"
 #include "PlayerHUD.h"
 #include "MyGameMode.h"
+#include "InventorySystem.h"
 
 // Sets default values
 ASurvivorCharacter::ASurvivorCharacter()
@@ -90,6 +91,8 @@ void ASurvivorCharacter::BeginPlay()
 	CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivorCharacter::ReloadEnd);
 
 	PlayerHP = myGameInstance->GetPlayerCurrentHP("1");
+
+	CharacterInventory = NewObject<UInventorySystem>(this, UInventorySystem::StaticClass());
 
 	//MyPlayerController = Cast<ASurvivor_PC>(GetOwner()->GetInstigatorController());
 
@@ -661,6 +664,16 @@ void ASurvivorCharacter::PlayerHasGun()
 	}
 }
 
+void ASurvivorCharacter::AddItemInventory(class UPlayerItemData* myPlayerItemData)
+{
+	CharacterInventory->AddItem(myPlayerItemData);
+}
+
+TArray<UPlayerItemData*> ASurvivorCharacter::GetItemInventory()
+{
+	return CharacterInventory->InventoryItems;
+}
+
 
 void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
@@ -688,4 +701,5 @@ void ASurvivorCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ASurvivorCharacter, GunItemID);
 	DOREPLIFETIME(ASurvivorCharacter, GunSkeletalMesh);
 	DOREPLIFETIME(ASurvivorCharacter, MyPlayerController);
+	DOREPLIFETIME(ASurvivorCharacter, CharacterInventory);
 }

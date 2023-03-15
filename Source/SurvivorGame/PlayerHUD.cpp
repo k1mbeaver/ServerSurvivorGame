@@ -122,3 +122,8 @@ void APlayerHUD::SetListView(int nIndex, FString strName, int nCount, UTexture2D
 {
 	MainUIObject->SetListView(nIndex, strName, nCount, setImage);
 }
+
+void APlayerHUD::ListUpdate()
+{
+	MainUIObject->ListUpdate();
+}

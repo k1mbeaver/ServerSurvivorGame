@@ -47,9 +47,9 @@ void UPlayerInventoryUI::SetListView(int nIndex, FString strName, int nCount, UT
 
 	UPlayerItemData* ItemData = NewObject<UPlayerItemData>(this, UPlayerItemData::StaticClass());
 	ItemData->SetItemIndex(nIndex);
-	ItemData->SetItemCount(0);
-	ItemData->SetItemName("Test");
-	ItemData->SetItemImage(MyGI->GetItemImage("5"));
+	ItemData->SetItemCount(nCount);
+	ItemData->SetItemName(strName);
+	ItemData->SetItemImage(setImage);
 	myListView->AddItem(ItemData);
 }
 

@@ -84,3 +84,8 @@ void UPlayerMainUI::SetListView(int nIndex, FString strName, int nCount, UTextur
 {
 	PlayerInventoryUI->SetListView(nIndex, strName, nCount, setImage);
 }
+
+void UPlayerMainUI::ListUpdate()
+{
+	PlayerInventoryUI->ListUpdate();
+}
