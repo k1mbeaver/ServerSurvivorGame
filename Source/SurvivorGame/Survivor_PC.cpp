@@ -150,7 +150,7 @@ void ASurvivor_PC::UseInventory()
 		FInputModeUIOnly InputMode;
 		UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(true);
 		ASurvivorCharacter* myPlayerCharacter = Cast<ASurvivorCharacter>(GetPawn());
-		TArray<UPlayerItemData*> GetInventoryData = myPlayerCharacter->GetItemInventory();
+		TArray<UPlayerItemData*> GetInventoryData = myCharacter->GetItemInventory();
 
 		//if (GetInventoryData == nullptr)
 		//{

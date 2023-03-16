@@ -32,3 +32,11 @@ int UInventorySystem::GetInventorySize()
 {
     return InventoryItems.Num();
 }
+
+void UInventorySystem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UInventorySystem, InventoryItems);
+
+}

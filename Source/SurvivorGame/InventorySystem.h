@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "PlayerItemData.h"
+#include "Net/UnrealNetwork.h"
 #include "InventorySystem.generated.h"
 
 /**
@@ -21,4 +22,7 @@ public:
 	void AddItem(UPlayerItemData* Item);
 	void RemoveItem(UPlayerItemData* Item);
 	int GetInventorySize();
+
+private:
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 };
