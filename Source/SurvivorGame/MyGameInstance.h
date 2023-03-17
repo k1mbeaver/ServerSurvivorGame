@@ -11,6 +11,7 @@ struct FItemDataTable;
 struct FPlayerDataTable;
 struct FParticleDataTable;
 struct FProjectileDataTable;
+struct FInventoryDataTable;
 
 class UDataTable;
 /**
@@ -59,6 +60,38 @@ public:
 	float GetProjectileSpeed(FString ProjectileID);
 	int GetProjectileMagazine(FString ProjectileID);
 
+	// 인벤토리 값 얻어오기
+
+	UTexture2D* GetInventoryImage(int ItemIndex);
+	int GetInventoryCount(int ItemIndex);
+	FString GetInventoryItemID(int ItemIndex);
+	FString GetInventoryItemName(int ItemIndex);
+	FString GetInventoryItemEquipType(int ItemIndex);
+
+	void SetInventoryItemImage(int ItemIndex, UTexture2D* ItemImage);
+	void SetInventoryItemCount(int ItemIndex, int ItemCount);
+	void SetInventoryItemID(int ItemIndex, FString ItemID);
+	void SetInventoryItemName(int ItemIndex, FString ItemName);
+	void SetInventoryItemEquipType(int ItemIndex, FString ItemEquipType);
+
+	/*
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString ItemID;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int ItemCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString ItemName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString ItemEquipType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UTexture2D* ItemImage;
+	*/
+
+
 private:
 	UPROPERTY()
 		UDataTable* FItemFileTable;
@@ -71,4 +104,7 @@ private:
 
 	UPROPERTY()
 		UDataTable* FProjectileFileTable;
+
+	UPROPERTY()
+		UDataTable* FInventoryFileTable;
 };

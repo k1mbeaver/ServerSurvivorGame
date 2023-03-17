@@ -6,6 +6,7 @@
 #include "PlayerDataTableClass.h"
 #include "ParticleDataTableClass.h"
 #include "ProjectileDataTableClass.h"
+#include "InventoryDataTableClass.h"
 
 UMyGameInstance::UMyGameInstance()
 {
@@ -43,6 +44,15 @@ UMyGameInstance::UMyGameInstance()
 	if (DT_MYPROJECTILEFILE.Succeeded())
 	{
 		FProjectileFileTable = DT_MYPROJECTILEFILE.Object;
+	}
+
+	FString InventoryFileDataPath = TEXT("DataTable'/Game/DataTable/InventoryDataTable.InventoryDataTable'");
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MYINVENTORYFILE(*InventoryFileDataPath);
+
+	if (DT_MYINVENTORYFILE.Succeeded())
+	{
+		FInventoryFileTable = DT_MYINVENTORYFILE.Object;
 	}
 }
 
@@ -220,4 +230,54 @@ int UMyGameInstance::GetProjectileMagazine(FString ProjectileID)
 	FProjectileDataTable* ProjectileData = FProjectileFileTable->FindRow<FProjectileDataTable>(*ProjectileID, TEXT(""));
 	int GetProjectileData = ProjectileData->ProjectileMagazine;
 	return GetProjectileData;
+}
+
+UTexture2D* UMyGameInstance::GetInventoryImage(int ItemIndex)
+{
+
+}
+
+int UMyGameInstance::GetInventoryCount(int ItemIndex)
+{
+
+}
+
+FString UMyGameInstance::GetInventoryItemID(int ItemIndex)
+{
+
+}
+
+FString UMyGameInstance::GetInventoryItemName(int ItemIndex)
+{
+
+}
+
+FString UMyGameInstance::GetInventoryItemEquipType(int ItemIndex)
+{
+
+}
+
+void UMyGameInstance::SetInventoryItemImage(int ItemIndex, UTexture2D* ItemImage)
+{
+
+}
+
+void UMyGameInstance::SetInventoryItemCount(int ItemIndex, int ItemCount)
+{
+
+}
+
+void UMyGameInstance::SetInventoryItemID(int ItemIndex, FString ItemID)
+{
+
+}
+
+void UMyGameInstance::SetInventoryItemName(int ItemIndex, FString ItemName)
+{
+
+}
+
+void UMyGameInstance::SetInventoryItemEquipType(int ItemIndex, FString ItemEquipType)
+{
+
 }
