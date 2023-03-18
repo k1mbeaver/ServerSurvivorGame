@@ -234,50 +234,75 @@ int UMyGameInstance::GetProjectileMagazine(FString ProjectileID)
 
 UTexture2D* UMyGameInstance::GetInventoryImage(int ItemIndex)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	UTexture2D* GetInventoryData = InventoryData->ItemImage;
+	return GetInventoryData;
 }
 
 int UMyGameInstance::GetInventoryCount(int ItemIndex)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	int GetInventoryData = InventoryData->ItemCount;
+	return GetInventoryData;
 }
 
 FString UMyGameInstance::GetInventoryItemID(int ItemIndex)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	FString GetInventoryData = InventoryData->ItemID;
+	return GetInventoryData;
 }
 
 FString UMyGameInstance::GetInventoryItemName(int ItemIndex)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	FString GetInventoryData = InventoryData->ItemName;
+	return GetInventoryData;
 }
 
 FString UMyGameInstance::GetInventoryItemEquipType(int ItemIndex)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	FString GetInventoryData = InventoryData->ItemEquipType;
+	return GetInventoryData;
 }
 
 void UMyGameInstance::SetInventoryItemImage(int ItemIndex, UTexture2D* ItemImage)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	InventoryData->ItemImage = ItemImage;
 }
 
 void UMyGameInstance::SetInventoryItemCount(int ItemIndex, int ItemCount)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	InventoryData->ItemCount = ItemCount;
 }
 
 void UMyGameInstance::SetInventoryItemID(int ItemIndex, FString ItemID)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	InventoryData->ItemID = ItemID;
 }
 
 void UMyGameInstance::SetInventoryItemName(int ItemIndex, FString ItemName)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	InventoryData->ItemName = ItemName;
 }
 
 void UMyGameInstance::SetInventoryItemEquipType(int ItemIndex, FString ItemEquipType)
 {
-
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	InventoryData->ItemEquipType = ItemEquipType;
 }
