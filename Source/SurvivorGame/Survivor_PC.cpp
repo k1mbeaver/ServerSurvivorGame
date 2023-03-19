@@ -159,7 +159,7 @@ void ASurvivor_PC::UseInventory()
 
 		//GetInventoryData.Num()
 
-		for (int Index = 0; Index < GetInventoryData.Num(); Index++)
+		for (int Index = 0; Index < 4; Index++)
 		{
 			UPlayerItemData* GetItemData = GetInventoryData[Index];
 			FString strName = GetItemData->GetItemName();

@@ -667,6 +667,13 @@ void ASurvivorCharacter::PlayerHasGun()
 void ASurvivorCharacter::AddItemInventory(class UPlayerItemData* myPlayerItemData)
 {
 	CharacterInventory->AddItem(myPlayerItemData);
+
+	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+	MyGI->SetInventoryItemCount(myPlayerItemData->GetItemIndex(), myPlayerItemData->ItemCount);
+	MyGI->SetInventoryItemID(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemID());
+	MyGI->SetInventoryItemName(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemName());
+	MyGI->SetInventoryItemImage(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemImage());
+	MyGI->SetInventoryItemEquipType(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemType());
 }
 
 TArray<UPlayerItemData*> ASurvivorCharacter::GetItemInventory()
