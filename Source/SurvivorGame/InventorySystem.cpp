@@ -12,6 +12,7 @@ void UInventorySystem::AddItem(UPlayerItemData* Item)
     else
     {
         InventoryItems.Add(Item);
+        Item->SetItemIndex(InventoryItems.Num());
     }
 }
 

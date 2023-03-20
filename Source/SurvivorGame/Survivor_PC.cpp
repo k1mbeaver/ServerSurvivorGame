@@ -152,25 +152,26 @@ void ASurvivor_PC::UseInventory()
 		ASurvivorCharacter* myPlayerCharacter = Cast<ASurvivorCharacter>(GetPawn());
 		TArray<UPlayerItemData*> GetInventoryData = myCharacter->GetItemInventory();
 
-		//if (GetInventoryData == nullptr)
+		//if (GetInventoryData.Num() == 0)
 		//{
 			//return;
 		//} 
 
 		//GetInventoryData.Num()
 
-		for (int Index = 0; Index < 4; Index++)
+		for (int Index = 1; Index <= 4; Index++)
 		{
-			UPlayerItemData* GetItemData = GetInventoryData[Index];
-			FString strName = GetItemData->GetItemName();
-			int nCount = GetItemData->GetItemCount();
-			UTexture2D* setImage = GetItemData->GetItemImage();
+			//UPlayerItemData* GetItemData = GetInventoryData[Index];
+			//FString strName = GetItemData->GetItemName();
+			//int nCount = GetItemData->GetItemCount();
+			//UTexture2D* setImage = GetItemData->GetItemImage();
 			
 
-			//UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
-			//FString strName = "Test";
-			//int nCount = 0;
-			//UTexture2D* setImage = MyGI->GetItemImage("5");
+			UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+			FString strIndex = FString::FromInt(Index);
+			FString strName = MyGI->GetInventoryItemName(Index);
+			int nCount = MyGI->GetInventoryCount(Index);
+			UTexture2D* setImage = MyGI->GetInventoryImage(Index);
 			HUD->SetListView(Index, strName, nCount, setImage);
 		}
 
