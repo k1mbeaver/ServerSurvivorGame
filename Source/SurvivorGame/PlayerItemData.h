@@ -15,8 +15,6 @@ class SURVIVORGAME_API UPlayerItemData : public UObject
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int ItemCount;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPrivateAccess = "true"))
@@ -34,11 +32,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPrivateAccess = "true"))
 		FString ItemID;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPrivateAccess = "true"))
+		int ItemCount = 0;
+
 public:
 	void SetItemIndex(int nIndex);
 	void SetItemName(FString strName);
 	void SetItemImage(UTexture2D* setImage);
-	void SetItemCount(int nCount);
+	void SetItemCount(bool IsPlusMinus);
 	void SetItemDescript(FString strDescript);
 	void SetItemType(FString strItemType);
 	void SetItemID(FString strItemID);

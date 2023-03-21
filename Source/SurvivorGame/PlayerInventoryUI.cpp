@@ -21,7 +21,7 @@ void UPlayerInventoryUI::SetListInit(int nIndex, FString strName, int nCount, UT
 	UPlayerItemData* ItemData = Cast<UPlayerItemData>(myListView->GetItemAt(nIndex));
 
 	ItemData->SetItemName(strName);
-	ItemData->SetItemCount(nCount);
+	ItemData->SetItemCount(true);
 	ItemData->SetItemImage(setImage);
 }
 
@@ -47,7 +47,7 @@ void UPlayerInventoryUI::SetListView(int nIndex, FString strName, int nCount, UT
 
 	UPlayerItemData* ItemData = NewObject<UPlayerItemData>(this, UPlayerItemData::StaticClass());
 	ItemData->SetItemIndex(nIndex);
-	ItemData->SetItemCount(nCount);
+	ItemData->SetItemCount(true);
 	ItemData->SetItemName(strName);
 	ItemData->SetItemImage(setImage);
 	myListView->AddItem(ItemData);
@@ -57,7 +57,7 @@ void UPlayerInventoryUI::SetListCount(int nIndex, int nCount)
 {
 	UPlayerItemData* ItemData = Cast<UPlayerItemData>(myListView->GetItemAt(nIndex));
 
-	ItemData->SetItemCount(nCount);
+	ItemData->SetItemCount(true);
 }
 
 void UPlayerInventoryUI::Init()

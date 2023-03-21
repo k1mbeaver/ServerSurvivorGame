@@ -7,7 +7,7 @@ void UInventorySystem::AddItem(UPlayerItemData* Item)
 {
     if (InventoryItems.Contains(Item))
     {
-        Item->ItemCount++; //-> 이건 아이템의 수량을 증가시킨다.
+        Item->SetItemCount(true); //-> 이건 아이템의 수량을 증가시킨다.
     }
     else
     {
@@ -20,9 +20,9 @@ void UInventorySystem::RemoveItem(UPlayerItemData* Item)
 {
     if (InventoryItems.Contains(Item))
     {
-        Item->ItemCount--; //-> 이건 아이템의 수량을 감소시킨다.
+        Item->SetItemCount(false); //-> 이건 아이템의 수량을 감소시킨다.
 
-        if (Item->ItemCount == 0) // 만약 아이템의 수가 0가 되면 삭제
+        if (Item->GetItemCount() == 0) // 만약 아이템의 수가 0가 되면 삭제
         {
             InventoryItems.Remove(Item);
         }

@@ -28,9 +28,17 @@ void UPlayerItemData::SetItemID(FString strItemID)
 	ItemID = strItemID;
 }
 
-void UPlayerItemData::SetItemCount(int nCount)
+void UPlayerItemData::SetItemCount(bool IsPlusMinus)
 {
-	ItemCount = nCount;
+	if (IsPlusMinus)
+	{
+		ItemCount++;
+	}
+
+	else
+	{
+		ItemCount--;
+	}
 }
 
 void UPlayerItemData::SetItemImage(UTexture2D* setImage)

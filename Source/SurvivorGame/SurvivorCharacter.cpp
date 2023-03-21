@@ -669,7 +669,8 @@ void ASurvivorCharacter::AddItemInventory(class UPlayerItemData* myPlayerItemDat
 	CharacterInventory->AddItem(myPlayerItemData);
 
 	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
-	MyGI->SetInventoryItemCount(myPlayerItemData->GetItemIndex(), myPlayerItemData->ItemCount);
+
+	MyGI->SetInventoryItemCount(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemCount());
 	MyGI->SetInventoryItemID(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemID());
 	MyGI->SetInventoryItemName(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemName());
 	MyGI->SetInventoryItemImage(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemImage());
