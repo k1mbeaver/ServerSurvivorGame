@@ -41,6 +41,11 @@ void UPlayerItemData::SetItemCount(bool IsPlusMinus)
 	}
 }
 
+void UPlayerItemData::SetItemCountSet(int nCount)
+{
+	ItemCount = nCount;
+}
+
 void UPlayerItemData::SetItemImage(UTexture2D* setImage)
 {
 	ItemImage = setImage;

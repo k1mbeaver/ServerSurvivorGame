@@ -151,6 +151,7 @@ void ASurvivor_PC::UseInventory()
 		UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(true);
 		ASurvivorCharacter* myPlayerCharacter = Cast<ASurvivorCharacter>(GetPawn());
 		TArray<UPlayerItemData*> GetInventoryData = myCharacter->GetItemInventory();
+		UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 
 		//if (GetInventoryData.Num() == 0)
 		//{
@@ -159,6 +160,12 @@ void ASurvivor_PC::UseInventory()
 
 		//GetInventoryData.Num()
 
+		HUD->ListUpdate();
+		if (myPlayerCharacter->bHasGun == true)
+		{
+			HUD->SetWeaponImage(MyGI->GetItemImage(myPlayerCharacter->GunItemID));
+		}
+
 		for (int Index = 1; Index <= 4; Index++)
 		{
 			//UPlayerItemData* GetItemData = GetInventoryData[Index];
@@ -166,8 +173,6 @@ void ASurvivor_PC::UseInventory()
 			//int nCount = GetItemData->GetItemCount();
 			//UTexture2D* setImage = GetItemData->GetItemImage();
 			
-
-			UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 			FString strIndex = FString::FromInt(Index);
 			FString strName = MyGI->GetInventoryItemName(Index);
 			int nCount = MyGI->GetInventoryCount(Index);

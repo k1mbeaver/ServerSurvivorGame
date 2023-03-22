@@ -40,6 +40,7 @@ public:
 	void SetListInit(int nIndex, FString strName, int nCount, UTexture2D* setImage);
 	void SetListView(int nIndex, FString strName, int nCount, UTexture2D* setImage);
 	void ListUpdate();
+	void SetWeaponImage(UTexture2D* setImage);
 
 private:
 	TSubclassOf<class UPlayerMainUI> MainUIClass;

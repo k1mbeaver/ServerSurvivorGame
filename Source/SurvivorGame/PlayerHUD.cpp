@@ -127,3 +127,8 @@ void APlayerHUD::ListUpdate()
 {
 	MainUIObject->ListUpdate();
 }
+
+void APlayerHUD::SetWeaponImage(UTexture2D* setImage)
+{
+	MainUIObject->SetWeaponImage(setImage);
+}

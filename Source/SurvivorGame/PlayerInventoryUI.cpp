@@ -14,6 +14,7 @@ void UPlayerInventoryUI::NativeOnInitialized()
 	Super::NativeOnInitialized();
 
 	myListView = Cast<UListView>(GetWidgetFromName(TEXT("myListView")));
+	WeaponImage = Cast<UImage>(GetWidgetFromName(TEXT("WeaponImage")));
 }
 
 void UPlayerInventoryUI::SetListInit(int nIndex, FString strName, int nCount, UTexture2D* setImage)
@@ -38,7 +39,8 @@ void UPlayerInventoryUI::SetVisible()
 
 void UPlayerInventoryUI::ListUpdate()
 {
-	myListView->RegenerateAllEntries();
+	//myListView->RegenerateAllEntries();
+	myListView->ClearListItems();
 }
 
 void UPlayerInventoryUI::SetListView(int nIndex, FString strName, int nCount, UTexture2D* setImage)
@@ -47,7 +49,7 @@ void UPlayerInventoryUI::SetListView(int nIndex, FString strName, int nCount, UT
 
 	UPlayerItemData* ItemData = NewObject<UPlayerItemData>(this, UPlayerItemData::StaticClass());
 	ItemData->SetItemIndex(nIndex);
-	ItemData->SetItemCount(true);
+	ItemData->SetItemCountSet(nCount);
 	ItemData->SetItemName(strName);
 	ItemData->SetItemImage(setImage);
 	myListView->AddItem(ItemData);
@@ -67,4 +69,9 @@ void UPlayerInventoryUI::Init()
 	//ItemImage->SetBrushFromTexture(MyGI->GetItemImage("5"));
 	//ItemName->SetText(FText::FromString(""));
 	//ItemDescript->SetText(FText::FromString(""));
+}
+
+void UPlayerInventoryUI::SetWeaponImage(UTexture2D* setImage)
+{
+	WeaponImage->SetBrushFromTexture(setImage);
 }

@@ -93,7 +93,7 @@ UPlayerItemData* ABP_FieldItem::GetPlayerItemData()
 {
 	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 	UPlayerItemData* ItemData = NewObject<UPlayerItemData>(this, UPlayerItemData::StaticClass());;
-	ItemData->SetItemCount(0);
+	ItemData->SetItemCount(1);
 	ItemData->SetItemName(MyGI->GetItemName(ItemID));
 	ItemData->SetItemID(ItemID);
 	ItemData->SetItemImage(MyGI->GetItemImage(ItemID));

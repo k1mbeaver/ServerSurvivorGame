@@ -40,6 +40,7 @@ public:
 	void SetItemName(FString strName);
 	void SetItemImage(UTexture2D* setImage);
 	void SetItemCount(bool IsPlusMinus);
+	void SetItemCountSet(int nCount);
 	void SetItemDescript(FString strDescript);
 	void SetItemType(FString strItemType);
 	void SetItemID(FString strItemID);

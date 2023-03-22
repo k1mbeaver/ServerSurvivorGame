@@ -53,6 +53,7 @@ ASurvivorCharacter::ASurvivorCharacter()
 	bCanBasicAttack = true;
 	bCanGetItem = false;
 	IsRight = true;
+	bHasGun = false;
 
 	fCurrentPawnSpeed = 200.0f;
 	fSprintPawnSpeed = 400.0f;
@@ -666,8 +667,19 @@ void ASurvivorCharacter::PlayerHasGun()
 
 void ASurvivorCharacter::AddItemInventory(class UPlayerItemData* myPlayerItemData)
 {
+	if (myPlayerItemData->GetItemType() == "Weapon")
+	{
+		bHasGun = true;
+		GunItemID = myPlayerItemData->GetItemID();
+		GunName = myGameInstance->GetItemName(GunItemID);
+		GunSkeletalMesh = myGameInstance->GetItemSkeletalMesh(GunItemID);
+		InitGun(myGameInstance->GetProjectileMagazine(GunName));
+		return;
+	}
+
 	CharacterInventory->AddItem(myPlayerItemData);
 
+	/*
 	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 
 	MyGI->SetInventoryItemCount(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemCount());
@@ -675,6 +687,7 @@ void ASurvivorCharacter::AddItemInventory(class UPlayerItemData* myPlayerItemDat
 	MyGI->SetInventoryItemName(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemName());
 	MyGI->SetInventoryItemImage(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemImage());
 	MyGI->SetInventoryItemEquipType(myPlayerItemData->GetItemIndex(), myPlayerItemData->GetItemType());
+	*/
 }
 
 TArray<UPlayerItemData*> ASurvivorCharacter::GetItemInventory()

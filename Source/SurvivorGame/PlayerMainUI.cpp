@@ -89,3 +89,8 @@ void UPlayerMainUI::ListUpdate()
 {
 	PlayerInventoryUI->ListUpdate();
 }
+
+void UPlayerMainUI::SetWeaponImage(UTexture2D* setImage)
+{
+	PlayerInventoryUI->SetWeaponImage(setImage);
+}

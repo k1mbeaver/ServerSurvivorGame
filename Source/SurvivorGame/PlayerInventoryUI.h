@@ -17,6 +17,8 @@ class SURVIVORGAME_API UPlayerInventoryUI : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UListView* myListView;
 
+	UPROPERTY(Meta = (BindWidget))
+		class UImage* WeaponImage;
 protected:
 	virtual void NativeOnInitialized() override;
 
@@ -29,6 +31,7 @@ public:
 	void SetVisible();
 	void SetListCount(int nIndex, int nCount);
 	void SetListInit(int nIndex, FString strName, int nCount, UTexture2D* setImage);
+	void SetWeaponImage(UTexture2D* setImage);
 	void ListUpdate();
 	void Init();
 };
