@@ -8,6 +8,7 @@
 #include "PlayerItemData.h"
 #include "InventorySystem.h"
 #include "MyGameInstance.h"
+#include "InventoryItemDescriptUI.h"
 
 void UPlayerInventoryUI::NativeOnInitialized()
 {
@@ -15,6 +16,7 @@ void UPlayerInventoryUI::NativeOnInitialized()
 
 	myListView = Cast<UListView>(GetWidgetFromName(TEXT("myListView")));
 	WeaponImage = Cast<UImage>(GetWidgetFromName(TEXT("WeaponImage")));
+	MyInventoryItemDescript = Cast<UInventoryItemDescriptUI>(GetWidgetFromName(TEXT("MyInventoryItemDescript")));
 }
 
 void UPlayerInventoryUI::SetListInit(int nIndex, FString strName, int nCount, UTexture2D* setImage)
@@ -74,4 +76,23 @@ void UPlayerInventoryUI::Init()
 void UPlayerInventoryUI::SetWeaponImage(UTexture2D* setImage)
 {
 	WeaponImage->SetBrushFromTexture(setImage);
+}
+
+void UPlayerInventoryUI::SetDescriptVisible()
+{
+	MyInventoryItemDescript->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UPlayerInventoryUI::SetDescriptHidden()
+{
+	MyInventoryItemDescript->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UPlayerInventoryUI::SetDescriptItem(FString myItemID)
+{
+	UMyGameInstance* MyGI = GetGameInstance<UMyGameInstance>();
+
+	MyInventoryItemDescript->SetItemImage(MyGI->GetItemImage(myItemID));
+	MyInventoryItemDescript->SetItemName(MyGI->GetItemName(myItemID));
+	MyInventoryItemDescript->SetItemDescript(MyGI->GetItemDescript(myItemID));
 }

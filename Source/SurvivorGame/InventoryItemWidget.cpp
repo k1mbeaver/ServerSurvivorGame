@@ -25,6 +25,8 @@ void UInventoryItemWidget::SetData(class UPlayerItemData* Data)
 	SetItemCount(Data->GetItemCount());
 	SetItemName(Data->GetItemName());
 	SetItemImage(Data->GetItemImage());
+
+	myData = Data;
 }
 
 void UInventoryItemWidget::SetItemCount(int nCount)
@@ -47,4 +49,9 @@ UPlayerItemData* UInventoryItemWidget::CastToPlayerItemData(UObject* ListItemDat
 {
 	UPlayerItemData* PlayerItemData = Cast<UPlayerItemData>(ListItemData);
 	return PlayerItemData;
+}
+
+FString UInventoryItemWidget::GetItemID()
+{
+	return myData->GetItemID();
 }

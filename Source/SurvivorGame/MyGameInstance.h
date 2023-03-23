@@ -27,6 +27,7 @@ public:
 	// 아이템 값 얻어오기
 	FString GetItemName(FString ItemID);
 	FString GetItemEquipType(FString ItemID);
+	FString GetItemDescript(FString ItemID);
 	FVector GetParticleMuzzleLocation(FString ItemID);
 	UTexture2D* GetItemImage(FString ItemID);
 	UStaticMesh* GetItemStaticMesh(FString ItemID);

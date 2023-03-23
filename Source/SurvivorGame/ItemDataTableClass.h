@@ -37,6 +37,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USkeletalMesh* ItemSkeletalMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString ItemDescript;
 };
 
 UCLASS()

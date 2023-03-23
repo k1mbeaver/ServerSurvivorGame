@@ -37,6 +37,12 @@ public:
     UFUNCTION(BlueprintCallable)
         UPlayerItemData* CastToPlayerItemData(UObject* ListItemObject);
 
+    UFUNCTION(BlueprintCallable)
+        FString GetItemID();
+
+private:
+    class UPlayerItemData* myData;
+
 protected:
     virtual void NativeOnInitialized() override;
 };

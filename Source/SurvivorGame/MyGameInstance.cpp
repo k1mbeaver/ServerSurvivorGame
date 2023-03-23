@@ -63,6 +63,13 @@ FString UMyGameInstance::GetItemName(FString ItemID)
 	return ItemName;
 }
 
+FString UMyGameInstance::GetItemDescript(FString ItemID)
+{
+	FItemDataTable* ItemData = FItemFileTable->FindRow<FItemDataTable>(*ItemID, TEXT(""));
+	FString ItemDescript = ItemData->ItemDescript;
+	return ItemDescript;
+}
+
 FString UMyGameInstance::GetItemEquipType(FString ItemID)
 {
 	FItemDataTable* ItemData = FItemFileTable->FindRow<FItemDataTable>(*ItemID, TEXT(""));
