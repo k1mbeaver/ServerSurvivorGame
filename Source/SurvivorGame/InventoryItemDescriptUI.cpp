@@ -8,7 +8,7 @@
 void UInventoryItemDescriptUI::NativeOnInitialized()
 {
 	ItemName = Cast<UTextBlock>(GetWidgetFromName(TEXT("ItemName")));
-	ItemDescript = Cast<UTextBlock>(GetWidgetFromName(TEXT("ItemDecript")));
+	ItemDescript = Cast<UTextBlock>(GetWidgetFromName(TEXT("ItemDescript")));
 	ItemImage = Cast<UImage>(GetWidgetFromName(TEXT("ItemImage")));
 }
 

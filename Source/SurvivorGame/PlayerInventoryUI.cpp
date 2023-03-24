@@ -54,6 +54,8 @@ void UPlayerInventoryUI::SetListView(int nIndex, FString strName, int nCount, UT
 	ItemData->SetItemCountSet(nCount);
 	ItemData->SetItemName(strName);
 	ItemData->SetItemImage(setImage);
+
+
 	myListView->AddItem(ItemData);
 }
 
@@ -88,11 +90,11 @@ void UPlayerInventoryUI::SetDescriptHidden()
 	MyInventoryItemDescript->SetVisibility(ESlateVisibility::Hidden);
 }
 
-void UPlayerInventoryUI::SetDescriptItem(FString myItemID)
+void UPlayerInventoryUI::SetDescriptItem()
 {
 	UMyGameInstance* MyGI = GetGameInstance<UMyGameInstance>();
 
-	MyInventoryItemDescript->SetItemImage(MyGI->GetItemImage(myItemID));
-	MyInventoryItemDescript->SetItemName(MyGI->GetItemName(myItemID));
-	MyInventoryItemDescript->SetItemDescript(MyGI->GetItemDescript(myItemID));
+	MyInventoryItemDescript->SetItemImage(MyGI->GetItemImage("3"));
+	MyInventoryItemDescript->SetItemName(MyGI->GetItemName("3"));
+	MyInventoryItemDescript->SetItemDescript(MyGI->GetItemDescript("3"));
 }

@@ -22,6 +22,9 @@ class SURVIVORGAME_API UPlayerInventoryUI : public UUserWidget
 
 	UPROPERTY(Meta = (BindWidget))
 		class UInventoryItemDescriptUI* MyInventoryItemDescript;
+
+private:
+	TArray<UPlayerItemData*> InventoryItemsData;
 protected:
 	virtual void NativeOnInitialized() override;
 
@@ -42,7 +45,7 @@ public:
 		void SetDescriptHidden();
 
 	UFUNCTION(BlueprintCallable)
-		void SetDescriptItem(FString myItemID);
+		void SetDescriptItem();
 
 	void ListUpdate();
 	void Init();
