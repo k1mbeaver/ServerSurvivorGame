@@ -9,6 +9,7 @@
 #include "InventorySystem.h"
 #include "MyGameInstance.h"
 #include "InventoryItemDescriptUI.h"
+#include "InventoryItemWidget.h"
 
 void UPlayerInventoryUI::NativeOnInitialized()
 {
@@ -94,7 +95,7 @@ void UPlayerInventoryUI::SetDescriptItem()
 {
 	UMyGameInstance* MyGI = GetGameInstance<UMyGameInstance>();
 
-	MyInventoryItemDescript->SetItemImage(MyGI->GetItemImage("3"));
-	MyInventoryItemDescript->SetItemName(MyGI->GetItemName("3"));
-	MyInventoryItemDescript->SetItemDescript(MyGI->GetItemDescript("3"));
+	MyInventoryItemDescript->SetItemImage(MyGI->GetItemImage("Current"));
+	MyInventoryItemDescript->SetItemName(MyGI->GetItemName("Current"));
+	MyInventoryItemDescript->SetItemDescript(MyGI->GetItemDescript("Current"));
 }
