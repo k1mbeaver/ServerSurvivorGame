@@ -166,7 +166,7 @@ void ASurvivor_PC::UseInventory()
 			HUD->SetWeaponImage(MyGI->GetItemImage(myPlayerCharacter->GunItemID));
 		}
 
-		for (int Index = 1; Index <= 4; Index++)
+		for (int Index = 1; Index <= 2; Index++)
 		{
 			//UPlayerItemData* GetItemData = GetInventoryData[Index];
 			//FString strName = GetItemData->GetItemName();

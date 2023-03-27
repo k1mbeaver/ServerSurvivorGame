@@ -45,7 +45,13 @@ public:
 		void SetDescriptHidden();
 
 	UFUNCTION(BlueprintCallable)
-		void SetDescriptItem();
+		void SetDescriptItem(int getItemIndex);
+
+	UFUNCTION(BlueprintCallable)
+		TArray<UPlayerItemData*> GetInventoryArray();
+
+	UFUNCTION(BlueprintCallable)
+		UPlayerItemData* CastUPlayerItemData(UObject* getObject);
 
 	void ListUpdate();
 	void Init();
