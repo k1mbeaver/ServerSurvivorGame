@@ -13,10 +13,25 @@ void UInventoryItemWidget::NativeOnInitialized()
 	ItemName = Cast<UTextBlock>(GetWidgetFromName(TEXT("ItemName")));
 	ItemCount = Cast<UTextBlock>(GetWidgetFromName(TEXT("ItemCount")));
 	ItemImage = Cast<UImage>(GetWidgetFromName(TEXT("ItemImage")));
+	bgImage = Cast<UImage>(GetWidgetFromName(TEXT("bgImage")));
 }
 
 void UInventoryItemWidget::OnItemClicked()
 {
+	return;
+}
+
+void UInventoryItemWidget::PlayerHover()
+{
+	//bgImage-> // 여기해서 호버되었을 때 이미지 값 조정
+	bgImage->SetBrushTintColor(HoverColor);
+	return;
+}
+
+void UInventoryItemWidget::PlayerHoverEnd()
+{
+	// 여기해서 호버가 끝났을 때 이미지값을 조정
+	bgImage->SetBrushTintColor(HoverEndColor);
 	return;
 }
 

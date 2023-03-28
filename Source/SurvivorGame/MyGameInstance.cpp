@@ -279,6 +279,14 @@ FString UMyGameInstance::GetInventoryItemEquipType(int ItemIndex)
 	return GetInventoryData;
 }
 
+FString UMyGameInstance::GetInventoryItemDescript(int ItemIndex)
+{
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	FString GetInventoryData = InventoryData->ItemDescript;
+	return GetInventoryData;
+}
+
 void UMyGameInstance::SetInventoryItemImage(int ItemIndex, UTexture2D* ItemImage)
 {
 	FString strSlot = FString::FromInt(ItemIndex);
@@ -312,4 +320,11 @@ void UMyGameInstance::SetInventoryItemEquipType(int ItemIndex, FString ItemEquip
 	FString strSlot = FString::FromInt(ItemIndex);
 	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
 	InventoryData->ItemEquipType = ItemEquipType;
+}
+
+void UMyGameInstance::SetInventoryItemDescript(int ItemIndex, FString ItemDescript)
+{
+	FString strSlot = FString::FromInt(ItemIndex);
+	FInventoryDataTable* InventoryData = FInventoryFileTable->FindRow<FInventoryDataTable>(*strSlot, TEXT(""));
+	InventoryData->ItemDescript = ItemDescript;
 }

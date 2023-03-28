@@ -31,6 +31,7 @@ void UInventorySystem::AddItem(UPlayerItemData* Item)
     MyGI->SetInventoryItemName(Item->GetItemIndex(), Item->GetItemName());
     MyGI->SetInventoryItemImage(Item->GetItemIndex(), Item->GetItemImage());
     MyGI->SetInventoryItemEquipType(Item->GetItemIndex(), Item->GetItemType());
+    MyGI->SetInventoryItemDescript(Item->GetItemIndex(), Item->GetItemDescript());
 
     /*
     if (InventoryItems.Contains(Item))
@@ -65,6 +66,7 @@ void UInventorySystem::RemoveItem(UPlayerItemData* Item)
                 MyGI->SetInventoryItemName(Item->GetItemIndex(), "");
                 MyGI->SetInventoryItemImage(Item->GetItemIndex(), MyGI->GetItemImage("5"));
                 MyGI->SetInventoryItemEquipType(Item->GetItemIndex(), "");
+                MyGI->SetInventoryItemDescript(Item->GetItemIndex(), "");
             }
             return;
         }

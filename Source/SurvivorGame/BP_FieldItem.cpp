@@ -98,6 +98,7 @@ UPlayerItemData* ABP_FieldItem::GetPlayerItemData()
 	ItemData->SetItemID(ItemID);
 	ItemData->SetItemImage(MyGI->GetItemImage(ItemID));
 	ItemData->SetItemType(MyGI->GetItemEquipType(ItemID));
+	ItemData->SetItemDescript(MyGI->GetItemDescript(ItemID));
 	return ItemData;
 }
 

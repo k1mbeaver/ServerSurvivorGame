@@ -68,12 +68,14 @@ public:
 	FString GetInventoryItemID(int ItemIndex);
 	FString GetInventoryItemName(int ItemIndex);
 	FString GetInventoryItemEquipType(int ItemIndex);
+	FString GetInventoryItemDescript(int ItemIndex);
 
 	void SetInventoryItemImage(int ItemIndex, UTexture2D* ItemImage);
 	void SetInventoryItemCount(int ItemIndex, int ItemCount);
 	void SetInventoryItemID(int ItemIndex, FString ItemID);
 	void SetInventoryItemName(int ItemIndex, FString ItemName);
 	void SetInventoryItemEquipType(int ItemIndex, FString ItemEquipType);
+	void SetInventoryItemDescript(int ItemIndex, FString ItemDescript);
 
 	/*
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

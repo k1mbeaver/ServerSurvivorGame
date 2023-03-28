@@ -44,6 +44,7 @@ void UPlayerInventoryUI::ListUpdate()
 {
 	//myListView->RegenerateAllEntries();
 	myListView->ClearListItems();
+	InventoryItemsData.Empty();
 }
 
 void UPlayerInventoryUI::SetListView(int nIndex, FString strName, int nCount, UTexture2D* setImage)
@@ -55,7 +56,6 @@ void UPlayerInventoryUI::SetListView(int nIndex, FString strName, int nCount, UT
 	ItemData->SetItemCountSet(nCount);
 	ItemData->SetItemName(strName);
 	ItemData->SetItemImage(setImage);
-
 
 	myListView->AddItem(ItemData);
 	InventoryItemsData.Add(ItemData);
@@ -95,18 +95,22 @@ void UPlayerInventoryUI::SetDescriptHidden()
 void UPlayerInventoryUI::SetDescriptItem(int getItemIndex)
 {
 	FString strItemIndex = FString::FromInt(getItemIndex);
-
 	UMyGameInstance* MyGI = GetGameInstance<UMyGameInstance>();
 
-	MyInventoryItemDescript->SetItemImage(MyGI->GetInventoryImage(getItemIndex));
-	MyInventoryItemDescript->SetItemName(MyGI->GetInventoryItemName(getItemIndex));
-	//MyInventoryItemDescript->SetItemDescript(MyGI->GetInventory(strItemIndex));
+	MyInventoryItemDescript->SetItemImage(MyGI->GetInventoryImage(getItemIndex + 1));
+	MyInventoryItemDescript->SetItemName(MyGI->GetInventoryItemName(getItemIndex + 1));
+	MyInventoryItemDescript->SetItemDescript(MyGI->GetInventoryItemDescript(getItemIndex + 1));
 }
 
 
 TArray<UPlayerItemData*> UPlayerInventoryUI::GetInventoryArray()
 {
 	return InventoryItemsData;
+}
+
+void UPlayerInventoryUI::SetInventoryArray(TArray<UPlayerItemData*> getInventoryArray)
+{
+	InventoryItemsData = getInventoryArray;
 }
 
 UPlayerItemData* UPlayerInventoryUI::CastUPlayerItemData(UObject* getObject)

@@ -24,8 +24,17 @@ public:
     UPROPERTY(meta = (BindWidget))
         class UTextBlock* ItemCount;
 
-    UFUNCTION()
+    UPROPERTY(Meta = (BindWidget))
+        class UImage* bgImage;
+
+    UFUNCTION(BlueprintCallable)
         void OnItemClicked();
+
+    UFUNCTION(BlueprintCallable)
+        void PlayerHover();
+
+    UFUNCTION(BlueprintCallable)
+        void PlayerHoverEnd();
 
     void SetItemImage(UTexture2D* ItemImage);
     void SetItemCount(int nCount);
@@ -42,6 +51,11 @@ public:
 
 private:
     class UPlayerItemData* myData;
+
+    FLinearColor HoverColor = FLinearColor(0.7f, 0.7f, 0.7f, 0.5f);
+    FLinearColor HoverEndColor = FLinearColor(0.5f, 0.5f, 0.5f, 0.5f);
+    FLinearColor SelectColor = FLinearColor(0.2f, 0.2f, 0.2f, 0.5f);
+    //FLinearColor Default Color;
 
 protected:
     virtual void NativeOnInitialized() override;

@@ -51,6 +51,7 @@ public:
 	UTexture2D* GetItemImage();
 	FString GetItemDescript();
 	FString GetItemType();
+	UFUNCTION(BlueprintCallable)
 	FString GetItemID();
 
 	FString ItemDescript;

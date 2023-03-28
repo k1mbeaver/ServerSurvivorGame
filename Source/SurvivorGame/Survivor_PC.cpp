@@ -177,7 +177,7 @@ void ASurvivor_PC::UseInventory()
 			FString strName = MyGI->GetInventoryItemName(Index);
 			int nCount = MyGI->GetInventoryCount(Index);
 			UTexture2D* setImage = MyGI->GetInventoryImage(Index);
-			HUD->SetListView(Index, strName, nCount, setImage);
+			HUD->SetListView(Index - 1, strName, nCount, setImage);
 		}
 
 		HUD->SetInventoryVisible();

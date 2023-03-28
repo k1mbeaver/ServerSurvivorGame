@@ -27,6 +27,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UTexture2D* ItemImage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString ItemDescript;
 };
 UCLASS()
 class SURVIVORGAME_API AInventoryDataTableClass : public AActor
