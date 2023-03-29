@@ -5,6 +5,7 @@
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
 #include "PlayerItemData.h"
+#include "MyGameInstance.h"
 
 void UInventoryItemWidget::NativeOnInitialized()
 {
@@ -16,22 +17,36 @@ void UInventoryItemWidget::NativeOnInitialized()
 	bgImage = Cast<UImage>(GetWidgetFromName(TEXT("bgImage")));
 }
 
-void UInventoryItemWidget::OnItemClicked()
+void UInventoryItemWidget::PlayerClick()
 {
+	bgImage->SetBrushTintColor(SelectColor);
+	IsSelected = true;
 	return;
 }
 
 void UInventoryItemWidget::PlayerHover()
 {
 	//bgImage-> // 여기해서 호버되었을 때 이미지 값 조정
-	bgImage->SetBrushTintColor(HoverColor);
+	if (IsSelected == false)
+	{
+		bgImage->SetBrushTintColor(HoverColor);
+	}
 	return;
 }
 
 void UInventoryItemWidget::PlayerHoverEnd()
 {
 	// 여기해서 호버가 끝났을 때 이미지값을 조정
-	bgImage->SetBrushTintColor(HoverEndColor);
+	if (IsSelected == false)
+	{
+		bgImage->SetBrushTintColor(HoverEndColor);
+	}
+
+	else
+	{
+		bgImage->SetBrushTintColor(HoverEndColor);
+		IsSelected = false;
+	}
 	return;
 }
 

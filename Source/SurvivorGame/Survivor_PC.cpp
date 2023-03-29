@@ -54,7 +54,10 @@ void ASurvivor_PC::Tick(float DeltaTime)
 
 	if (IsHealth)
 	{
-		playerHUD->SetHealthPersent(playerCharacterHP / playerCharacterDefaultHP);
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		if (HUD == nullptr) return;
+		playerCharacterDefaultHP = myCharacter->PlayerDefaultHP;
+		HUD->SetHealthPersent(playerCharacterHP / playerCharacterDefaultHP);
 		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("GageChange!"));
 		IsHealth = false;
 	}

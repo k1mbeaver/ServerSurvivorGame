@@ -28,7 +28,7 @@ public:
         class UImage* bgImage;
 
     UFUNCTION(BlueprintCallable)
-        void OnItemClicked();
+        void PlayerClick();
 
     UFUNCTION(BlueprintCallable)
         void PlayerHover();
@@ -51,6 +51,9 @@ public:
 
 private:
     class UPlayerItemData* myData;
+
+    UPROPERTY()
+        bool IsSelected = false;
 
     FLinearColor HoverColor = FLinearColor(0.7f, 0.7f, 0.7f, 0.5f);
     FLinearColor HoverEndColor = FLinearColor(0.5f, 0.5f, 0.5f, 0.5f);
