@@ -10,6 +10,8 @@
 #include "MyGameInstance.h"
 #include "InventoryItemDescriptUI.h"
 #include "InventoryItemWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "Survivor_PC.h"
 
 void UPlayerInventoryUI::NativeOnInitialized()
 {
@@ -100,6 +102,8 @@ void UPlayerInventoryUI::SetDescriptItem(int getItemIndex)
 	MyInventoryItemDescript->SetItemImage(MyGI->GetInventoryImage(getItemIndex + 1));
 	MyInventoryItemDescript->SetItemName(MyGI->GetInventoryItemName(getItemIndex + 1));
 	MyInventoryItemDescript->SetItemDescript(MyGI->GetInventoryItemDescript(getItemIndex + 1));
+
+	SetCurrentHoverItemID(MyGI->GetInventoryItemID(getItemIndex + 1));
 }
 
 
@@ -118,4 +122,24 @@ UPlayerItemData* UPlayerInventoryUI::CastUPlayerItemData(UObject* getObject)
 	UPlayerItemData* CastObj = Cast<UPlayerItemData>(getObject);
 
 	return CastObj;
+}
+
+FString UPlayerInventoryUI::GetCurrentHoverItemID()
+{
+	return CurrentHoverItemID;
+}
+
+void UPlayerInventoryUI::SetCurrentHoverItemID(FString ItemID)
+{
+	CurrentHoverItemID = ItemID;
+}
+
+void UPlayerInventoryUI::UseItem()
+{
+	ASurvivor_PC* MyPC = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	UMyGameInstance* MyGI = GetGameInstance<UMyGameInstance>();
+
+	MyPC->GetHealthHUD(MyGI->GetItemHealthPercent(CurrentHoverItemID));
+
+	return;
 }

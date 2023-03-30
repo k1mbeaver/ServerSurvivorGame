@@ -385,10 +385,14 @@ void ASurvivorCharacter::SetHP(float newHP)
 
 float ASurvivorCharacter::HealthHP(float myPlayerHP)
 {
-	float myHP = myPlayerHP;
-	myHP = myHP + 20.0f; // 이건 나중에 수정하자
+	//float myHP = myPlayerHP;
+	//myHP = myHP + 20.0f; // 이건 나중에 수정하자
 
-	return myHP;
+	float myHp = GetHP();
+	myHp = myHp + myPlayerHP;
+	SetHP(myHp);
+
+	return myHp;
 }
 
 void ASurvivorCharacter::HealthPlayerHUD(float myPlayerHP)

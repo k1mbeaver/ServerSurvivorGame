@@ -771,6 +771,16 @@ void ASurvivor_PC::GetHealthHUD(float CharacterInfo)
 	}
 }
 
+void ASurvivor_PC::CharacterHealth(float HealthPercent)
+{
+	if (myCharacter)
+	{
+		playerCharacterHP = myCharacter->HealthHP(HealthPercent);
+		Server_GetHealth(myCharacter, myCharacter->GetHP());
+		IsHealth = true;
+	}
+}
+
 void ASurvivor_PC::Server_GetDamage_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
 {
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.

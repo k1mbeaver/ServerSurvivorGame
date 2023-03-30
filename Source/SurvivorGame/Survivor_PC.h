@@ -28,6 +28,7 @@ public:
 	void GetHealthHUD(float CharacterInfo);
 	void WeaponUIVisible();
 	void WeaponUIHidden();
+	void CharacterHealth(float HealthPercent);
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Pawn)
 		class ASurvivorCharacter* myCharacter;

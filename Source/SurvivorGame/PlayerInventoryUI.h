@@ -25,6 +25,7 @@ class SURVIVORGAME_API UPlayerInventoryUI : public UUserWidget
 
 private:
 	TArray<UPlayerItemData*> InventoryItemsData;
+	FString CurrentHoverItemID;
 protected:
 	virtual void NativeOnInitialized() override;
 
@@ -48,6 +49,15 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void SetDescriptItem(int getItemIndex);
+
+	UFUNCTION(BlueprintCallable)
+		void SetCurrentHoverItemID(FString ItemID);
+
+	UFUNCTION(BlueprintCallable)
+		void UseItem();
+
+	UFUNCTION(BlueprintCallable)
+		FString GetCurrentHoverItemID();
 
 	UFUNCTION(BlueprintCallable)
 		TArray<UPlayerItemData*> GetInventoryArray();
