@@ -784,8 +784,8 @@ void ASurvivor_PC::CharacterHealth(float HealthPercent)
 void ASurvivor_PC::Server_GetDamage_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
 {
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
-	//TArray<AActor*> OutActors;
-	//UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
 
 	ClientCharacter->SetHP(CharacterHP);
 
@@ -812,31 +812,31 @@ void ASurvivor_PC::Client_GetDamage_Implementation(ASurvivorCharacter* ClientCha
 void ASurvivor_PC::Server_GetHealth_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
 {
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
-	//TArray<AActor*> OutActors;
-	//UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
 
 	ClientCharacter->SetHP(CharacterHP);
 
 	
-	//for (AActor* OutActor : OutActors)
-	//{
-		//ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
-		//if (PC)
-		//{
-			//PC->Client_GetHealth(ClientCharacter, CharacterHP);
-		//}
-	//}
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_GetHealth(ClientCharacter, CharacterHP);
+		}
+	}
 	
 }
 
-/*
+
 void ASurvivor_PC::Client_GetHealth_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
 {
 	if (ClientCharacter == nullptr) return;
 
 	ClientCharacter->SetHP(CharacterHP);
 }
-*/
+
 
 void ASurvivor_PC::WeaponUIVisible()
 {

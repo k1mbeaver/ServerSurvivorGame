@@ -189,7 +189,7 @@ private:
 	UFUNCTION(Server, Reliable)
 		void Server_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 
-	//UFUNCTION(Client, Reliable)
-		//void Client_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
+	UFUNCTION(Client, Reliable)
+		void Client_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
 };
 
