@@ -427,26 +427,26 @@ void ASurvivor_PC::GetItem()
 {
 	if (myCharacter)
 	{
-		Server_GetItem(myCharacter);
+		Server_GetItem(myCharacter, myCharacter->CharacterInventory);
 	}
 }
 
-void ASurvivor_PC::Server_GetItem_Implementation(ASurvivorCharacter* ClientCharacter)
+void ASurvivor_PC::Server_GetItem_Implementation(ASurvivorCharacter* ClientCharacter, UInventorySystem* PlayerInventory)
 {
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
-	TArray<AActor*> OutActors;
-	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	//TArray<AActor*> OutActors;
+	//UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
 
-	ClientCharacter->GetItem();
+	ClientCharacter->CharacterInventory = PlayerInventory;
 
-	for (AActor* OutActor : OutActors)
-	{
-		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
-		if (PC)
-		{
-			PC->Client_GetItem(ClientCharacter);
-		}
-	}
+	//for (AActor* OutActor : OutActors)
+	//{
+		//ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		//if (PC)
+		//{
+			//PC->Client_GetItem(ClientCharacter);
+		//}
+	//}
 }
 
 void ASurvivor_PC::Client_GetItem_Implementation(ASurvivorCharacter* ClientCharacter)
@@ -812,20 +812,20 @@ void ASurvivor_PC::Client_GetDamage_Implementation(ASurvivorCharacter* ClientCha
 void ASurvivor_PC::Server_GetHealth_Implementation(ASurvivorCharacter* ClientCharacter, float CharacterHP)
 {
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
-	TArray<AActor*> OutActors;
-	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	//TArray<AActor*> OutActors;
+	//UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
 
 	ClientCharacter->SetHP(CharacterHP);
 
 	
-	for (AActor* OutActor : OutActors)
-	{
-		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
-		if (PC)
-		{
-			PC->Client_GetHealth(ClientCharacter, CharacterHP);
-		}
-	}
+	//for (AActor* OutActor : OutActors)
+	//{
+		//ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		//if (PC)
+		//{
+			//PC->Client_GetHealth(ClientCharacter, CharacterHP);
+		//}
+	//}
 	
 }
 

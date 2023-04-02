@@ -29,6 +29,9 @@ public:
 	void WeaponUIVisible();
 	void WeaponUIHidden();
 	void CharacterHealth(float HealthPercent);
+
+	UFUNCTION(BlueprintCallable)
+		void GetItem();
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Pawn)
 		class ASurvivorCharacter* myCharacter;
@@ -107,12 +110,10 @@ private:
 	void UseInventory();
 
 	UFUNCTION(Server, Reliable)
-		void Server_GetItem(ASurvivorCharacter* ClientCharacter);
+		void Server_GetItem(ASurvivorCharacter* ClientCharacter, UInventorySystem* PlayerInventory);
 
 	UFUNCTION(Client, Reliable)
 		void Client_GetItem(ASurvivorCharacter* ClientCharacter);
-
-	void GetItem();
 
 	UFUNCTION(Server, Reliable)
 		void Server_Crouching(ASurvivorCharacter* ClientCharacter);
