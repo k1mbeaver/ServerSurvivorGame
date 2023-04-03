@@ -683,6 +683,8 @@ void ASurvivorCharacter::AddItemInventory(class UPlayerItemData* myPlayerItemDat
 
 	CharacterInventory->AddItem(myPlayerItemData);
 
+	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	//myPlayerController->GetItem();
 	/*
 	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
 

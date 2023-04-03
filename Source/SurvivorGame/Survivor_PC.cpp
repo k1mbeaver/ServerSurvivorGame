@@ -427,26 +427,27 @@ void ASurvivor_PC::GetItem()
 {
 	if (myCharacter)
 	{
-		Server_GetItem(myCharacter, myCharacter->CharacterInventory);
+		Server_GetItem(myCharacter);
+		//myCharacter->CharacterInventory
 	}
 }
 
-void ASurvivor_PC::Server_GetItem_Implementation(ASurvivorCharacter* ClientCharacter, UInventorySystem* PlayerInventory)
+void ASurvivor_PC::Server_GetItem_Implementation(ASurvivorCharacter* ClientCharacter)
 {
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
-	//TArray<AActor*> OutActors;
-	//UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
 
-	ClientCharacter->CharacterInventory = PlayerInventory;
+	ClientCharacter->GetItem();
 
-	//for (AActor* OutActor : OutActors)
-	//{
-		//ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
-		//if (PC)
-		//{
-			//PC->Client_GetItem(ClientCharacter);
-		//}
-	//}
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_GetItem(ClientCharacter);
+		}
+	}
 }
 
 void ASurvivor_PC::Client_GetItem_Implementation(ASurvivorCharacter* ClientCharacter)
@@ -855,6 +856,41 @@ void ASurvivor_PC::WeaponUIHidden()
 		APlayerHUD* HUD = GetHUD<APlayerHUD>();
 		if (HUD == nullptr) return;
 		HUD->SetImageNotUse();
+	}
+}
+
+void ASurvivor_PC::GameDead()
+{
+	CurrentDeadPlayer++;
+	Server_GameDead(CurrentDeadPlayer);
+}
+
+void ASurvivor_PC::Server_GameDead_Implementation(int fCurrentDeadPlayer)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	int CurrentGamePlayers = OutActors.Num();
+
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_GameDead(CurrentGamePlayers, fCurrentDeadPlayer);
+		}
+	}
+
+}
+
+void ASurvivor_PC::Client_GameDead_Implementation(int fCurrentMultiPlayer, int fCurrentDeadPlayer)
+{
+	CurrentDeadPlayer = fCurrentDeadPlayer;
+
+	if (CurrentDeadPlayer == fCurrentMultiPlayer - 1)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GameEnd!!"));
 	}
 }
 

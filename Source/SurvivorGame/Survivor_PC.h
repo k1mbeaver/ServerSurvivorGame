@@ -30,8 +30,6 @@ public:
 	void WeaponUIHidden();
 	void CharacterHealth(float HealthPercent);
 
-	UFUNCTION(BlueprintCallable)
-		void GetItem();
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Pawn)
 		class ASurvivorCharacter* myCharacter;
@@ -56,6 +54,9 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, Category = HUD)
 		float playerCharacterDefaultStamina;
+
+	UPROPERTY()
+		int CurrentDeadPlayer = 0;
 
 	class UMyGameInstance* myGameInstance;
 	bool IsHealth = false;
@@ -110,10 +111,12 @@ private:
 	void UseInventory();
 
 	UFUNCTION(Server, Reliable)
-		void Server_GetItem(ASurvivorCharacter* ClientCharacter, UInventorySystem* PlayerInventory);
+		void Server_GetItem(ASurvivorCharacter* ClientCharacter);
 
 	UFUNCTION(Client, Reliable)
 		void Client_GetItem(ASurvivorCharacter* ClientCharacter);
+
+	void GetItem();
 
 	UFUNCTION(Server, Reliable)
 		void Server_Crouching(ASurvivorCharacter* ClientCharacter);
@@ -192,5 +195,15 @@ private:
 
 	UFUNCTION(Client, Reliable)
 		void Client_GetHealth(ASurvivorCharacter* ClientCharacter, float CharacterHP);
+
+	// 캐릭터가 사망했을 때
+
+	UFUNCTION(Server, Reliable)
+		void Server_GameDead(int fCurrentDeadPlayer);
+
+	UFUNCTION(Client, Reliable)
+		void Client_GameDead(int fCurrentMultiPlayer, int fCurrentDeadPlayer);
+
+	void GameDead();
 };
 
