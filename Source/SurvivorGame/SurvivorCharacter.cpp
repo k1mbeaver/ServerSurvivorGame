@@ -584,6 +584,9 @@ void ASurvivorCharacter::ReloadEnd()
 
 void ASurvivorCharacter::SetDead()
 {
+	ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	myPlayerController->GameDead();
+
 	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("PlayerDead!!"));
 	CharacterAnim->SetDeadAnim();
 

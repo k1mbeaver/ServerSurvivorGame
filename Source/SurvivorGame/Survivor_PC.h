@@ -29,6 +29,7 @@ public:
 	void WeaponUIVisible();
 	void WeaponUIHidden();
 	void CharacterHealth(float HealthPercent);
+	void GameDead();
 
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Pawn)
@@ -203,7 +204,5 @@ private:
 
 	UFUNCTION(Client, Reliable)
 		void Client_GameDead(int fCurrentMultiPlayer, int fCurrentDeadPlayer);
-
-	void GameDead();
 };
 
