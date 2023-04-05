@@ -5,6 +5,7 @@
 #include "PlayerGageUI.h"
 #include "PlayerWeaponUI.h"
 #include "PlayerInventoryUI.h"
+#include "PlayerGameEndUI.h"
 
 void UPlayerMainUI::SetHealthPersent(float PlayerHP)
 {
@@ -93,4 +94,24 @@ void UPlayerMainUI::ListUpdate()
 void UPlayerMainUI::SetWeaponImage(UTexture2D* setImage)
 {
 	PlayerInventoryUI->SetWeaponImage(setImage);
+}
+
+void UPlayerMainUI::SetEndVisible()
+{
+	PlayerEndUI->SetVisible();
+}
+
+void UPlayerMainUI::SetEndHidden()
+{
+	PlayerEndUI->SetHidden();
+}
+
+void UPlayerMainUI::SetWin()
+{
+	PlayerEndUI->SetWin();
+}
+
+void UPlayerMainUI::SetLose()
+{
+	PlayerEndUI->SetLose();
 }

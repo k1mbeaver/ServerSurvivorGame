@@ -42,6 +42,13 @@ public:
 	void ListUpdate();
 	void SetWeaponImage(UTexture2D* setImage);
 
+	// 게임 종료
+
+	void SetEndVisible();
+	void SetEndHidden();
+	void SetWin();
+	void SetLose();
+
 private:
 	TSubclassOf<class UPlayerMainUI> MainUIClass;
 	class UPlayerMainUI* MainUIObject;

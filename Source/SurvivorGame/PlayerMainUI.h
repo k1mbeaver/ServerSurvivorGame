@@ -23,6 +23,9 @@ class SURVIVORGAME_API UPlayerMainUI : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UPlayerInventoryUI* PlayerInventoryUI;
 
+	UPROPERTY(Meta = (BindWidget))
+		class UPlayerGameEndUI* PlayerEndUI;
+
 public:
 	// GageUI
 	void SetHealthPersent(float PlayerHP);
@@ -47,4 +50,10 @@ public:
 	void SetListView(int nIndex, FString strName, int nCount, UTexture2D* setImage);
 	void ListUpdate();
 	void SetWeaponImage(UTexture2D* setImage);
+
+	// EndUI
+	void SetEndVisible();
+	void SetEndHidden();
+	void SetWin();
+	void SetLose();
 };

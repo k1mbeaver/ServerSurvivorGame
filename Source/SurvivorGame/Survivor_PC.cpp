@@ -861,8 +861,11 @@ void ASurvivor_PC::WeaponUIHidden()
 
 void ASurvivor_PC::GameDead()
 {
-	CurrentDeadPlayer++;
-	Server_GameDead(CurrentDeadPlayer);
+	if (myCharacter->CurrentPlayerState == EPlayerState::DEAD)
+	{
+		CurrentDeadPlayer++;
+		Server_GameDead(CurrentDeadPlayer);
+	}
 }
 
 void ASurvivor_PC::Server_GameDead_Implementation(int fCurrentDeadPlayer)
@@ -881,16 +884,32 @@ void ASurvivor_PC::Server_GameDead_Implementation(int fCurrentDeadPlayer)
 			PC->Client_GameDead(CurrentGamePlayers, fCurrentDeadPlayer);
 		}
 	}
-
 }
 
 void ASurvivor_PC::Client_GameDead_Implementation(int fCurrentMultiPlayer, int fCurrentDeadPlayer)
 {
 	CurrentDeadPlayer = fCurrentDeadPlayer;
 
-	if (CurrentDeadPlayer == fCurrentMultiPlayer - 1)
+	if (myCharacter->CurrentPlayerState == EPlayerState::DEAD)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GameEnd!!"));
+		FInputModeUIOnly InputMode;
+		UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(true);
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		HUD->SetLose();
+		HUD->SetEndVisible();
+	}
+
+	else if (myCharacter->CurrentPlayerState == EPlayerState::ALIVE)
+	{
+		if (CurrentDeadPlayer == fCurrentMultiPlayer - 1)
+		{
+			FInputModeUIOnly InputMode;
+			UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(true);
+			APlayerHUD* HUD = GetHUD<APlayerHUD>();
+			HUD->SetWin();
+			HUD->SetEndVisible();
+		}
+		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GameEnd!!"));
 	}
 }
 

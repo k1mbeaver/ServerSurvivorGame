@@ -13,5 +13,18 @@ UCLASS()
 class SURVIVORGAME_API UPlayerGameEndUI : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
+	UPROPERTY(Meta = (BindWidget))
+		class UButton* BtExit;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextWin;
+protected:
+	virtual void NativeOnInitialized() override;
+
+public:
+	void SetVisible();
+	void SetHidden();
+	void SetWin();
+	void SetLose();
 };

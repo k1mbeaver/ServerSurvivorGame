@@ -132,3 +132,23 @@ void APlayerHUD::SetWeaponImage(UTexture2D* setImage)
 {
 	MainUIObject->SetWeaponImage(setImage);
 }
+
+void APlayerHUD::SetEndHidden()
+{
+	MainUIObject->SetEndHidden();
+}
+
+void APlayerHUD::SetEndVisible()
+{
+	MainUIObject->SetEndVisible();
+}
+
+void APlayerHUD::SetWin()
+{
+	MainUIObject->SetWin();
+}
+
+void APlayerHUD::SetLose()
+{
+	MainUIObject->SetLose();
+}
