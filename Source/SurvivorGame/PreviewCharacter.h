@@ -35,10 +35,6 @@ private:
 
 	void LeftRight(float NewAxisValue);
 
-	void GoRightOrLeft();
-
-	void StopRightOrLeft();
-
 	void LookUp(float NewAxisValue);
 
 	void Turn(float NewAxisValue);

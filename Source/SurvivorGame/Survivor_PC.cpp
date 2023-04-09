@@ -865,6 +865,7 @@ void ASurvivor_PC::GameDead()
 	{
 		CurrentDeadPlayer++;
 		Server_GameDead(CurrentDeadPlayer);
+		
 	}
 }
 
