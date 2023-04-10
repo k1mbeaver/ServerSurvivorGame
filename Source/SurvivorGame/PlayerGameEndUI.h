@@ -18,6 +18,9 @@ class SURVIVORGAME_API UPlayerGameEndUI : public UUserWidget
 		class UButton* BtExit;
 
 	UPROPERTY(Meta = (BindWidget))
+		class UButton* BtPreview;
+
+	UPROPERTY(Meta = (BindWidget))
 		class UTextBlock* TextWin;
 protected:
 	virtual void NativeOnInitialized() override;

@@ -10,6 +10,7 @@ void UPlayerGameEndUI::NativeOnInitialized()
 	Super::NativeOnInitialized();
 
 	BtExit = Cast<UButton>(GetWidgetFromName(TEXT("BtExit")));
+	BtPreview = Cast<UButton>(GetWidgetFromName(TEXT("BtPreview")));
 	TextWin = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextWin")));
 }
 
@@ -28,6 +29,7 @@ void UPlayerGameEndUI::SetWin()
 	FString myString = "YOU WIN!";
 	FText myText = FText::FromString(myString);
 	TextWin->SetText(myText);
+	BtPreview->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UPlayerGameEndUI::SetLose()
@@ -35,4 +37,5 @@ void UPlayerGameEndUI::SetLose()
 	FString myString = "YOU DEAD!";
 	FText myText = FText::FromString(myString);
 	TextWin->SetText(myText);
+	BtPreview->SetVisibility(ESlateVisibility::Visible);
 }
