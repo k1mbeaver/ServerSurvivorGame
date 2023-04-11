@@ -4,6 +4,8 @@
 #include "PlayerGameEndUI.h"
 #include "Components/TextBlock.h"
 #include "Components/Button.h"
+#include "Survivor_PC.h"
+#include "Kismet/GameplayStatics.h"
 
 void UPlayerGameEndUI::NativeOnInitialized()
 {
@@ -38,4 +40,15 @@ void UPlayerGameEndUI::SetLose()
 	FText myText = FText::FromString(myString);
 	TextWin->SetText(myText);
 	BtPreview->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UPlayerGameEndUI::StartPreview()
+{
+	ASurvivor_PC* MyPC = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
+	MyPC->DestroyCharacter();
+	FInputModeGameOnly InputMode;
+	SetHidden();
+
+	return;
+	//MyPC->GetHealthHUD(MyGI->GetItemHealthPercent(CurrentHoverItemID));
 }

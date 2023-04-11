@@ -30,4 +30,7 @@ public:
 	void SetHidden();
 	void SetWin();
 	void SetLose();
+
+	UFUNCTION(BlueprintCallable)
+		void StartPreview();
 };

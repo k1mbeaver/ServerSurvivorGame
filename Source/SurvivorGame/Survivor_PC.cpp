@@ -11,33 +11,50 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "InventorySystem.h"
 #include "PlayerItemData.h"
+#include "PreviewCharacter.h"
 
 ASurvivor_PC::ASurvivor_PC()
 {
-
+	static ConstructorHelpers::FClassFinder<APreviewCharacter> PREVIEW_CHARACTER(TEXT("Blueprint'/Game/Blueprints/MyPreviewCharacter.MyPreviewCharacter_C'"));
+	if (PREVIEW_CHARACTER.Succeeded())
+	{
+		PreviewClass = PREVIEW_CHARACTER.Class;
+	}
 }
 
 void ASurvivor_PC::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
-	if (aPawn)
+
+	if (bGameEnd != true)
 	{
-		myCharacter = Cast<ASurvivorCharacter>(aPawn);
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Success!"));
-		SetInputMode(FInputModeGameOnly());
+		if (aPawn)
+		{
+			myCharacter = Cast<ASurvivorCharacter>(aPawn);
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Success!"));
+			SetInputMode(FInputModeGameOnly());
 
-		bCanRun = true;
-		bCanCrouching = true;
+			bCanRun = true;
+			bCanCrouching = true;
 
-		myCharacter->CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivor_PC::ReloadEnd);
-		myCharacter->MyPlayerController = this;
+			myCharacter->CharacterAnim->ReloadEnd_Reload.AddUObject(this, &ASurvivor_PC::ReloadEnd);
+			myCharacter->MyPlayerController = this;
 
-		myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+			myGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 
-		playerHUD = GetHUD<APlayerHUD>();
+			playerHUD = GetHUD<APlayerHUD>();
 
-		playerCharacterDefaultHP = myCharacter->PlayerDefaultHP;
-		playerCharacterDefaultStamina = myCharacter->PlayerDefaultStamina;
+			playerCharacterDefaultHP = myCharacter->PlayerDefaultHP;
+			playerCharacterDefaultStamina = myCharacter->PlayerDefaultStamina;
+		}
+	}
+
+	else
+	{
+		if (aPawn)
+		{
+			myPreviewCharacter = Cast<APreviewCharacter>(aPawn);
+		}
 	}
 }
 
@@ -110,17 +127,27 @@ void ASurvivor_PC::SetupInputComponent()
 
 void ASurvivor_PC::UpDown(float NewAxisValue)
 {
-	if (myCharacter)
+	if (!bGameEnd)
 	{
 		myCharacter->UpDown(NewAxisValue);
+	}
+
+	else
+	{
+		myPreviewCharacter->UpDown(NewAxisValue);
 	}
 }
 
 void ASurvivor_PC::LeftRight(float NewAxisValue)
 {
-	if (myCharacter)
+	if (!bGameEnd)
 	{
 		myCharacter->LeftRight(NewAxisValue);
+	}
+
+	else
+	{
+		myPreviewCharacter->LeftRight(NewAxisValue);
 	}
 }
 
@@ -251,17 +278,27 @@ void ASurvivor_PC::Client_StopRightOrLeft_Implementation(ASurvivorCharacter* Cli
 
 void ASurvivor_PC::LookUp(float NewAxisValue)
 {
-	if (myCharacter)
+	if (!bGameEnd)
 	{
 		myCharacter->LookUp(NewAxisValue);
+	}
+
+	else
+	{
+		myPreviewCharacter->LookUp(NewAxisValue);
 	}
 }
 
 void ASurvivor_PC::Turn(float NewAxisValue)
 {
-	if (myCharacter)
+	if (!bGameEnd)
 	{
 		myCharacter->Turn(NewAxisValue);
+	}
+
+	else
+	{
+		myPreviewCharacter->Turn(NewAxisValue);
 	}
 }
 
@@ -863,10 +900,53 @@ void ASurvivor_PC::GameDead()
 {
 	if (myCharacter->CurrentPlayerState == EPlayerState::DEAD)
 	{
+		//bGameEnd = true;
 		CurrentDeadPlayer++;
 		Server_GameDead(CurrentDeadPlayer);
-		
 	}
+}
+
+void ASurvivor_PC::DestroyCharacter()
+{
+	//if (myCharacter->CurrentPlayerState == EPlayerState::DEAD)
+	//{
+		
+	//}
+	FVector CurrentLocation = FVector(0.0f, 0.0f, 0.0f);
+	FRotator CurrentRotator = FRotator(0.0f, 0.0f, 0.0f);
+	myCharacter->Destroy();
+	Server_DestroyCharacter(myCharacter);
+
+	FActorSpawnParameters ActorSpawnParams;
+	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+	bGameEnd = true;
+	APreviewCharacter* myPreview = GetWorld()->SpawnActor<APreviewCharacter>(PreviewClass, CurrentLocation, CurrentRotator, ActorSpawnParams);
+	myPreviewCharacter = myPreview;
+	//Possess(myPreview);
+}
+
+void ASurvivor_PC::Server_DestroyCharacter_Implementation(ASurvivorCharacter* DestroyCharacter)
+{
+	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
+
+	DestroyCharacter->Destroy();
+
+	for (AActor* OutActor : OutActors)
+	{
+		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
+		if (PC)
+		{
+			PC->Client_DestroyCharacter(DestroyCharacter);
+		}
+	}
+}
+
+void ASurvivor_PC::Client_DestroyCharacter_Implementation(ASurvivorCharacter* DestroyCharacter)
+{
+	DestroyCharacter->Destroy();
 }
 
 void ASurvivor_PC::Server_GameDead_Implementation(int fCurrentDeadPlayer)
@@ -898,6 +978,7 @@ void ASurvivor_PC::Client_GameDead_Implementation(int fCurrentMultiPlayer, int f
 		APlayerHUD* HUD = GetHUD<APlayerHUD>();
 		HUD->SetLose();
 		HUD->SetEndVisible();
+		//bGameEnd = true;
 	}
 
 	else if (myCharacter->CurrentPlayerState == EPlayerState::ALIVE)

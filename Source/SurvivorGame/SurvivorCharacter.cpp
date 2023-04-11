@@ -128,6 +128,11 @@ void ASurvivorCharacter::PossessedBy(AController* NewController)
 
 void ASurvivorCharacter::UpDown(float NewAxisValue)
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -153,6 +158,11 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 
 void ASurvivorCharacter::LeftRight(float NewAxisValue)
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -178,6 +188,11 @@ void ASurvivorCharacter::LeftRight(float NewAxisValue)
 
 void ASurvivorCharacter::GoRightOrLeft()
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -196,6 +211,11 @@ void ASurvivorCharacter::GoRightOrLeft()
 
 void ASurvivorCharacter::StopRightOrLeft()
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -206,6 +226,11 @@ void ASurvivorCharacter::StopRightOrLeft()
 
 void ASurvivorCharacter::LookUp(float NewAxisValue)
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -216,6 +241,11 @@ void ASurvivorCharacter::LookUp(float NewAxisValue)
 
 void ASurvivorCharacter::Turn(float NewAxisValue)
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -226,6 +256,11 @@ void ASurvivorCharacter::Turn(float NewAxisValue)
 
 void ASurvivorCharacter::Run()
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -241,6 +276,11 @@ void ASurvivorCharacter::Run()
 
 void ASurvivorCharacter::StopRun()
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -255,6 +295,11 @@ void ASurvivorCharacter::StopRun()
 
 void ASurvivorCharacter::Jump()
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
@@ -265,6 +310,11 @@ void ASurvivorCharacter::Jump()
 
 void ASurvivorCharacter::StopJumping()
 {
+	if (this == nullptr)
+	{
+		return;
+	}
+
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;

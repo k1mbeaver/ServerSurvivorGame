@@ -36,22 +36,22 @@ void APreviewCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void APreviewCharacter::UpDown(float NewAxisValue)
 {
-	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X);
+	//FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X);
 
-	Direction.Z = 0.0f;
-	Direction.Normalize();
+	//Direction.Z = 0.0f;
+	//Direction.Normalize();
 
-	AddMovementInput(Direction, NewAxisValue);
+	//AddMovementInput(Direction, NewAxisValue);
 }
 
 void APreviewCharacter::LeftRight(float NewAxisValue)
 {
-	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y);
+	//FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y);
 
-	Direction.Z = 0.0f;
-	Direction.Normalize();
+	//Direction.Z = 0.0f;
+	//Direction.Normalize();
 
-	AddMovementInput(Direction, NewAxisValue);
+	//AddMovementInput(Direction, NewAxisValue);
 }
 
 void APreviewCharacter::LookUp(float NewAxisValue)

@@ -30,10 +30,15 @@ public:
 	void WeaponUIHidden();
 	void CharacterHealth(float HealthPercent);
 	void GameDead();
+	void DestroyCharacter();
+	//void PossessPreview();
 
 private:
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Pawn)
 		class ASurvivorCharacter* myCharacter;
+
+	UPROPERTY(VisibleInstanceOnly, Category = Pawn)
+		class APreviewCharacter* myPreviewCharacter;
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Run)
 		bool bCanRun;
@@ -58,6 +63,12 @@ private:
 
 	UPROPERTY()
 		int CurrentDeadPlayer = 0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Character")
+		TSubclassOf<class APreviewCharacter> PreviewClass;
+
+	UPROPERTY()
+		bool bGameEnd = false;
 
 	class UMyGameInstance* myGameInstance;
 	bool IsHealth = false;
@@ -204,5 +215,13 @@ private:
 
 	UFUNCTION(Client, Reliable)
 		void Client_GameDead(int fCurrentMultiPlayer, int fCurrentDeadPlayer);
+
+	// 플레이어가 관전할 때
+
+	UFUNCTION(Server, Reliable)
+		void Server_DestroyCharacter(ASurvivorCharacter* DestroyCharacter);
+
+	UFUNCTION(Client, Reliable)
+		void Client_DestroyCharacter(ASurvivorCharacter* DestroyCharacter);
 };
 
