@@ -12,14 +12,18 @@
 #include "InventorySystem.h"
 #include "PlayerItemData.h"
 #include "PreviewCharacter.h"
+#include "SurvivorPreviewCharacter.h"
+#include "Components/CapsuleComponent.h"
 
 ASurvivor_PC::ASurvivor_PC()
 {
-	static ConstructorHelpers::FClassFinder<APreviewCharacter> PREVIEW_CHARACTER(TEXT("Blueprint'/Game/Blueprints/MyPreviewCharacter.MyPreviewCharacter_C'"));
+	
+	static ConstructorHelpers::FClassFinder<ASurvivorPreviewCharacter> PREVIEW_CHARACTER(TEXT("Blueprint'/Game/Blueprints/MySurvivorPreviewCharacter.MySurvivorPreviewCharacter_C'"));
 	if (PREVIEW_CHARACTER.Succeeded())
 	{
 		PreviewClass = PREVIEW_CHARACTER.Class;
 	}
+	
 }
 
 void ASurvivor_PC::OnPossess(APawn* aPawn)
@@ -49,13 +53,15 @@ void ASurvivor_PC::OnPossess(APawn* aPawn)
 		}
 	}
 
+	/*
 	else
 	{
 		if (aPawn)
 		{
-			myPreviewCharacter = Cast<APreviewCharacter>(aPawn);
+			myPreviewCharacter = Cast<ASurvivorPreviewCharacter>(aPawn);
 		}
 	}
+	*/
 }
 
 void ASurvivor_PC::PostInitializeComponents()
@@ -123,31 +129,24 @@ void ASurvivor_PC::SetupInputComponent()
 
 	// 인벤토리 열기
 	InputComponent->BindAction(TEXT("Inventory"), IE_Pressed, this, &ASurvivor_PC::UseInventory);
+
+	// 캐릭터 견착
+	InputComponent->BindAction(TEXT("Esc"), IE_Pressed, this, &ASurvivor_PC::PressEsc);
 }
 
 void ASurvivor_PC::UpDown(float NewAxisValue)
 {
-	if (!bGameEnd)
+	if (myCharacter)
 	{
 		myCharacter->UpDown(NewAxisValue);
-	}
-
-	else
-	{
-		myPreviewCharacter->UpDown(NewAxisValue);
 	}
 }
 
 void ASurvivor_PC::LeftRight(float NewAxisValue)
 {
-	if (!bGameEnd)
+	if (myCharacter)
 	{
 		myCharacter->LeftRight(NewAxisValue);
-	}
-
-	else
-	{
-		myPreviewCharacter->LeftRight(NewAxisValue);
 	}
 }
 
@@ -278,27 +277,17 @@ void ASurvivor_PC::Client_StopRightOrLeft_Implementation(ASurvivorCharacter* Cli
 
 void ASurvivor_PC::LookUp(float NewAxisValue)
 {
-	if (!bGameEnd)
+	if (myCharacter)
 	{
 		myCharacter->LookUp(NewAxisValue);
-	}
-
-	else
-	{
-		myPreviewCharacter->LookUp(NewAxisValue);
 	}
 }
 
 void ASurvivor_PC::Turn(float NewAxisValue)
 {
-	if (!bGameEnd)
+	if (myCharacter)
 	{
 		myCharacter->Turn(NewAxisValue);
-	}
-
-	else
-	{
-		myPreviewCharacter->Turn(NewAxisValue);
 	}
 }
 
@@ -900,11 +889,19 @@ void ASurvivor_PC::GameDead()
 {
 	if (myCharacter->CurrentPlayerState == EPlayerState::DEAD)
 	{
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		HUD->SetPreviewUI();
+
 		//bGameEnd = true;
 		CurrentDeadPlayer++;
-		Server_GameDead(CurrentDeadPlayer);
+		myCharacter->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		myCharacter->GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+		myCharacter->GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+		myCharacter->GetCharacterMovement()->MaxWalkSpeed = 800.0f;
+		Server_GameDead(CurrentDeadPlayer, myCharacter);
 	}
 }
+
 
 void ASurvivor_PC::DestroyCharacter()
 {
@@ -912,18 +909,24 @@ void ASurvivor_PC::DestroyCharacter()
 	//{
 		
 	//}
-	FVector CurrentLocation = FVector(0.0f, 0.0f, 0.0f);
-	FRotator CurrentRotator = FRotator(0.0f, 0.0f, 0.0f);
-	myCharacter->Destroy();
+	myCharacter->GetMesh()->DestroyComponent();
+	FInputModeGameOnly InputMode;
+	bGameEnd = true;
 	Server_DestroyCharacter(myCharacter);
+
+	/*
+	FVector CurrentLocation = myCharacter->GetActorLocation();
+	FRotator CurrentRotator = myCharacter->GetActorRotation();
 
 	FActorSpawnParameters ActorSpawnParams;
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 	bGameEnd = true;
-	APreviewCharacter* myPreview = GetWorld()->SpawnActor<APreviewCharacter>(PreviewClass, CurrentLocation, CurrentRotator, ActorSpawnParams);
+	ASurvivorPreviewCharacter* myPreview = GetWorld()->SpawnActor<ASurvivorPreviewCharacter>(PreviewClass, CurrentLocation, CurrentRotator, ActorSpawnParams);
 	myPreviewCharacter = myPreview;
-	//Possess(myPreview);
+	FInputModeGameOnly InputMode;
+	Possess(myPreview);
+	*/
 }
 
 void ASurvivor_PC::Server_DestroyCharacter_Implementation(ASurvivorCharacter* DestroyCharacter)
@@ -932,7 +935,7 @@ void ASurvivor_PC::Server_DestroyCharacter_Implementation(ASurvivorCharacter* De
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetPawn()->GetWorld(), APlayerController::StaticClass(), OutActors);
 
-	DestroyCharacter->Destroy();
+	DestroyCharacter->GetMesh()->DestroyComponent();
 
 	for (AActor* OutActor : OutActors)
 	{
@@ -946,10 +949,10 @@ void ASurvivor_PC::Server_DestroyCharacter_Implementation(ASurvivorCharacter* De
 
 void ASurvivor_PC::Client_DestroyCharacter_Implementation(ASurvivorCharacter* DestroyCharacter)
 {
-	DestroyCharacter->Destroy();
+	DestroyCharacter->GetMesh()->DestroyComponent();
 }
 
-void ASurvivor_PC::Server_GameDead_Implementation(int fCurrentDeadPlayer)
+void ASurvivor_PC::Server_GameDead_Implementation(int fCurrentDeadPlayer, ASurvivorCharacter* DestroyCharacter)
 {
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
 	TArray<AActor*> OutActors;
@@ -957,27 +960,40 @@ void ASurvivor_PC::Server_GameDead_Implementation(int fCurrentDeadPlayer)
 
 	int CurrentGamePlayers = OutActors.Num();
 
+	DestroyCharacter->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	DestroyCharacter->GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+	DestroyCharacter->GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	DestroyCharacter->GetCharacterMovement()->MaxWalkSpeed = 800.0f;
+
 	for (AActor* OutActor : OutActors)
 	{
 		ASurvivor_PC* PC = Cast<ASurvivor_PC>(OutActor);
 		if (PC)
 		{
-			PC->Client_GameDead(CurrentGamePlayers, fCurrentDeadPlayer);
+			PC->Client_GameDead(CurrentGamePlayers, fCurrentDeadPlayer, DestroyCharacter);
 		}
 	}
 }
 
-void ASurvivor_PC::Client_GameDead_Implementation(int fCurrentMultiPlayer, int fCurrentDeadPlayer)
+void ASurvivor_PC::Client_GameDead_Implementation(int fCurrentMultiPlayer, int fCurrentDeadPlayer, ASurvivorCharacter* DestroyCharacter)
 {
 	CurrentDeadPlayer = fCurrentDeadPlayer;
 
+	DestroyCharacter->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	DestroyCharacter->GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+	DestroyCharacter->GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	DestroyCharacter->GetCharacterMovement()->MaxWalkSpeed = 800.0f;
+
 	if (myCharacter->CurrentPlayerState == EPlayerState::DEAD)
 	{
-		FInputModeUIOnly InputMode;
-		UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(true);
-		APlayerHUD* HUD = GetHUD<APlayerHUD>();
-		HUD->SetLose();
-		HUD->SetEndVisible();
+		if (!bGameEnd)
+		{
+			FInputModeUIOnly InputMode;
+			UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(true);
+			APlayerHUD* HUD = GetHUD<APlayerHUD>();
+			HUD->SetLose();
+			HUD->SetEndVisible();
+		}
 		//bGameEnd = true;
 	}
 
@@ -992,6 +1008,23 @@ void ASurvivor_PC::Client_GameDead_Implementation(int fCurrentMultiPlayer, int f
 			HUD->SetEndVisible();
 		}
 		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GameEnd!!"));
+	}
+}
+
+void ASurvivor_PC::PressEsc()
+{
+	if (!IsEsc)
+	{
+		IsEsc = true;
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		HUD->SetEsc(IsEsc);
+	}
+
+	else
+	{
+		IsEsc = false;
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		HUD->SetEsc(IsEsc);
 	}
 }
 

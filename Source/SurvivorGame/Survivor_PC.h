@@ -38,7 +38,7 @@ private:
 		class ASurvivorCharacter* myCharacter;
 
 	UPROPERTY(VisibleInstanceOnly, Category = Pawn)
-		class APreviewCharacter* myPreviewCharacter;
+		class ASurvivorPreviewCharacter* myPreviewCharacter;
 
 	UPROPERTY(VisibleInstanceOnly, Replicated, Category = Run)
 		bool bCanRun;
@@ -65,7 +65,7 @@ private:
 		int CurrentDeadPlayer = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Character")
-		TSubclassOf<class APreviewCharacter> PreviewClass;
+		TSubclassOf<class ASurvivorPreviewCharacter> PreviewClass;
 
 	UPROPERTY()
 		bool bGameEnd = false;
@@ -73,6 +73,7 @@ private:
 	class UMyGameInstance* myGameInstance;
 	bool IsHealth = false;
 	bool IsUIopen = false;
+	bool IsEsc = false;
 private:
 	void UpDown(float NewAxisValue);
 
@@ -211,10 +212,10 @@ private:
 	// 캐릭터가 사망했을 때
 
 	UFUNCTION(Server, Reliable)
-		void Server_GameDead(int fCurrentDeadPlayer);
+		void Server_GameDead(int fCurrentDeadPlayer, ASurvivorCharacter* DestroyCharacter);
 
 	UFUNCTION(Client, Reliable)
-		void Client_GameDead(int fCurrentMultiPlayer, int fCurrentDeadPlayer);
+		void Client_GameDead(int fCurrentMultiPlayer, int fCurrentDeadPlayer, ASurvivorCharacter* DestroyCharacter);
 
 	// 플레이어가 관전할 때
 
@@ -223,5 +224,7 @@ private:
 
 	UFUNCTION(Client, Reliable)
 		void Client_DestroyCharacter(ASurvivorCharacter* DestroyCharacter);
+
+	void PressEsc();
 };
 

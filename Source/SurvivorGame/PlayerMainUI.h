@@ -42,6 +42,9 @@ public:
 	void SetTextVisible();
 	void SetTextHidden();
 
+	// GageAndWeaponUI
+	void SetPreviewUI();
+
 	// InventoryUI
 	void SetInventoryVisible();
 	void SetInventoryHidden();
@@ -56,4 +59,5 @@ public:
 	void SetEndHidden();
 	void SetWin();
 	void SetLose();
+	void SetEsc(bool IsEsc);
 };

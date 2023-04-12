@@ -133,10 +133,19 @@ void ASurvivorCharacter::UpDown(float NewAxisValue)
 		return;
 	}
 
+	// 관전중일 때
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
+		FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X);
+
+		//Direction.Z = 0.0f;
+		//Direction.Normalize();
+
+		AddMovementInput(Direction, NewAxisValue);
+
 		return;
 	}
+	
 
 	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X);
 	
@@ -162,12 +171,20 @@ void ASurvivorCharacter::LeftRight(float NewAxisValue)
 	{
 		return;
 	}
-
+	
+	// 관전중일때
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
+		FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y);
+
+		//Direction.Z = 0.0f;
+		//Direction.Normalize();
+
+		AddMovementInput(Direction, NewAxisValue);
+
 		return;
 	}
-
+	
 	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y);
 
 	Direction.Z = 0.0f;
@@ -230,12 +247,12 @@ void ASurvivorCharacter::LookUp(float NewAxisValue)
 	{
 		return;
 	}
-
+	/*
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
-
+	*/
 	AddControllerPitchInput(NewAxisValue);
 }
 
@@ -245,12 +262,12 @@ void ASurvivorCharacter::Turn(float NewAxisValue)
 	{
 		return;
 	}
-
+	/*
 	if (CurrentPlayerState == EPlayerState::DEAD)
 	{
 		return;
 	}
-
+	*/
 	AddControllerYawInput(NewAxisValue);
 }
 

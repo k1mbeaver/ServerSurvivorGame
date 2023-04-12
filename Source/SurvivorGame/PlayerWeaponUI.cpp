@@ -69,3 +69,13 @@ void UPlayerWeaponUI::SetTextVisible()
 	DefaultText->SetVisibility(ESlateVisibility::Visible);
 	TextSlash->SetVisibility(ESlateVisibility::Visible);
 }
+
+void UPlayerWeaponUI::SetHidden()
+{
+	SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UPlayerWeaponUI::SetVisible()
+{
+	SetVisibility(ESlateVisibility::Visible);
+}

@@ -31,6 +31,7 @@ void UPlayerGameEndUI::SetWin()
 	FString myString = "YOU WIN!";
 	FText myText = FText::FromString(myString);
 	TextWin->SetText(myText);
+	TextWin->SetVisibility(ESlateVisibility::Visible);
 	BtPreview->SetVisibility(ESlateVisibility::Hidden);
 }
 
@@ -39,6 +40,7 @@ void UPlayerGameEndUI::SetLose()
 	FString myString = "YOU DEAD!";
 	FText myText = FText::FromString(myString);
 	TextWin->SetText(myText);
+	TextWin->SetVisibility(ESlateVisibility::Visible);
 	BtPreview->SetVisibility(ESlateVisibility::Visible);
 }
 
@@ -46,9 +48,25 @@ void UPlayerGameEndUI::StartPreview()
 {
 	ASurvivor_PC* MyPC = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
 	MyPC->DestroyCharacter();
-	FInputModeGameOnly InputMode;
 	SetHidden();
 
 	return;
 	//MyPC->GetHealthHUD(MyGI->GetItemHealthPercent(CurrentHoverItemID));
+}
+
+void UPlayerGameEndUI::SetEsc(bool IsEsc)
+{
+	if (IsEsc)
+	{
+		SetVisibility(ESlateVisibility::Visible);
+		TextWin->SetVisibility(ESlateVisibility::Hidden);
+		BtPreview->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+	else
+	{
+		SetVisibility(ESlateVisibility::Hidden);
+		BtPreview->SetVisibility(ESlateVisibility::Hidden);
+	}
+
 }

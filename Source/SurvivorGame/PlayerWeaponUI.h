@@ -44,4 +44,6 @@ public:
 	void SetDefaultText(int nProjectile);
 	void SetTextVisible();
 	void SetTextHidden();
+	void SetHidden();
+	void SetVisible();
 };

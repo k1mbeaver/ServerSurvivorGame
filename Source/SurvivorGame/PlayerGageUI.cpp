@@ -22,3 +22,13 @@ void UPlayerGageUI::SetStaminaPersent(float PlayerStamina)
 {
 	StaminaPersent->SetPercent(PlayerStamina);
 }
+
+void UPlayerGageUI::SetHidden()
+{
+	SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UPlayerGageUI::SetVisible()
+{
+	SetVisibility(ESlateVisibility::Visible);
+}

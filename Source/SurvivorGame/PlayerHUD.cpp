@@ -152,3 +152,13 @@ void APlayerHUD::SetLose()
 {
 	MainUIObject->SetLose();
 }
+
+void APlayerHUD::SetPreviewUI()
+{
+	MainUIObject->SetPreviewUI();
+}
+
+void APlayerHUD::SetEsc(bool IsEsc)
+{
+	MainUIObject->SetEsc(IsEsc);
+}

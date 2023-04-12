@@ -1,40 +1,42 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PreviewCharacter.h"
+#include "SurvivorPreviewCharacter.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
-APreviewCharacter::APreviewCharacter()
+ASurvivorPreviewCharacter::ASurvivorPreviewCharacter()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
+	Camera->SetupAttachment(GetCapsuleComponent());
 }
 
 // Called when the game starts or when spawned
-void APreviewCharacter::BeginPlay()
+void ASurvivorPreviewCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void APreviewCharacter::Tick(float DeltaTime)
+void ASurvivorPreviewCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void APreviewCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ASurvivorPreviewCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
 
-void APreviewCharacter::UpDown(float NewAxisValue)
+void ASurvivorPreviewCharacter::UpDown(float NewAxisValue)
 {
 	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X);
 
@@ -44,7 +46,7 @@ void APreviewCharacter::UpDown(float NewAxisValue)
 	AddMovementInput(Direction, NewAxisValue);
 }
 
-void APreviewCharacter::LeftRight(float NewAxisValue)
+void ASurvivorPreviewCharacter::LeftRight(float NewAxisValue)
 {
 	FVector Direction = FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y);
 
@@ -54,12 +56,12 @@ void APreviewCharacter::LeftRight(float NewAxisValue)
 	AddMovementInput(Direction, NewAxisValue);
 }
 
-void APreviewCharacter::LookUp(float NewAxisValue)
+void ASurvivorPreviewCharacter::LookUp(float NewAxisValue)
 {
 	AddControllerPitchInput(NewAxisValue);
 }
 
-void APreviewCharacter::Turn(float NewAxisValue)
+void ASurvivorPreviewCharacter::Turn(float NewAxisValue)
 {
 	AddControllerYawInput(NewAxisValue);
 }

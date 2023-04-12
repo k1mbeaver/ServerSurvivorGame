@@ -49,6 +49,14 @@ public:
 	void SetWin();
 	void SetLose();
 
+	// 게임 관전
+
+	void SetPreviewUI();
+
+	// 게임 진행
+
+	void SetEsc(bool IsEsc);
+
 private:
 	TSubclassOf<class UPlayerMainUI> MainUIClass;
 	class UPlayerMainUI* MainUIObject;

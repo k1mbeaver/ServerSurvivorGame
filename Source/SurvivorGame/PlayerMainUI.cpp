@@ -115,3 +115,14 @@ void UPlayerMainUI::SetLose()
 {
 	PlayerEndUI->SetLose();
 }
+
+void UPlayerMainUI::SetPreviewUI()
+{
+	PlayerGageUI->SetHidden();
+	PlayerWeaponUI->SetHidden();
+}
+
+void UPlayerMainUI::SetEsc(bool IsEsc)
+{
+	PlayerEndUI->SetEsc(IsEsc);
+}
