@@ -84,6 +84,15 @@ void ASurvivor_PC::Tick(float DeltaTime)
 		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("GageChange!"));
 		IsHealth = false;
 	}
+
+	if (IsRun)
+	{
+		APlayerHUD* HUD = GetHUD<APlayerHUD>();
+		if (HUD == nullptr) return;
+		playerCharacterDefaultStamina = myCharacter->PlayerDefaultStamina;
+		playerCharacterStamina = myCharacter->PlayerStamina;
+		HUD->SetStaminaPersent(playerCharacterStamina / playerCharacterDefaultStamina);
+	}
 }
 
 
@@ -299,6 +308,7 @@ void ASurvivor_PC::Run()
 
 		//myCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 		myCharacter->Run();
+		IsRun = true;
 		Server_Run(myCharacter);
 	}
 }
@@ -337,6 +347,7 @@ void ASurvivor_PC::StopRun()
 
 		//myCharacter->GetCharacterMovement()->MaxWalkSpeed = 200.0f;
 		myCharacter->StopRun();
+		IsRun = false;
 		Server_StopRun(myCharacter);
 	}
 }

@@ -74,6 +74,7 @@ private:
 	bool IsHealth = false;
 	bool IsUIopen = false;
 	bool IsEsc = false;
+	bool IsRun = false;
 private:
 	void UpDown(float NewAxisValue);
 

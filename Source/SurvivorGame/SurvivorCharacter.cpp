@@ -286,6 +286,7 @@ void ASurvivorCharacter::Run()
 	if (bCanRun)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = fSprintPawnSpeed;
+		PlayerStamina -= 1;
 		bCanCrouching = false;
 	}
 }
