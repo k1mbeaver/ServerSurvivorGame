@@ -240,16 +240,23 @@ public:
 	UFUNCTION(BlueprintCallable)
 		bool HealthCharacter(FString ItemID);
 
-	void HealthStamina();
-
 	UFUNCTION(BlueprintCallable)
 		float GetHP();
+
+	UFUNCTION(BlueprintCallable)
+		float GetStamina();
 
 	UFUNCTION(BlueprintCallable)
 		void SetHP(float newHP);
 
 	UFUNCTION(BlueprintCallable)
+		void SetStamina(float newStamina);
+
+	UFUNCTION(BlueprintCallable)
 		float HealthHP(float myPlayerHP);
+
+	UFUNCTION(BlueprintCallable)
+		float HealthStamina(float myPlayerStamina);
 
 	UFUNCTION(BlueprintCallable)
 		void HealthPlayerHUD(float myPlayerHP);

@@ -445,11 +445,23 @@ float ASurvivorCharacter::GetHP()
 	return this->PlayerHP;
 }
 
+float ASurvivorCharacter::GetStamina()
+{
+	return this->PlayerStamina;
+}
+
 void ASurvivorCharacter::SetHP(float newHP)
 {
 	this->PlayerHP = newHP;
 	return;
 }
+
+void ASurvivorCharacter::SetStamina(float newStamina)
+{
+	this->PlayerStamina = newStamina;
+	return;
+}
+
 
 float ASurvivorCharacter::HealthHP(float myPlayerHP)
 {
@@ -468,17 +480,13 @@ void ASurvivorCharacter::HealthPlayerHUD(float myPlayerHP)
 	MyPlayerController->GetHealthHUD(myPlayerHP);
 }
 
-void ASurvivorCharacter::HealthStamina()
+float ASurvivorCharacter::HealthStamina(float myPlayerStamina)
 {
-	//this->PlayerStamina = myStamina + myGameInstance->GetItemHealthPercent(ItemID);
+	float myStamina = GetStamina();
+	myStamina = myStamina + myPlayerStamina;
+	SetStamina(myStamina);
 
-	if (!MyPlayerController)
-	{
-		return;
-	}
-
-	//ASurvivor_PC* myPlayerController = Cast<ASurvivor_PC>(UGameplayStatics::GetPlayerController(this, 0));
-	//MyPlayerController->GetHealthHUD();
+	return myStamina;
 }
 
 void ASurvivorCharacter::InitGun(int GunMagazine)
