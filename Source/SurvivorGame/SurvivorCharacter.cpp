@@ -108,7 +108,6 @@ void ASurvivorCharacter::BeginPlay()
 void ASurvivorCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -285,8 +284,15 @@ void ASurvivorCharacter::Run()
 
 	if (bCanRun)
 	{
-		GetCharacterMovement()->MaxWalkSpeed = fSprintPawnSpeed;
-		PlayerStamina -= 1;
+		if (PlayerStamina > 0)
+		{
+			GetCharacterMovement()->MaxWalkSpeed = fSprintPawnSpeed * 1.5f;
+		}
+
+		else
+		{
+			GetCharacterMovement()->MaxWalkSpeed = fSprintPawnSpeed;
+		}
 		bCanCrouching = false;
 	}
 }
