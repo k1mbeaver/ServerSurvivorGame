@@ -108,6 +108,11 @@ void ASurvivorCharacter::BeginPlay()
 void ASurvivorCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (PlayerStamina <= 0.0f)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = fSprintPawnSpeed;
+	}
 }
 
 // Called to bind functionality to input

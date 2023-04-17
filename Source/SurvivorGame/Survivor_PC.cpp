@@ -89,7 +89,12 @@ void ASurvivor_PC::Tick(float DeltaTime)
 	{
 		APlayerHUD* HUD = GetHUD<APlayerHUD>();
 		if (HUD == nullptr) return;
-		myCharacter->PlayerStamina -= 0.1f;
+		if (myCharacter->PlayerStamina <= 0)
+		{
+			myCharacter->GetCharacterMovement()->MaxWalkSpeed = myCharacter->fSprintPawnSpeed;
+			return;
+		}
+		myCharacter->PlayerStamina -= 0.05f;
 		playerCharacterDefaultStamina = myCharacter->PlayerDefaultStamina;
 		playerCharacterStamina = myCharacter->PlayerStamina;
 		HUD->SetStaminaPersent(playerCharacterStamina / playerCharacterDefaultStamina);
