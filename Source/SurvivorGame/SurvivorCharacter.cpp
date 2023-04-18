@@ -111,7 +111,7 @@ void ASurvivorCharacter::Tick(float DeltaTime)
 
 	if (PlayerStamina <= 0.0f)
 	{
-		GetCharacterMovement()->MaxWalkSpeed = fSprintPawnSpeed;
+		GetCharacterMovement()->MaxWalkSpeed = fCurrentPawnSpeed;
 	}
 }
 
