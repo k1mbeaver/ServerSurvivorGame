@@ -104,6 +104,7 @@ void UPlayerInventoryUI::SetDescriptItem(int getItemIndex)
 	MyInventoryItemDescript->SetItemDescript(MyGI->GetInventoryItemDescript(getItemIndex + 1));
 
 	SetCurrentHoverItemID(MyGI->GetInventoryItemID(getItemIndex + 1));
+	CurrentHoverItemIndex = getItemIndex + 1;
 }
 
 
@@ -140,6 +141,8 @@ void UPlayerInventoryUI::UseItem()
 	UMyGameInstance* MyGI = GetGameInstance<UMyGameInstance>();
 
 	MyPC->GetHealthHUD(MyGI->GetItemHealthPercent(CurrentHoverItemID));
+	MyGI->SetInventoryItemCount(CurrentHoverItemIndex, MyGI->GetInventoryCount(CurrentHoverItemIndex) - 1);
+	MyPC->UpdateInventory();
 
 	return;
 }

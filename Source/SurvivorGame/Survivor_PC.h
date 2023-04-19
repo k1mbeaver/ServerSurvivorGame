@@ -31,6 +31,7 @@ public:
 	void CharacterHealth(float HealthPercent);
 	void GameDead();
 	void DestroyCharacter();
+	void UpdateInventory();
 	//void PossessPreview();
 
 private:

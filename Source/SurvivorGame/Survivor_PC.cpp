@@ -229,6 +229,41 @@ void ASurvivor_PC::UseInventory()
 	}
 }
 
+void ASurvivor_PC::UpdateInventory()
+{
+	APlayerHUD* HUD = GetHUD<APlayerHUD>();
+	if (HUD == nullptr) return;
+
+	FInputModeUIOnly InputMode;
+	UGameplayStatics::GetPlayerController(this, 0)->SetShowMouseCursor(true);
+	ASurvivorCharacter* myPlayerCharacter = Cast<ASurvivorCharacter>(GetPawn());
+	TArray<UPlayerItemData*> GetInventoryData = myCharacter->GetItemInventory();
+	UMyGameInstance* MyGI = Cast<UMyGameInstance>(GetGameInstance());
+
+	//if (GetInventoryData.Num() == 0)
+	//{
+		//return;
+	//} 
+
+	//GetInventoryData.Num()
+
+	HUD->ListUpdate();
+
+	for (int Index = 1; Index <= 2; Index++)
+	{
+		//UPlayerItemData* GetItemData = GetInventoryData[Index];
+		//FString strName = GetItemData->GetItemName();
+		//int nCount = GetItemData->GetItemCount();
+		//UTexture2D* setImage = GetItemData->GetItemImage();
+
+		FString strIndex = FString::FromInt(Index);
+		FString strName = MyGI->GetInventoryItemName(Index);
+		int nCount = MyGI->GetInventoryCount(Index);
+		UTexture2D* setImage = MyGI->GetInventoryImage(Index);
+		HUD->SetListView(Index - 1, strName, nCount, setImage);
+	}
+}
+
 void ASurvivor_PC::Server_GoRightOrLeft_Implementation(ASurvivorCharacter* ClientCharacter)
 {
 	// 서버에서는 모든 PlayerController에게 이벤트를 보낸다.
@@ -803,9 +838,8 @@ void ASurvivor_PC::GetHealthHUD(float CharacterInfo)
 
 		//myCharacter->PlayerHP += 20.0f;
 		//myCharacter->GetHP()
-		Server_GetHealth(myCharacter, CharacterInfo);
-
-		playerCharacterHP = myCharacter->GetHP();
+		playerCharacterHP = myCharacter->HealthHP(CharacterInfo);
+		Server_GetHealth(myCharacter, myCharacter->GetHP());
 		//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("GETHEALTH(HUD)!!"));
 
 		IsHealth = true;

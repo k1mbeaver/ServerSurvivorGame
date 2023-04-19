@@ -26,6 +26,7 @@ class SURVIVORGAME_API UPlayerInventoryUI : public UUserWidget
 private:
 	TArray<UPlayerItemData*> InventoryItemsData;
 	FString CurrentHoverItemID;
+	int CurrentHoverItemIndex;
 protected:
 	virtual void NativeOnInitialized() override;
 
